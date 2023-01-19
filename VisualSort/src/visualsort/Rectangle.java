@@ -15,41 +15,28 @@ public class Rectangle extends JPanel {
         this.y = y;
         this.width = width;
         this.height = height;
+        
+        this.setSize(width, height);
     }
     
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawRect(x, y, width, height);  
-        g.setColor(Color.RED);  
+        g.setColor(Color.WHITE);
+        g.drawRect(x, y, width, height);
         g.fillRect(x, y, width, height);
-    }
-
-    public int getX() {
-        return x;
     }
 
     public void setX(int x) {
         this.x = x;
     }
 
-    public int getY() {
-        return y;
-    }
-
     public void setY(int y) {
         this.y = y;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
     public void setWidth(int width) {
         this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 
     public void setHeight(int height) {

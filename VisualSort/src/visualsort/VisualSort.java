@@ -16,7 +16,7 @@ public class VisualSort {
     private JButton start;
     
     private static String[] algorithmsNames = {"Bubble Sort", "Insertion Sort"};
-    private static String[] sizesValues = {"10", "100", "250", "500"};
+    private static String[] sizesValues = {"10", "100", "200", "400"};
     
     public VisualSort() {
         menu = new JFrame("Visual Sort");
@@ -48,7 +48,7 @@ public class VisualSort {
             sizes.setEnabled(false);
             start.setEnabled(false);
             
-            new SortingFrame(
+            JFrame sf = new SortingFrame(
                 (String)algorithms.getSelectedItem(),
                 Integer.parseInt((String)sizes.getSelectedItem()),
                 new WindowAdapter() {

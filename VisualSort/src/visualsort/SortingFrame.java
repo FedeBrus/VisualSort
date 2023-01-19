@@ -1,78 +1,60 @@
 package visualsort;
 
-import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.WindowListener;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
+import javax.swing.*;
 
-public class SortingFrame {
+
+public class SortingFrame extends JFrame {
     
-    private int WIDTH;
-    private int HEIGHT;
+    private final int WIDTH = 800;
+    private final int HEIGHT = 500;
     private int size;
     
-    private int rectX;
-    private int rectY;
-    
     private JFrame main;
-    private JSplitPane pnlMain;
-    private JPanel pnlSorting;
+    private SortingPanel pnlSorting;
     private JPanel pnlActions;
     
     private int[] arr;
     
-    public SortingFrame(String algorithm, int size, WindowListener wl) {
-        main = new JFrame(algorithm);
-        pnlSorting = new JPanel();
-        pnlActions = new JPanel();
-        pnlMain = new JSplitPane();
-        
+    public SortingFrame(String algorithm, int size, WindowListener wl) { 
         this.size = size;
         arr = new int[size];
         
+        for(int i = 1; i <= size; i++) {
+            arr[i - 1] = i;
+        }
+        
+        main = new JFrame(algorithm);
+        pnlSorting = new SortingPanel(arr, WIDTH, HEIGHT);
+        System.out.println(pnlSorting);
+        pnlActions = new JPanel();
+        JButton btn1 = new JButton("1");
+        JButton btn2 = new JButton("2");
+        JButton btn3 = new JButton("3");
+        JButton btn4 = new JButton("4");
+        JButton btn5 = new JButton("5");
+        JButton btn6 = new JButton("6");
+        
         main.addWindowListener(wl);
-        setup();
-        setupArray();
-    }
-    
-    public void setup() {
-        //main.setBounds(500, 500, 1000, 500);
-        //main.setVisible(true);
-
-        //pnlMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, pnlSorting, pnlActions);
-        //pnlMain.setDividerLocation(500);
+        main.setBounds(300, 300, 900, 800);
+        main.setLayout(new FlowLayout());
+        main.setVisible(true);
         
-        //pnlMain.setLeftComponent(pnlSorting);
-        //pnlMain.setRightComponent(pnlActions);
-        //pnlMain.setEnabled(false);
+        pnlSorting.setBackground(Color.BLACK);
+        pnlSorting.setLayout(null);
+        pnlSorting.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+       
+        pnlActions.setLayout(new GridLayout(3, 2));
+        pnlActions.setPreferredSize(new Dimension(WIDTH, 200));
         
-        //pnlSorting.setBackground(Color.BLACK);
-        
-        //main.add(pnlMain);
-        //WIDTH = 500;
-        //HEIGHT = 500;
-        //rectX = WIDTH / size;
-        //rectY = HEIGHT / size;
-        //main.setBounds(500, 500, (rectX * size) + 500, (rectY * size) + 45);
-    }
-    
-    public void setupArray() {
-        //for(int i = 0; i < size; i++) {
-        //    arr[i] = i;
-        //}
-        
-        //System.out.println(rectX);
-        //System.out.println(rectY);
-        //int rX = 20, rY = 300;
-        //pnlSorting.add(new Rectangle(rX, rY, rectX, -(rectY * 4)));
-        
-        //for(int i = 1; i <= size; i++) {
-        //    pnlSorting.add(new Rectangle(rX, rY, rectX, -(rectY * i)));
-        //    rX += rectX;
-        //}
-        
+        main.add(pnlSorting);
+        main.add(pnlActions);
+        pnlActions.add(btn1);
+        pnlActions.add(btn2);
+        pnlActions.add(btn3);
+        pnlActions.add(btn4);
+        pnlActions.add(btn5);
+        pnlActions.add(btn6);
     }
 }

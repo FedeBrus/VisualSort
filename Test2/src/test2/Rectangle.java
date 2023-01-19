@@ -8,13 +8,14 @@ public class Rectangle extends JPanel {
     private int value;
     private int width;
     private int height;
+    
     private int x;
     private int y;
-    
     public Rectangle(int value, int width, int height, int x, int y) {
         this.value = value;
         this.width = width;
         this.height = height;
+        
         this.x = x;
         this.y = y;
     }

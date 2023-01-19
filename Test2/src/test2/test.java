@@ -29,7 +29,6 @@ public class test2 {
             value = arr[i];
             pnl.add(new Rectangle(value, WIDTH/size, value*(HEIGHT-TITLEGAP)/size,0, -HEIGHT));
         }
-        frame.pack();
     }
     
     public static void main(String[] args) {

@@ -2,15 +2,19 @@ from tkinter import *
 from tkinter import ttk
 import random as rnd
 from sort import *
+from threading import Thread
 
 def sort_array(alg):
-    match (alg):
-        case 'Bubble sort':
-            bubble_sort(array, draw_array)
-        case 'Insertion sort':
-            insertion_sort(array, draw_array)
-        case 'Selection sort':
-            selection_sort(array, draw_array)
+    def sort():
+        match (alg):
+            case 'Bubble sort':
+                bubble_sort(array, draw_array)
+            case 'Insertion sort':
+                insertion_sort(array, draw_array)
+            case 'Selection sort':
+                selection_sort(array, draw_array)
+
+    Thread(target=sort, daemon=True).start()
 
 #Clears canvas and draws the new array
 def draw_array(array):

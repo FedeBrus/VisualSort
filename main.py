@@ -8,16 +8,20 @@ def sort_array(alg):
     def sort():
         match (alg):
             case 'Bubble sort':
-                bubble_sort(array, draw_array)
+                bubble_sort(array, main)
             case 'Insertion sort':
-                insertion_sort(array, draw_array)
+                insertion_sort(array, main)
             case 'Selection sort':
-                selection_sort(array, draw_array)
+                selection_sort(array, main)
 
     Thread(target=sort, daemon=True).start()
 
+def draw_event(event):
+    draw_array()
+
 #Clears canvas and draws the new array
-def draw_array(array):
+def draw_array():
+    global array
     canvas.delete('all')
     rectX = 1200 / len(array)
     rectY = 600 / (len(array) + 1)
@@ -40,7 +44,7 @@ def generate_array(size):
     global array
     array = [i for i in range(1, size + 1)]
     shuffle_array(array)
-    draw_array(array)
+    draw_array()
 
 #Main window
 main = Tk()
@@ -81,4 +85,5 @@ canvas = Canvas(main, width = 1200, height = 600, bg = 'black')
 canvas.pack()
 
 generate_array(10)
+main.bind("<<draw>>", draw_event)
 main.mainloop()

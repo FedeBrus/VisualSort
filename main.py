@@ -4,16 +4,25 @@ import random as rnd
 from sort import *
 from threading import Thread
 
+stop = [False]
 def sort_array(alg):
+    global stop
+    
+    btn_sort["state"] = "disabled"
+    btn_shuffle["state"] = "disabled"
+    
     def sort():
+        stop[0] = False
         match (alg):
             case 'Bubble sort':
-                bubble_sort(array, main)
+                bubble_sort(array, main, stop)
             case 'Insertion sort':
-                insertion_sort(array, main)
+                insertion_sort(array, main, stop)
             case 'Selection sort':
-                selection_sort(array, main)
-
+                selection_sort(array, main, stop)
+        btn_sort['state'] = "normal"
+        btn_shuffle['state'] = "normal"
+        
     Thread(target=sort, daemon=True).start()
 
 def draw_event(event):
@@ -45,6 +54,10 @@ def generate_array(size):
     array = [i for i in range(1, size + 1)]
     shuffle_array(array)
     draw_array()
+
+def stop_thread():
+    global stop
+    stop[0] = True
 
 #Main window
 main = Tk()
@@ -79,6 +92,9 @@ btn_shuffle.grid(row = 0, column = 2)
 #Generate Button
 btn_sort = Button(options, command = lambda: sort_array(selected_alg.get()), text = 'Sort')
 btn_sort.grid(row = 0, column = 3)
+
+btn_stop = Button(options, command=stop_thread, text="Stop")
+btn_stop.grid(row=0, column=4)
 
 #Sort Canvas
 canvas = Canvas(main, width = 1200, height = 600, bg = 'black')

@@ -20,6 +20,8 @@ def sort_array(alg):
                 insertion_sort(array, main, stop)
             case 'Selection sort':
                 selection_sort(array, main, stop)
+            case 'Merge sort':
+                merge_sort(array, main, stop, 0, len(array) - 1)
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"
         
@@ -74,7 +76,8 @@ options.pack()
 #Algs ComboBox
 selected_alg = StringVar()
 algorithms = ttk.Combobox(options, textvariable = selected_alg)
-algorithms['values'] = ('Bubble sort', 'Insertion sort', 'Selection sort')
+algorithms['values'] = ('Bubble sort', 'Insertion sort', 'Selection sort',
+                        'Merge sort')
 algorithms.current(0)
 algorithms.grid(row = 0, column = 0)
 

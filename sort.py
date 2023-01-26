@@ -1,6 +1,7 @@
 import time
 import random
 
+
 def bubble_sort(array, main, stop):
     n = len(array)
     for i in range(n - 1):
@@ -11,7 +12,8 @@ def bubble_sort(array, main, stop):
                 time.sleep(0.001)
             if stop[0]:
                 return
-    
+
+
 def insertion_sort(array, main, stop):
     n = len(array)
     for i in range(1, n):
@@ -24,22 +26,24 @@ def insertion_sort(array, main, stop):
             if stop[0]:
                 return
 
+
 def selection_sort(array, main, stop):
     n = len(array)
     for i in range(0, n - 1):
         min_idx = i
         for j in range(i + 1, n):
-            if(array[j] < array[min_idx]):
+            if (array[j] < array[min_idx]):
                 min_idx = j
-        
+
         array[i], array[min_idx] = array[min_idx], array[i]
         main.event_generate("<<draw>>")
         time.sleep(0.001)
         if stop[0]:
             return
 
+
 def merge(array, main, stop, inf, ctr, sup):
-    if stop[0]: 
+    if stop[0]:
         return
 
     i, j, k = inf, ctr + 1, 0
@@ -67,7 +71,7 @@ def merge(array, main, stop, inf, ctr, sup):
         array[inf + i] = supp[i]
         main.event_generate("<<draw>>")
         time.sleep(0.001)
-        
+
 
 def merge_sort(array, main, stop, inf, sup):
     if inf < sup:
@@ -76,25 +80,27 @@ def merge_sort(array, main, stop, inf, sup):
         merge_sort(array, main, stop, ctr + 1, sup)
         merge(array, main, stop, inf, ctr, sup)
 
+
 def counting_sort(array, main, stop):
     maxA = (max(array) + 1)
     copia = [0] * maxA
-    
+
     for x in array:
         copia[x] = copia[x] + 1
-        if(stop[0]):
+        if (stop[0]):
             return
 
     j = 0
     for i in range(maxA):
-        while(copia[i] > 0):
+        while (copia[i] > 0):
             array[j] = i
             copia[i] = copia[i] - 1
             j = j + 1
-            
+
         main.event_generate("<<draw>>")
-        if(stop[0]):
+        if (stop[0]):
             return
+
 
 def bogo_sort(array, main, stop):
     while array != sorted(array):
@@ -102,5 +108,81 @@ def bogo_sort(array, main, stop):
         y = random.randint(0, len(array) - 1)
         array[x], array[y] = array[y], array[x]
         main.event_generate("<<draw>>")
-        if(stop[0]):
+        if (stop[0]):
             return
+
+
+def heapify(arr, N, i, stop):
+    if (stop[0]):
+            return
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < N and arr[largest] < arr[l]:
+        largest = l
+
+    if r < N and arr[largest] < arr[r]:
+        largest = r
+        
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]  # swap
+        heapify(arr, N, largest, stop)
+
+
+def heap_sort(array, main, stop):
+
+    N = len(array)
+
+    for i in range(N//2 - 1, -1, -1):
+        heapify(array, N, i, stop)
+        main.event_generate("<<draw>>")
+        if (stop[0]):
+            return
+
+    for i in range(N-1, 0, -1):
+        array[i], array[0] = array[0], array[i]  # swap
+        heapify(array, i, 0, stop)
+        main.event_generate("<<draw>>")
+        if (stop[0]):
+            return
+
+def radix_sort(array, main, stop):
+    max_cifre = max(array)
+    posto = 1
+    while max_cifre // posto > 0:
+        size = len(array)
+        output = [0] * size
+        count = [0] * 10
+
+        for i in range(0, size):
+            index = array[i] // posto
+            count[index % 10] += 1
+
+
+        for i in range(1, 10):
+            count[i] += count[i - 1]
+
+            
+        i = size - 1
+        while i >= 0:
+            index = array[i] // posto
+            output[count[index % 10] - 1] = array[i]
+            count[index % 10] -= 1
+            i -= 1
+            if (stop[0]):
+                return
+
+            
+        for i in range(0, size):
+            array[i] = output[i]
+            main.event_generate("<<draw>>")
+            if (stop[0]):
+                return
+            
+        if (stop[0]):
+            return
+            
+        posto *= 10
+        main.event_generate("<<draw>>")
+        

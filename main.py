@@ -32,6 +32,9 @@ def sort_array(alg):
                 radix_sort(array, main, stop)
             case 'Selection sort':
                 selection_sort(array, main, stop)
+            case 'Quick sort':
+                quick_sort(array, main, stop, 0, len(array) - 1)
+
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"
 
@@ -92,7 +95,7 @@ selected_alg = StringVar()
 algorithms = ttk.Combobox(options, textvariable=selected_alg)
 algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Heap sort',
                         'Insertion sort', 'Merge sort', 'Radix sort',
-                        'Selection sort')
+                        'Selection sort', 'Quick sort')
 algorithms.current(0)
 algorithms.grid(row=0, column=0)
 

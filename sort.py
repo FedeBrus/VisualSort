@@ -1,4 +1,5 @@
 import time
+import random
 
 def bubble_sort(array, main, stop):
     n = len(array)
@@ -91,6 +92,15 @@ def counting_sort(array, main, stop):
             copia[i] = copia[i] - 1
             j = j + 1
             
+        main.event_generate("<<draw>>")
+        if(stop[0]):
+            return
+
+def bogo_sort(array, main, stop):
+    while array != sorted(array):
+        x = random.randint(0, len(array) - 1)
+        y = random.randint(0, len(array) - 1)
+        array[x], array[y] = array[y], array[x]
         main.event_generate("<<draw>>")
         if(stop[0]):
             return

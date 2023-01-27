@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import font
 import random as rnd
 from sort import *
 from threading import Thread
@@ -121,6 +122,21 @@ btn_shuffle.grid(row=0, column=2)
 btn_sort = Button(options, command=lambda: sort_array(
     selected_alg.get()), text='Sort')
 btn_sort.grid(row=0, column=3)
+
+# Slider for sorting speed
+def getSpeed(val):
+    speed = val
+    return None
+    
+minSpeed = 0.5
+maxSpeed = 2
+
+slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed, resolution = 0.5, foreground='#a32929', bg = '#1c1c1c', activebackground = '#801410')
+slider.set(1)
+slider.config(label='Velocità di ordinamento')
+font_style = font.Font(family='Consolas', size=11)
+slider.config(font=font_style)
+slider.grid(row = 0, column = 5)
 
 btn_stop = Button(options, command=stop_thread, text="Stop")
 btn_stop.grid(row=0, column=4)

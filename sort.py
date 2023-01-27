@@ -1,5 +1,6 @@
 import time
 import random
+import math
 
 
 def bubble_sort(array, main, stop):
@@ -239,3 +240,65 @@ def gnome_sort(array, main, stop):
         
         if(stop[0]):
             return
+
+def introinsertion(array, main, stop, inf, sup):
+    n = sup - inf + 1
+    for i in range(1, n):
+        j = i
+        while j > 0 and array[inf + j - 1] > array[inf + j]:
+            array[inf + j - 1], array[inf + j] = array[inf + j], array[inf + j - 1]
+            j -= 1
+            main.event_generate("<<draw>>")
+            time.sleep(0.001)
+            if stop[0]:
+                return
+    return
+
+def introheapify(arr, N, i, stop, inf):
+    if (stop[0]):
+            return
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < N and arr[inf + largest] < arr[inf + l]:
+        largest = l
+
+    if r < N and arr[inf + largest] < arr[inf + r]:
+        largest = r
+        
+    if largest != i:
+        arr[inf + i], arr[inf + largest] = arr[inf + largest], arr[inf + i]  # swap
+        introheapify(arr, N, largest, stop, inf)
+
+def introheap(array, main, stop, inf, sup):
+    N = sup - inf + 1
+
+    for i in range(N//2 - 1, -1, -1):
+        introheapify(array, N, i, stop, inf)
+        main.event_generate("<<draw>>")
+        if (stop[0]):
+            return
+
+    for i in range(N-1, 0, -1):
+        array[inf + i], array[inf] = array[inf], array[inf + i]  # swap
+        introheapify(array, i, 0, stop, inf)
+        main.event_generate("<<draw>>")
+        if (stop[0]):
+            return
+
+def introutil(array, main, stop, maxdepth, inf, sup):
+    n = sup - inf + 1
+    if n < 16:
+        introinsertion(array, main, stop, inf, sup)
+    elif maxdepth == 0:
+        introheap(array, main, stop, inf, sup)
+    else:
+        q = partition(array, main, stop, inf, sup)
+        introutil(array, main, stop, maxdepth - 1, inf, q - 1)
+        introutil(array, main, stop, maxdepth - 1, q + 1, sup)
+
+def intro_sort(array, main, stop):
+    maxdepth = 3
+    #maxdepth = math.floor(math.log2(len(array))) * 2
+    introutil(array, main, stop, maxdepth, 0, len(array) - 1)

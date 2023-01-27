@@ -108,6 +108,7 @@ def counting_sort(array, main, stop):
             j = j + 1
 
         main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
         if (stop[0]):
             return
 
@@ -118,6 +119,7 @@ def bogo_sort(array, main, stop):
         y = random.randint(0, len(array) - 1)
         array[x], array[y] = array[y], array[x]
         main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
         if (stop[0]):
             return
 
@@ -147,6 +149,7 @@ def heap_sort(array, main, stop):
     for i in range(N//2 - 1, -1, -1):
         heapify(array, N, i, stop)
         main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
         if (stop[0]):
             return
 
@@ -154,6 +157,7 @@ def heap_sort(array, main, stop):
         array[i], array[0] = array[0], array[i]  # swap
         heapify(array, i, 0, stop)
         main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
         if (stop[0]):
             return
 
@@ -187,6 +191,7 @@ def radix_sort(array, main, stop):
         for i in range(0, size):
             array[i] = output[i]
             main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
             if (stop[0]):
                 return
             
@@ -195,6 +200,7 @@ def radix_sort(array, main, stop):
             
         posto *= 10
         main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
 
 def partition(array, main, stop, inf, sup):
     # Questo campionamento serve a prende un pivot abbastanza bilanciato, per migliorare l'effetto visivo
@@ -280,6 +286,7 @@ def introheap(array, main, stop, inf, sup):
     for i in range(N//2 - 1, -1, -1):
         introheapify(array, N, i, stop, inf)
         main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
         if (stop[0]):
             return
 
@@ -287,6 +294,7 @@ def introheap(array, main, stop, inf, sup):
         array[inf + i], array[inf] = array[inf], array[inf + i]  # swap
         introheapify(array, i, 0, stop, inf)
         main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
         if (stop[0]):
             return
 

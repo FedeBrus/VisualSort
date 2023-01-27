@@ -59,7 +59,7 @@ def draw_event(event):
 def draw_array():
     global array
     canvas.delete('all')
-    rectX = 1200 / len(array)
+    rectX = 1600 / len(array)
     rectY = 600 / (len(array) + 1)
     rX = 0
     rY = 600
@@ -92,14 +92,26 @@ def stop_thread():
 # Main window
 main = Tk()
 main.title("Visual Sort")
-main.geometry("1200x800")
+main.geometry("1600x800")
 main.resizable(False, False)
 main.protocol("WM_DELETE_WINDOW", )
 
+#Colors
+blk = '#1c1c1c'
+rd = '#a32929'
+
 # Options Frame
-options = Frame(main, width=1200, height=200, bg='black')
+options = Frame(main, width=1600, height=200, bg=blk)
 options.grid_propagate(False)
 options.pack()
+
+# Combobox style
+combostyle = ttk.Style()
+combostyle.theme_create('combostyle', parent='clam', settings = {'TCombobox': {'configure': {
+                                                                                            'fieldbackground': blk,
+                                                                                            'foreground': 'white',
+                                                                                            }}})
+combostyle.theme_use('combostyle')
 
 # Algs ComboBox
 selected_alg = StringVar()
@@ -114,19 +126,23 @@ algorithms.grid(row=0, column=0)
 # Size ComboBox
 selected_size = StringVar()
 sizes = ttk.Combobox(options, textvariable=selected_size)
-sizes['values'] = ('10', '50', '100', '200', '400', '600')
+sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
 sizes.current(0)
 sizes.grid(row=0, column=1)
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
-    int(selected_size.get())), text='Shuffle', bg='black', fg='white')
+    int(selected_size.get())), text='Shuffle', bg=blk, fg='white')
 btn_shuffle.grid(row=0, column=2)
 
 # Generate Button
 btn_sort = Button(options, command=lambda: sort_array(
-    selected_alg.get()), text='Sort', bg='black', fg='white')
+    selected_alg.get()), text='Sort', bg=blk, fg='white')
 btn_sort.grid(row=0, column=3)
+
+# Stop Button
+btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg='white')
+btn_stop.grid(row=0, column=4)
 
 # Slider for sorting speed
 def getSpeed(val):
@@ -136,18 +152,16 @@ def getSpeed(val):
 minSpeed = 0.001
 maxSpeed = 1
 
-slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed, resolution = 0.001, foreground='#a32929', bg = '#1c1c1c', activebackground = '#801410')
+slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed,
+                 resolution=0.001, foreground='white', bg=blk, activebackground='#801410')
 slider.set(0.001)
 slider.config(label='Velocità')
 font_style = font.Font(family='Consolas', size=12)
 slider.config(font=font_style)
 slider.grid(row = 0, column = 5)
 
-btn_stop = Button(options, command=stop_thread, text="Stop", bg='black', fg='white')
-btn_stop.grid(row=0, column=4)
-
 # Sort Canvas
-canvas = Canvas(main, width=1200, height=600, bg='black')
+canvas = Canvas(main, width=1600, height=600, bg=blk)
 canvas.pack()
 
 generate_array(10)

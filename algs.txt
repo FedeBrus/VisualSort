@@ -20,7 +20,7 @@ tournament
 cocktailshaker
 comb
 gnome               x
-oddeven             
+oddeven             x
 pigeonhole
 bucket
 counting            x

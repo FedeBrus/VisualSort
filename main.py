@@ -22,22 +22,24 @@ def sort_array(alg):
                 bogo_sort(array, main, stop)
             case 'Counting sort':
                 counting_sort(array, main, stop)
+            case 'Gnome sort':
+                gnome_sort(array, main, stop)
             case 'Heap sort':
                 heap_sort(array, main, stop)
             case 'Insertion sort':
                 insertion_sort(array, main, stop)
+            case 'Intro sort':
+                intro_sort(array, main, stop)
             case 'Merge sort':
                 merge_sort(array, main, stop, 0, len(array) - 1)
             case 'Radix sort':
                 radix_sort(array, main, stop)
             case 'Selection sort':
                 selection_sort(array, main, stop)
+            case 'Sleep sort':
+                sleep_sort(array, main, stop)
             case 'Quick sort':
                 quick_sort(array, main, stop, 0, len(array) - 1)
-            case 'Gnome sort':
-                gnome_sort(array, main, stop)
-            case 'Intro sort':
-                intro_sort(array, main, stop)
 
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"
@@ -97,9 +99,9 @@ options.pack()
 # Algs ComboBox
 selected_alg = StringVar()
 algorithms = ttk.Combobox(options, textvariable=selected_alg)
-algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Heap sort',
-                        'Insertion sort', 'Merge sort', 'Radix sort',
-                        'Selection sort', 'Quick sort', 'Gnome sort', 'Intro sort')
+algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Gnome sort',
+                        'Heap sort', 'Insertion sort', 'Intro sort','Merge sort', 
+                        'Radix sort', 'Selection sort', 'Sleep sort','Quick sort', )
 algorithms.current(0)
 algorithms.grid(row=0, column=0)
 

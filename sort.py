@@ -1,5 +1,6 @@
 import time
 import random
+import threading
 import math
 
 
@@ -302,3 +303,25 @@ def intro_sort(array, main, stop):
     maxdepth = 3
     #maxdepth = math.floor(math.log2(len(array))) * 2
     introutil(array, main, stop, maxdepth, 0, len(array) - 1)
+
+def sleep_sort(array: list, main, stop):
+    copia = array.copy()
+    array.clear()
+    
+    e = threading.Event()
+
+    def s_sort(val):
+        e.wait(0.1 * val)
+        array.append(val)
+        main.event_generate("<<draw>>")
+
+    for x in copia:
+        threading.Thread(target=s_sort, args=[x]).start()
+    
+    copia = sorted(copia)
+    uscita = False
+    while array != copia and uscita == False:
+        if stop[0]:
+            e.set()
+            uscita = True
+        time.sleep(0.5)

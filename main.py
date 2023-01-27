@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import font
 import random as rnd
-from sort import *
+import sorts
 from threading import Thread
 
 stop = [False]
@@ -18,31 +18,31 @@ def sort_array(alg):
         stop[0] = False
         match (alg):
             case 'Bubble sort':
-                bubble_sort(array, main, stop)
+                sorts.bubble.bubble_sort(array, main, stop)
             case 'Bogo sort':
-                bogo_sort(array, main, stop)
+                sorts.bogo.bogo_sort(array, main, stop)
             case 'Counting sort':
-                counting_sort(array, main, stop)
+                sorts.counting.counting_sort(array, main, stop)
             case 'Gnome sort':
-                gnome_sort(array, main, stop)
+                sorts.gnome.gnome_sort(array, main, stop)
             case 'Heap sort':
-                heap_sort(array, main, stop)
+                sorts.heap.heap_sort(array, main, stop)
             case 'Insertion sort':
-                insertion_sort(array, main, stop)
+                sorts.insertion.insertion_sort(array, main, stop)
             case 'Intro sort':
-                intro_sort(array, main, stop)
+                sorts.intro.intro_sort(array, main, stop)
             case 'Merge sort':
-                merge_sort(array, main, stop, 0, len(array) - 1)
+                sorts.merge.merge_sort(array, main, stop, 0, len(array) - 1)
             case 'Radix sort':
-                radix_sort(array, main, stop)
+                sorts.radix.radix_sort(array, main, stop)
             case 'Selection sort':
-                selection_sort(array, main, stop)
+                sorts.selection.selection_sort(array, main, stop)
             case 'Shell sort':
-                shell_sort(array, main, stop)
+                sorts.shell.shell_sort(array, main, stop)
             case 'Sleep sort':
-                sleep_sort(array, main, stop)
+                sorts.sleep.sleep_sort(array, main, stop)
             case 'Quick sort':
-                quick_sort(array, main, stop, 0, len(array) - 1)
+                sorts.quick.quick_sort(array, main, stop, 0, len(array) - 1)
 
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"

@@ -12,7 +12,7 @@ def bubble_sort(array, main, stop):
         for j in range(n - i - 1):
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
-                time.sleep(float(velocity[0]))
+                time.sleep(velocity[0])
                 main.event_generate("<<draw>>")
             if stop[0]:
                 return

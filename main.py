@@ -129,7 +129,7 @@ btn_sort.grid(row=0, column=3)
 # Slider for sorting speed
 def getSpeed(val):
     from sort import velocity
-    velocity[0] = val
+    velocity[0] = float(val)
     
 minSpeed = 0.001
 maxSpeed = 1

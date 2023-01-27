@@ -290,7 +290,8 @@ def introheap(array, main, stop, inf, sup):
 
 def introutil(array, main, stop, maxdepth, inf, sup):
     n = sup - inf + 1
-    if n < 16:
+    #if n < 16:
+    if n < 64:
         introinsertion(array, main, stop, inf, sup)
     elif maxdepth == 0:
         introheap(array, main, stop, inf, sup)
@@ -325,3 +326,21 @@ def sleep_sort(array: list, main, stop):
             e.set()
             uscita = True
         time.sleep(0.5)
+
+def shell_sort(array, main, stop):
+    n = len(array)
+    gaps = [701, 301, 132, 57, 23, 10, 4, 1]
+    for gap in gaps:
+        for i in range(gap, n):
+            tmp = array[i]
+            j = i
+            while j >= gap and array[j - gap] > tmp:
+                array[j] = array[j - gap]
+                j -= gap
+                main.event_generate("<<draw>>")
+                time.sleep(0.001)
+                if stop[0]:
+                    return
+            array[j] = tmp
+            main.event_generate("<<draw>>")
+            time.sleep(0.001)

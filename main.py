@@ -2,19 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import font
 import random as rnd
-import sorts.bubble
-import sorts.bogo
-import sorts.counting
-import sorts.gnome
-import sorts.heap
-import sorts.insertion
-import sorts.intro
-import sorts.merge
-import sorts.radix
-import sorts.selection
-import sorts.shell
-import sorts.quick
-import sorts.sleep
+from sort import *
 from threading import Thread
 
 stop = [False]
@@ -30,31 +18,31 @@ def sort_array(alg):
         stop[0] = False
         match (alg):
             case 'Bubble sort':
-                sorts.bubble.bubble_sort(array, main, stop)
+                bubble_sort(array, main, stop)
             case 'Bogo sort':
-                sorts.bogo.bogo_sort(array, main, stop)
+                bogo_sort(array, main, stop)
             case 'Counting sort':
-                sorts.counting.counting_sort(array, main, stop)
+                counting_sort(array, main, stop)
             case 'Gnome sort':
-                sorts.gnome.gnome_sort(array, main, stop)
+                gnome_sort(array, main, stop)
             case 'Heap sort':
-                sorts.heap.heap_sort(array, main, stop)
+                heap_sort(array, main, stop)
             case 'Insertion sort':
-                sorts.insertion.insertion_sort(array, main, stop)
+                insertion_sort(array, main, stop)
             case 'Intro sort':
-                sorts.intro.intro_sort(array, main, stop)
+                intro_sort(array, main, stop)
             case 'Merge sort':
-                sorts.merge.merge_sort(array, main, stop, 0, len(array) - 1)
+                merge_sort(array, main, stop, 0, len(array) - 1)
             case 'Radix sort':
-                sorts.radix.radix_sort(array, main, stop)
+                radix_sort(array, main, stop)
             case 'Selection sort':
-                sorts.selection.selection_sort(array, main, stop)
+                selection_sort(array, main, stop)
             case 'Shell sort':
-                sorts.shell.shell_sort(array, main, stop)
+                shell_sort(array, main, stop)
             case 'Sleep sort':
-                sorts.sleep.sleep_sort(array, main, stop)
+                sleep_sort(array, main, stop)
             case 'Quick sort':
-                sorts.quick.quick_sort(array, main, stop, 0, len(array) - 1)
+                quick_sort(array, main, stop, 0, len(array) - 1)
 
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"
@@ -107,7 +95,7 @@ main.resizable(False, False)
 main.protocol("WM_DELETE_WINDOW", )
 
 # Options Frame
-options = Frame(main, width=1200, height=200, bg='gray')
+options = Frame(main, width=1200, height=200, bg='black')
 options.grid_propagate(False)
 options.pack()
 
@@ -130,30 +118,30 @@ sizes.grid(row=0, column=1)
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
-    int(selected_size.get())), text='Shuffle')
+    int(selected_size.get())), text='Shuffle', bg='black', fg='white')
 btn_shuffle.grid(row=0, column=2)
 
 # Generate Button
 btn_sort = Button(options, command=lambda: sort_array(
-    selected_alg.get()), text='Sort')
+    selected_alg.get()), text='Sort', bg='black', fg='white')
 btn_sort.grid(row=0, column=3)
 
 # Slider for sorting speed
 def getSpeed(val):
-    speed = val
-    return None
+    from sort import velocity
+    velocity[0] = val
     
-minSpeed = 0.5
-maxSpeed = 2
+minSpeed = 0.001
+maxSpeed = 1
 
-slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed, resolution = 0.5, foreground='#a32929', bg = '#1c1c1c', activebackground = '#801410')
-slider.set(1)
-slider.config(label='Velocità di ordinamento')
-font_style = font.Font(family='Consolas', size=11)
+slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed, resolution = 0.001, foreground='#a32929', bg = '#1c1c1c', activebackground = '#801410')
+slider.set(0.001)
+slider.config(label='Velocità')
+font_style = font.Font(family='Consolas', size=12)
 slider.config(font=font_style)
 slider.grid(row = 0, column = 5)
 
-btn_stop = Button(options, command=stop_thread, text="Stop")
+btn_stop = Button(options, command=stop_thread, text="Stop", bg='black', fg='white')
 btn_stop.grid(row=0, column=4)
 
 # Sort Canvas

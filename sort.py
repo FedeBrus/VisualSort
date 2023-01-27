@@ -4,17 +4,16 @@ import threading
 import math
 
 global velocity
-velocity = [1]
+velocity = [0.001]
 
 def bubble_sort(array, main, stop):
     n = len(array)
     for i in range(n - 1):
         for j in range(n - i - 1):
-            print(velocity[0])
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
+                time.sleep(float(velocity[0]))
                 main.event_generate("<<draw>>")
-                time.sleep(velocity[0])
             if stop[0]:
                 return
 

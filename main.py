@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import font
 import random as rnd
 from sort import *
 from threading import Thread
@@ -22,22 +23,16 @@ def sort_array(alg):
                 bogo_sort(array, main, stop)
             case 'Counting sort':
                 counting_sort(array, main, stop)
-            case 'Gnome sort':
-                gnome_sort(array, main, stop)
             case 'Heap sort':
                 heap_sort(array, main, stop)
             case 'Insertion sort':
                 insertion_sort(array, main, stop)
-            case 'Intro sort':
-                intro_sort(array, main, stop)
             case 'Merge sort':
                 merge_sort(array, main, stop, 0, len(array) - 1)
             case 'Radix sort':
                 radix_sort(array, main, stop)
             case 'Selection sort':
                 selection_sort(array, main, stop)
-            case 'Sleep sort':
-                sleep_sort(array, main, stop)
             case 'Quick sort':
                 quick_sort(array, main, stop, 0, len(array) - 1)
 
@@ -99,9 +94,9 @@ options.pack()
 # Algs ComboBox
 selected_alg = StringVar()
 algorithms = ttk.Combobox(options, textvariable=selected_alg)
-algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Gnome sort',
-                        'Heap sort', 'Insertion sort', 'Intro sort','Merge sort', 
-                        'Radix sort', 'Selection sort', 'Sleep sort','Quick sort', )
+algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Heap sort',
+                        'Insertion sort', 'Merge sort', 'Radix sort',
+                        'Selection sort', 'Quick sort')
 algorithms.current(0)
 algorithms.grid(row=0, column=0)
 
@@ -124,6 +119,21 @@ btn_sort.grid(row=0, column=3)
 
 btn_stop = Button(options, command=stop_thread, text="Stop")
 btn_stop.grid(row=0, column=4)
+
+# Slider for sorting speed
+def getSpeed(val):
+    speed = val
+    return None
+    
+minSpeed = 0.5
+maxSpeed = 2
+
+slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed, resolution = 0.5, foreground='#a32929', bg = '#1c1c1c', activebackground = '#801410')
+slider.set(1)
+slider.config(label='Velocità di ordinamento')
+font_style = font.Font(family='Consolas', size=11)
+slider.config(font=font_style)
+slider.grid(row = 0, column = 5)
 
 # Sort Canvas
 canvas = Canvas(main, width=1200, height=600, bg='black')

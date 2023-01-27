@@ -33,6 +33,8 @@ def sort_array(alg):
                 intro_sort(array, main, stop)
             case 'Merge sort':
                 merge_sort(array, main, stop, 0, len(array) - 1)
+            case 'Odd-Even sort':
+                oddeven_sort(array, main, stop)
             case 'Radix sort':
                 radix_sort(array, main, stop)
             case 'Selection sort':
@@ -104,8 +106,8 @@ selected_alg = StringVar()
 algorithms = ttk.Combobox(options, textvariable=selected_alg)
 algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Gnome sort',
                         'Heap sort', 'Insertion sort', 'Intro sort', 'Merge sort', 
-                        'Radix sort', 'Selection sort', 'Shell sort', 'Sleep sort',
-                        'Quick sort')
+                        'Odd-Even sort', 'Radix sort', 'Selection sort', 'Shell sort',
+                        'Sleep sort', 'Quick sort')
 algorithms.current(0)
 algorithms.grid(row=0, column=0)
 

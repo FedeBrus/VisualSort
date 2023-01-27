@@ -346,3 +346,25 @@ def shell_sort(array, main, stop):
             array[j] = tmp
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
+
+def oddeven_sort(array, main, stop):
+    n = len(array)
+    sorted = False
+    while not sorted:
+        sorted = True
+        for i in range(1, n - 1, 2):
+            if array[i] > array[i + 1]:
+                array[i], array[i + 1] = array[i + 1], array[i]
+                main.event_generate("<<draw>>")
+                time.sleep(velocity[0])
+                sorted = False
+                if stop[0]:
+                    return
+        for i in range(0, n - 1, 2):
+            if array[i] > array[i + 1]:
+                array[i], array[i + 1] = array[i + 1], array[i]
+                main.event_generate("<<draw>>")
+                time.sleep(velocity[0])
+                sorted = False
+                if stop[0]:
+                    return

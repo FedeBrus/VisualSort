@@ -1,0 +1,45 @@
+quick               x
+merge               x
+intro               x
+heap                x
+insertion           x
+block               
+tim
+selection           x
+cube
+shell               x
+bubble              x
+exchange
+tree
+cycle
+library
+patience
+smooth
+strand
+tournament
+cocktailshaker
+comb
+gnome               x
+oddeven             
+pigeonhole
+bucket
+counting            x
+lsdradix10          x
+msdradix10
+lsdradix2
+msdradix2
+spread
+burst
+flash
+postman
+uni
+bead
+pancake
+ICBICS
+spaghetti
+sortingnetwork
+bitonic
+bogo                x
+stooge
+slow
+

@@ -2,7 +2,19 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import font
 import random as rnd
-import sorts
+import sorts.bubble
+import sorts.bogo
+import sorts.counting
+import sorts.gnome
+import sorts.heap
+import sorts.insertion
+import sorts.intro
+import sorts.merge
+import sorts.radix
+import sorts.selection
+import sorts.shell
+import sorts.quick
+import sorts.sleep
 from threading import Thread
 
 stop = [False]

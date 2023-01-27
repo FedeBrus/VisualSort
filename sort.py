@@ -14,7 +14,7 @@ def bubble_sort(array, main, stop):
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
                 main.event_generate("<<draw>>")
-                time.sleep(0.001)
+                time.sleep(velocity[0])
             if stop[0]:
                 return
 
@@ -27,7 +27,7 @@ def insertion_sort(array, main, stop):
             array[j - 1], array[j] = array[j], array[j - 1]
             j -= 1
             main.event_generate("<<draw>>")
-            time.sleep(0.001)
+            time.sleep(velocity[0])
             if stop[0]:
                 return
 
@@ -42,7 +42,7 @@ def selection_sort(array, main, stop):
 
         array[i], array[min_idx] = array[min_idx], array[i]
         main.event_generate("<<draw>>")
-        time.sleep(0.001)
+        time.sleep(velocity[0])
         if stop[0]:
             return
 
@@ -81,7 +81,7 @@ def merge(array, main, stop, inf, ctr, sup):
     for i in range(sup - inf + 1):
         array[inf + i] = supp[i]
         main.event_generate("<<draw>>")
-        time.sleep(0.001)
+        time.sleep(velocity[0])
 
 
 def merge_sort(array, main, stop, inf, sup):
@@ -212,13 +212,13 @@ def partition(array, main, stop, inf, sup):
             i += 1
             array[i], array[j] = array[j], array[i]
             main.event_generate("<<draw>>")
-            time.sleep(0.001)
+            time.sleep(velocity[0])
         if (stop[0]):
             return i + 1
 
     array[i + 1], array[sup] = array[sup], array[i + 1]
     main.event_generate("<<draw>>")
-    time.sleep(0.001)
+    time.sleep(velocity[0])
     return i + 1
     
 def quick_sort(array, main, stop, inf, sup):
@@ -240,7 +240,7 @@ def gnome_sort(array, main, stop):
             array[pos], array[pos - 1] = array[pos - 1], array[pos]
             pos -= 1
             main.event_generate("<<draw>>")
-            time.sleep(0.001)
+            time.sleep(velocity[0])
         
         if(stop[0]):
             return
@@ -253,7 +253,7 @@ def introinsertion(array, main, stop, inf, sup):
             array[inf + j - 1], array[inf + j] = array[inf + j], array[inf + j - 1]
             j -= 1
             main.event_generate("<<draw>>")
-            time.sleep(0.001)
+            time.sleep(velocity[0])
             if stop[0]:
                 return
     return
@@ -341,9 +341,9 @@ def shell_sort(array, main, stop):
                 array[j] = array[j - gap]
                 j -= gap
                 main.event_generate("<<draw>>")
-                time.sleep(0.001)
+                time.sleep(velocity[0])
                 if stop[0]:
                     return
             array[j] = tmp
             main.event_generate("<<draw>>")
-            time.sleep(0.001)
+            time.sleep(velocity[0])

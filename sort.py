@@ -241,6 +241,8 @@ def gnome_sort(array, main, stop):
     while(pos < n):
         if(pos == 0 or array[pos] >= array[pos - 1]):
             pos += 1
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
         else:
             array[pos], array[pos - 1] = array[pos - 1], array[pos]
             pos -= 1

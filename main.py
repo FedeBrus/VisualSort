@@ -96,9 +96,12 @@ main.geometry("1600x800")
 main.resizable(False, False)
 main.protocol("WM_DELETE_WINDOW", )
 
-#Colors
+# Colors
 blk = '#1c1c1c'
 rd = '#a32929'
+
+# Font
+font_style = font.Font(family='Consolas', size=12)
 
 # Options Frame
 options = Frame(main, width=1600, height=200, bg=blk)
@@ -115,7 +118,7 @@ combostyle.theme_use('combostyle')
 
 # Algs ComboBox
 selected_alg = StringVar()
-algorithms = ttk.Combobox(options, textvariable=selected_alg)
+algorithms = ttk.Combobox(options, textvariable=selected_alg, font=font_style, state='readonly')
 algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Gnome sort',
                         'Heap sort', 'Insertion sort', 'Intro sort', 'Merge sort', 
                         'Odd-Even sort', 'Radix sort', 'Selection sort', 'Shell sort',
@@ -125,23 +128,23 @@ algorithms.place(x=100, y=50, width=240, height=50)
 
 # Size ComboBox
 selected_size = StringVar()
-sizes = ttk.Combobox(options, textvariable=selected_size)
+sizes = ttk.Combobox(options, textvariable=selected_size, font=font_style, state='readonly')
 sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
 sizes.current(0)
 sizes.place(x=100, y=100, width=240, height=50)
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
-    int(selected_size.get())), text='Shuffle', bg=blk, fg='white')
+    int(selected_size.get())), text='Shuffle', bg=blk, fg='white', font=font_style)
 btn_shuffle.place(x=440, y=50, width=240, height=100)
 
 # Generate Button
 btn_sort = Button(options, command=lambda: sort_array(
-    selected_alg.get()), text='Sort', bg=blk, fg='white')
+    selected_alg.get()), text='Sort', bg=blk, fg='white', font=font_style)
 btn_sort.place(x=680, y=50, width=240, height=100)
 
 # Stop Button
-btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg='white')
+btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg='white', font=font_style)
 btn_stop.place(x=920, y=50, width=240, height=100)
 
 # Slider for sorting speed
@@ -155,9 +158,7 @@ maxSpeed = 1
 slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed,
                  resolution=0.001, foreground='white', bg=blk, activebackground='#801410')
 slider.set(0.001)
-slider.config(label='Velocità')
-font_style = font.Font(family='Consolas', size=12)
-slider.config(font=font_style)
+slider.config(label='Velocità', font=font_style)
 slider.place(x=1260, y=50, width=240, height=100)
 
 # Sort Canvas

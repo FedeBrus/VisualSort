@@ -10,7 +10,7 @@ cube
 shell               x
 bubble              x
 exchange
-tree
+tree                x
 cycle
 library
 patience

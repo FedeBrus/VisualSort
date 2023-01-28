@@ -161,24 +161,22 @@ def heap_sort(array, main, stop):
         if (stop[0]):
             return
 
-def radix_sort(array, main, stop):
+def radix10LSD_sort(array, main, stop):
+    n = len(array)
     max_cifre = max(array)
     posto = 1
     while max_cifre // posto > 0:
-        size = len(array)
-        output = [0] * size
+        output = [0] * n
         count = [0] * 10
 
-        for i in range(0, size):
+        for i in range(0, n):
             index = array[i] // posto
             count[index % 10] += 1
 
-
         for i in range(1, 10):
             count[i] += count[i - 1]
-
             
-        i = size - 1
+        i = n - 1
         while i >= 0:
             index = array[i] // posto
             output[count[index % 10] - 1] = array[i]
@@ -187,8 +185,7 @@ def radix_sort(array, main, stop):
             if (stop[0]):
                 return
 
-            
-        for i in range(0, size):
+        for i in range(0, n):
             array[i] = output[i]
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
@@ -199,6 +196,45 @@ def radix_sort(array, main, stop):
             return
             
         posto *= 10
+
+        main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
+
+def radix2LSD_sort(array, main, stop):
+    n = len(array)
+    max_cifre = max(array)
+    posto = 1
+    while max_cifre // posto > 0:
+        output = [0] * n
+        count = [0] * 2
+
+        for i in range(0, n):
+            index = array[i] // posto
+            count[index % 2] += 1
+
+        for i in range(1, 2):
+            count[i] += count[i - 1]
+            
+        i = n - 1
+        while i >= 0:
+            index = array[i] // posto
+            output[count[index % 2] - 1] = array[i]
+            count[index % 2] -= 1
+            i -= 1
+            if (stop[0]):
+                return
+
+        for i in range(0, n):
+            array[i] = output[i]
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
+            if (stop[0]):
+                return
+            
+        if (stop[0]):
+            return
+            
+        posto *= 2
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
 

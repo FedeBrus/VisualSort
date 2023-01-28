@@ -109,7 +109,7 @@ options.pack()
 combostyle = ttk.Style()
 combostyle.theme_create('combostyle', parent='clam', settings = {'TCombobox': {'configure': {
                                                                                             'fieldbackground': blk,
-                                                                                            'foreground': 'white',
+                                                                                            'foreground': 'white'
                                                                                             }}})
 combostyle.theme_use('combostyle')
 
@@ -121,28 +121,28 @@ algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Counting sort', 'Gnome sort
                         'Odd-Even sort', 'Radix sort', 'Selection sort', 'Shell sort',
                         'Sleep sort', 'Quick sort')
 algorithms.current(0)
-algorithms.grid(row=0, column=0)
+algorithms.place(x=100, y=50, width=240, height=50)
 
 # Size ComboBox
 selected_size = StringVar()
 sizes = ttk.Combobox(options, textvariable=selected_size)
 sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
 sizes.current(0)
-sizes.grid(row=0, column=1)
+sizes.place(x=100, y=100, width=240, height=50)
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
     int(selected_size.get())), text='Shuffle', bg=blk, fg='white')
-btn_shuffle.grid(row=0, column=2)
+btn_shuffle.place(x=440, y=50, width=240, height=100)
 
 # Generate Button
 btn_sort = Button(options, command=lambda: sort_array(
     selected_alg.get()), text='Sort', bg=blk, fg='white')
-btn_sort.grid(row=0, column=3)
+btn_sort.place(x=680, y=50, width=240, height=100)
 
 # Stop Button
 btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg='white')
-btn_stop.grid(row=0, column=4)
+btn_stop.place(x=920, y=50, width=240, height=100)
 
 # Slider for sorting speed
 def getSpeed(val):
@@ -158,7 +158,7 @@ slider.set(0.001)
 slider.config(label='Velocità')
 font_style = font.Font(family='Consolas', size=12)
 slider.config(font=font_style)
-slider.grid(row = 0, column = 5)
+slider.place(x=1260, y=50, width=240, height=100)
 
 # Sort Canvas
 canvas = Canvas(main, width=1600, height=600, bg=blk)

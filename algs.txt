@@ -17,8 +17,8 @@ patience
 smooth
 strand
 tournament
-cocktailshaker
-comb
+cocktailshaker      x
+comb                x
 gnome               x
 oddeven             x
 pigeonhole

@@ -430,3 +430,22 @@ def cocktailshaker_sort(array, main, stop):
                         return
                     sorted = False
             i += 1
+
+def comb_sort(array, main, stop):
+    n = len(array)
+    shrink = 1.33
+    gap = n
+    sorted = False
+    while not sorted:
+        sorted = True
+        gap = math.floor(gap / shrink)
+        if gap < 1:
+            gap = 1
+        for i in range(0, n - gap):
+            if array[i] > array[i + gap]:
+                array[i], array[i + gap] = array[i + gap], array[i]
+                main.event_generate("<<draw>>")
+                time.sleep(velocity[0])
+                if(stop[0]):
+                    return
+                sorted = False

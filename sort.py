@@ -451,3 +451,49 @@ def comb_sort(array, main, stop):
                 if(stop[0]):
                     return
                 sorted = False
+
+class BST:
+    def __init__(self):
+        self.value = None
+        self.left = None
+        self.right = None
+
+    def insert(self, val):
+        if self.value == None:
+            self.value = val
+        else:
+            if val < self.value:
+                if self.left == None:
+                    self.left = BST()
+                self.left.insert(val)
+            else:
+                if self.right == None:
+                    self.right = BST()
+                self.right.insert(val)
+
+    def ascending(self, array, main, stop, pos):
+        if self.value != None:
+            if self.left == None:
+                self.left = BST()
+            self.left.ascending(array, main, stop, pos)
+            
+            array[pos[0]] = self.value
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
+            if(stop[0]):
+                return
+            pos[0] += 1
+            
+            if self.right == None:
+                self.right = BST()
+            self.right.ascending(array, main, stop, pos)
+
+def tree_sort(array, main, stop):
+    tree = BST()
+    n = len(array)
+    for i in range(0, n):
+        tree.insert(array[i])
+
+    pos = [0]
+    tree.ascending(array, main, stop, pos)
+    

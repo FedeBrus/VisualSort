@@ -49,6 +49,8 @@ def sort_array(alg):
                 shell_sort(array, main, stop)
             case 'Sleep sort':
                 sleep_sort(array, main, stop)
+            case 'Tree sort':
+                tree_sort(array, main, stop)
             case 'Quick sort':
                 quick_sort(array, main, stop, 0, len(array) - 1)
 
@@ -117,6 +119,7 @@ options.pack()
 # Combobox style
 combostyle = ttk.Style()
 combostyle.theme_create('combostyle', parent='clam', settings = {'TCombobox': {'configure': {
+                                                                                            'selectbackground': blk,
                                                                                             'fieldbackground': blk,
                                                                                             'foreground': 'white'
                                                                                             }}})
@@ -128,7 +131,7 @@ algorithms = ttk.Combobox(options, textvariable=selected_alg, font=font_style, s
 algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Cocktail Shaker sort',
                         'Comb sort', 'Counting sort', 'Gnome sort', 'Heap sort', 'Insertion sort',
                         'Intro sort', 'Merge sort', 'Odd-Even sort', 'Radix sort',
-                        'Selection sort', 'Shell sort', 'Sleep sort', 'Quick sort')
+                        'Selection sort', 'Shell sort', 'Sleep sort', 'Tree sort', 'Quick sort')
 algorithms.current(0)
 algorithms.place(x=100, y=50, width=240, height=50)
 
@@ -136,7 +139,7 @@ algorithms.place(x=100, y=50, width=240, height=50)
 selected_size = StringVar()
 sizes = ttk.Combobox(options, textvariable=selected_size, font=font_style, state='readonly')
 sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
-sizes.current(0)
+sizes.current(3)
 sizes.place(x=100, y=100, width=240, height=50)
 
 # Generate Button
@@ -171,6 +174,6 @@ slider.place(x=1260, y=50, width=240, height=100)
 canvas = Canvas(main, width=1600, height=600, bg=blk)
 canvas.pack()
 
-generate_array(10)
+generate_array(100)
 main.bind("<<draw>>", draw_event)
 main.mainloop()

@@ -8,14 +8,19 @@ velocity = [0.001]
 
 def bubble_sort(array, main, stop):
     n = len(array)
-    for i in range(n - 1):
+    sorted = False
+    i = 0
+    while not sorted and i < n:
+        sorted = True
         for j in range(n - i - 1):
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
+                sorted = False
                 time.sleep(velocity[0])
                 main.event_generate("<<draw>>")
             if stop[0]:
                 return
+        i += 1
 
 
 def insertion_sort(array, main, stop):

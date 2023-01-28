@@ -9,7 +9,6 @@ selection           x
 cube
 shell               x
 bubble              x
-exchange
 tree                x
 cycle
 library
@@ -26,7 +25,7 @@ bucket              x
 counting            x
 lsdradix10          x
 msdradix10
-lsdradix2
+lsdradix2           x
 msdradix2
 spread
 burst

@@ -22,7 +22,7 @@ comb
 gnome               x
 oddeven             x
 pigeonhole
-bucket
+bucket              x
 counting            x
 lsdradix10          x
 msdradix10

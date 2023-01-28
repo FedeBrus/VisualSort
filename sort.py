@@ -301,7 +301,7 @@ def introheap(array, main, stop, inf, sup):
 def introutil(array, main, stop, maxdepth, inf, sup):
     n = sup - inf + 1
     #if n < 16:
-    if n < 64:
+    if n < 32:
         introinsertion(array, main, stop, inf, sup)
     elif maxdepth == 0:
         introheap(array, main, stop, inf, sup)
@@ -311,7 +311,7 @@ def introutil(array, main, stop, maxdepth, inf, sup):
         introutil(array, main, stop, maxdepth - 1, q + 1, sup)
 
 def intro_sort(array, main, stop):
-    maxdepth = 3
+    maxdepth = 4
     #maxdepth = math.floor(math.log2(len(array))) * 2
     introutil(array, main, stop, maxdepth, 0, len(array) - 1)
 
@@ -376,3 +376,27 @@ def oddeven_sort(array, main, stop):
                 sorted = False
                 if stop[0]:
                     return
+
+def bucket_sort(array, main, stop):
+    n = len(array)
+    m = max(array) + 1
+    k = n // 20 if n >= 20 else 1
+    buckets = [[] for i in range(0, k)]
+    
+    for i in range(0, n):
+        buckets[math.floor(k * array[i] / m)].append(array[i])
+    
+    idx = 0
+    for i in range(0, k):
+        for j in range(0, len(buckets[i])):
+            array[idx] = buckets[i][j]
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
+            if(stop[0]):
+                return
+            idx += 1
+
+    idx = 0
+    for i in range(0, k):
+        introinsertion(array, main, stop, idx, idx + len(buckets[i]) - 1)
+        idx += len(buckets[i])

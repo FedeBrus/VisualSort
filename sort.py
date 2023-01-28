@@ -400,3 +400,33 @@ def bucket_sort(array, main, stop):
     for i in range(0, k):
         introinsertion(array, main, stop, idx, idx + len(buckets[i]) - 1)
         idx += len(buckets[i])
+
+def cocktailshaker_sort(array, main, stop):
+    n = len(array)
+    i = 0
+    j = n - 1
+    sorted = False
+    while not sorted:
+        sorted = True
+        for idx in range(i, j):
+            if(array[idx] > array[idx + 1]):
+                array[idx], array[idx + 1] = array[idx + 1], array[idx]
+                main.event_generate("<<draw>>")
+                time.sleep(velocity[0])
+                if(stop[0]):
+                    return
+                sorted = False
+
+        j -= 1
+        if sorted:
+            return
+        else:
+            for idx in range(j, i - 1, -1):
+                if(array[idx] > array[idx + 1]):
+                    array[idx], array[idx + 1] = array[idx + 1], array[idx]
+                    main.event_generate("<<draw>>")
+                    time.sleep(velocity[0])
+                    if(stop[0]):
+                        return
+                    sorted = False
+            i += 1

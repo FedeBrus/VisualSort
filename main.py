@@ -23,6 +23,8 @@ def sort_array(alg):
                 bogo_sort(array, main, stop)
             case 'Bucket sort':
                 bucket_sort(array, main, stop)
+            case 'Cocktail Shaker sort':
+                cocktailshaker_sort(array, main, stop)
             case 'Counting sort':
                 counting_sort(array, main, stop)
             case 'Gnome sort':
@@ -121,10 +123,10 @@ combostyle.theme_use('combostyle')
 # Algs ComboBox
 selected_alg = StringVar()
 algorithms = ttk.Combobox(options, textvariable=selected_alg, font=font_style, state='readonly')
-algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Counting sort', 'Gnome sort',
-                        'Heap sort', 'Insertion sort', 'Intro sort', 'Merge sort', 
-                        'Odd-Even sort', 'Radix sort', 'Selection sort', 'Shell sort',
-                        'Sleep sort', 'Quick sort')
+algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Cocktail Shaker sort',
+                        'Counting sort', 'Gnome sort', 'Heap sort', 'Insertion sort',
+                        'Intro sort', 'Merge sort', 'Odd-Even sort', 'Radix sort',
+                        'Selection sort', 'Shell sort', 'Sleep sort', 'Quick sort')
 algorithms.current(0)
 algorithms.place(x=100, y=50, width=240, height=50)
 

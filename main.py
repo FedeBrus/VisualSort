@@ -29,6 +29,8 @@ def sort_array(alg):
                 comb_sort(array, main, stop)
             case 'Counting sort':
                 counting_sort(array, main, stop)
+            case 'Cycle sort':
+                cycle_sort(array, main, stop)
             case 'Gnome sort':
                 gnome_sort(array, main, stop)
             case 'Heap sort':
@@ -71,7 +73,7 @@ def draw_event(event):
 def draw_array():
     global array
     canvas.delete('all')
-    rectX = 1600 / len(array) if len(array) else 1 
+    rectX = 1600 / len(array) if len(array) else 1
     rectY = 600 / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
     rY = 600
@@ -133,10 +135,9 @@ combostyle.theme_use('combostyle')
 selected_alg = StringVar()
 algorithms = ttk.Combobox(options, textvariable=selected_alg, font=font_style, state='readonly')
 algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Cocktail Shaker sort',
-                        'Comb sort', 'Counting sort', 'Gnome sort', 'Heap sort', 'Insertion sort',
+                        'Comb sort', 'Counting sort', 'Cycle sort', 'Gnome sort', 'Heap sort', 'Insertion sort',
                         'Intro sort', 'Merge sort', 'Odd-Even sort', 'Radix 10 LSD sort',
-                        'Radix 2 LSD sort',
-                        'Selection sort', 'Shell sort', 'Sleep sort', 'Strand sort', 'Tree sort', 'Quick sort')
+                        'Radix 2 LSD sort', 'Selection sort', 'Shell sort', 'Sleep sort', 'Strand sort', 'Tree sort', 'Quick sort')
 algorithms.current(0)
 algorithms.place(x=100, y=50, width=240, height=50)
 

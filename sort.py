@@ -586,3 +586,43 @@ def strand_sort(array: list, superlist, ric, main, stop):
         
         ric[0] += 1
         strand_sort(array, superlist, ric, main, stop)
+
+def cycle_sort(array, main, stop):
+    n = len(array)
+    for i in range(0, n - 1):
+        x = array[i]
+        pos = i
+        for j in range(i + 1, n):
+            if array[j] < x:
+                pos += 1
+            if(stop[0]):
+                return
+        
+        if pos == i:
+            continue
+
+        while x == array[pos]:
+            pos += 1
+
+        array[pos], x = x, array[pos]
+        main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
+        if(stop[0]):
+            return
+
+        while pos != i:
+            pos = i
+            for j in range(i + 1, n):
+                if array[j] < x:
+                    pos += 1
+                if(stop[0]):
+                    return
+
+            while x == array[pos]:
+                pos += 1
+
+            array[pos], x = x, array[pos]
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
+            if(stop[0]):
+                return

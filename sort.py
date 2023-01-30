@@ -538,3 +538,47 @@ def tree_sort(array, main, stop):
     pos = [0]
     tree.ascending(array, main, stop, pos)
     
+def strand_sort(array: list, superlist, ric, main, stop):
+    if(len(superlist) == 0):
+        return
+    else:
+        if(ric[0] == 0):
+            superlist = array.copy()
+            array.clear()
+        sublist = []
+        sublist.append(superlist.pop(0))
+        i = 0
+        idx = 0
+        while i < len(superlist):
+            if(superlist[i] > sublist[idx]):
+                sublist.append(superlist.pop(i))
+                i -= 1
+                idx += 1
+            i += 1
+
+        if ric[0] == 0:
+            i = 0
+            while i < len(sublist):
+                array.append(sublist[i])
+                main.event_generate("<<draw>>")
+                time.sleep(velocity[0])
+                if(stop[0]):
+                    return
+                i += 1
+        else:
+            subend = len(sublist) - 1
+            solstart = 0;
+            while len(sublist) > 0:
+                if sublist[subend] > array[solstart]:
+                    solstart += 1
+                else:
+                    array.insert(solstart, sublist.pop(subend))
+                    main.event_generate("<<draw>>")
+                    time.sleep(velocity[0])
+                    if(stop[0]):
+                        return
+                    subend -= 1
+                    solstart = 0
+        
+        ric[0] += 1
+        strand_sort(array, superlist, ric, main, stop)

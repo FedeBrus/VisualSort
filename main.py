@@ -51,6 +51,8 @@ def sort_array(alg):
                 shell_sort(array, main, stop)
             case 'Sleep sort':
                 sleep_sort(array, main, stop)
+            case 'Strand sort':
+                strand_sort(array, array, [0], main, stop)
             case 'Tree sort':
                 tree_sort(array, main, stop)
             case 'Quick sort':
@@ -70,7 +72,7 @@ def draw_array():
     global array
     canvas.delete('all')
     rectX = 1600 / len(array)
-    rectY = 600 / (len(array) + 1)
+    rectY = 600 / (max(max(array), len(array)) + 1)
     rX = 0
     rY = 600
     for i in array:
@@ -134,7 +136,7 @@ algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Cocktail Sha
                         'Comb sort', 'Counting sort', 'Gnome sort', 'Heap sort', 'Insertion sort',
                         'Intro sort', 'Merge sort', 'Odd-Even sort', 'Radix 10 LSD sort',
                         'Radix 2 LSD sort',
-                        'Selection sort', 'Shell sort', 'Sleep sort', 'Tree sort', 'Quick sort')
+                        'Selection sort', 'Shell sort', 'Sleep sort', 'Strand sort', 'Tree sort', 'Quick sort')
 algorithms.current(0)
 algorithms.place(x=100, y=50, width=240, height=50)
 

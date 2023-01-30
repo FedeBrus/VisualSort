@@ -71,8 +71,8 @@ def draw_event(event):
 def draw_array():
     global array
     canvas.delete('all')
-    rectX = 1600 / len(array)
-    rectY = 600 / (max(max(array), len(array)) + 1)
+    rectX = 1600 / len(array) if len(array) else 1 
+    rectY = 600 / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
     rY = 600
     for i in array:

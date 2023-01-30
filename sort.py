@@ -512,31 +512,35 @@ class BST:
                     self.right = BST()
                 self.right.insert(val)
 
-    def ascending(self, array, main, stop, pos):
+    def ascending(self, array, main, stop):
         if self.value != None:
             if self.left == None:
                 self.left = BST()
-            self.left.ascending(array, main, stop, pos)
+            self.left.ascending(array, main, stop)
             
-            array[pos[0]] = self.value
+            array.append(self.value)
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
             if(stop[0]):
                 return
-            pos[0] += 1
             
             if self.right == None:
                 self.right = BST()
-            self.right.ascending(array, main, stop, pos)
+            self.right.ascending(array, main, stop)
 
 def tree_sort(array, main, stop):
     tree = BST()
+    i = 0
     n = len(array)
-    for i in range(0, n):
-        tree.insert(array[i])
+    while i < n:
+        tree.insert(array.pop(0))
+        main.event_generate("<<draw>>")
+        time.sleep(velocity[0]) 
+        if(stop[0]):
+            return
+        i += 1
 
-    pos = [0]
-    tree.ascending(array, main, stop, pos)
+    tree.ascending(array, main, stop)
     
 def strand_sort(array: list, superlist, ric, main, stop):
     if(len(superlist) == 0):

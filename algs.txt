@@ -10,11 +10,11 @@ cube
 shell               x
 bubble              x
 tree                x
-cycle
+cycle               x
 library
 patience
 smooth
-strand
+strand              x
 tournament
 cocktailshaker      x
 comb                x
@@ -39,6 +39,6 @@ spaghetti
 sortingnetwork
 bitonic
 bogo                x
-stooge
+stooge              x
 slow
 

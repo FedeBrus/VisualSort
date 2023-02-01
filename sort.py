@@ -626,3 +626,18 @@ def cycle_sort(array, main, stop):
             time.sleep(velocity[0])
             if(stop[0]):
                 return
+
+def stooge_sort(array, main, stop, start, end):
+    if(stop[0]):
+        return
+    if array[start] > array[end]:
+        array[start], array[end] = array[end], array[start]
+        main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
+    
+    length = end - start + 1
+    if length >= 3:
+        onethird = math.floor(length / 3)
+        stooge_sort(array, main, stop, start, end - onethird)
+        stooge_sort(array, main, stop, start + onethird, end)
+        stooge_sort(array, main, stop, start, end - onethird)

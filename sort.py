@@ -641,3 +641,29 @@ def stooge_sort(array, main, stop, start, end):
         stooge_sort(array, main, stop, start, end - onethird)
         stooge_sort(array, main, stop, start + onethird, end)
         stooge_sort(array, main, stop, start, end - onethird)
+
+def flip(array, main, stop, k):
+    left = 0
+    while left < k:
+        if(stop[0]):
+            return
+        array[left], array[k] = array[k], array[left]
+        main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
+        k -= 1
+        left += 1
+
+def max_index(array, k):
+    index = 0
+    for i in range(k):
+        if array[i] > array[index]:
+            index = i
+    return index
+
+def pancake_sort(array, main, stop):
+    n = len(array)
+    while n > 1:
+        maxdex = max_index(array, n)
+        flip(array, main, stop, maxdex)
+        flip(array, main, stop, n - 1)
+        n -= 1

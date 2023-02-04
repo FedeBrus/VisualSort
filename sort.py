@@ -6,6 +6,14 @@ import math
 global velocity
 velocity = [0]
 
+fc = 'red'
+sc = 'snow'
+tc = 'lime'
+
+def reset_colors(array, colors, main):
+    colors = ['red' for i in range(len(array))]
+    main.event_generate("<<draw>>")
+
 def bubble_sort(array, main, stop, colors):
     n = len(array)
     sorted = False
@@ -16,13 +24,15 @@ def bubble_sort(array, main, stop, colors):
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
                 sorted = False
-                colors[j + 1] = 'snow'
+                colors[j + 1] = sc
                 time.sleep(velocity[0])
                 main.event_generate("<<draw>>")
-                colors[j + 1] = 'red'
+                colors[j + 1] = fc
             if stop[0]:
                 return
         i += 1
+
+    reset_colors(array, colors, main)
 
 
 def insertion_sort(array, main, stop, colors):
@@ -32,12 +42,14 @@ def insertion_sort(array, main, stop, colors):
         while j > 0 and array[j - 1] > array[j]:
             array[j - 1], array[j] = array[j], array[j - 1]
             j -= 1
-            colors[j] = 'snow'
+            colors[j] = sc
             time.sleep(velocity[0])
             main.event_generate("<<draw>>")
-            colors[j] = 'red'
+            colors[j] = fc
             if stop[0]:
                 return
+    
+    reset_colors(array, colors, main)
 
 
 def selection_sort(array, main, stop, colors):
@@ -45,19 +57,32 @@ def selection_sort(array, main, stop, colors):
     for i in range(0, n - 1):
         min_idx = i
         for j in range(i + 1, n):
+            colors[j] = sc
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
+            if stop[0]:
+                return
             if (array[j] < array[min_idx]):
+                colors[min_idx] = fc
                 min_idx = j
+                colors[min_idx] = tc
+            if j != min_idx:
+                colors[j] = fc
 
+        colors[min_idx] = fc
         array[i], array[min_idx] = array[min_idx], array[i]
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if stop[0]:
             return
+    
+    reset_colors(array, colors, main)
 
 
 def merge(array, main, stop, inf, ctr, sup, colors):
-
     i, j, k = inf, ctr + 1, 0
+    colors[inf] = sc
+    colors[sup] = sc
     supp = [None] * (sup - inf + 1)
     while i <= ctr and j <= sup:
         if array[i] <= array[j]:
@@ -85,12 +110,17 @@ def merge(array, main, stop, inf, ctr, sup, colors):
         if stop[0]:
             return
 
+    colors[inf] = fc
+    colors[sup] = fc
+
 def merge_sort(array, main, stop, inf, sup, colors):
     if inf < sup:
         ctr = (sup + inf) // 2
         merge_sort(array, main, stop, inf, ctr, colors)
         merge_sort(array, main, stop, ctr + 1, sup, colors)
         merge(array, main, stop, inf, ctr, sup, colors)
+
+    reset_colors(array, colors, main)
 
 
 def counting_sort(array, main, stop, colors):

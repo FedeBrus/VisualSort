@@ -4,9 +4,10 @@ from tkinter import font
 import random as rnd
 from sort import *
 from threading import Thread
+from pygame import mixer
 
 stop = [False]
-
+sound = True
 
 def sort_array(alg):
     global stop
@@ -79,6 +80,7 @@ def draw_event(event):
 def draw_array():
     global array
     global colors
+    global sound
     canvas.delete('all')
     rectX = 1600 / len(array) if len(array) else 1
     rectY = 600 / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
@@ -90,6 +92,8 @@ def draw_array():
             rX, rY, rX + rectX, rY - (rectY * array[i]), fill=color)
         rX += rectX
 
+    if sound:
+        mixer.music.play()
     main.update_idletasks()
 
 # Fisher-Yates shuffle
@@ -117,12 +121,19 @@ def stop_thread():
     generate_array(int(selected_size.get()))
     shuffle_array(array)
 
+def toggle_sound():
+    global sound
+    sound = not sound
+
 # Main window
 main = Tk()
 main.title("Visual Sort")
 main.geometry("1600x800")
 main.resizable(False, False)
 main.protocol("WM_DELETE_WINDOW", )
+
+mixer.init()
+mixer.music.load("blipSelect.wav")
 
 # Colors
 blk = '#1c1c1c'
@@ -169,10 +180,14 @@ btn_shuffle = Button(options, command=lambda: generate_array(
     int(selected_size.get())), text='Shuffle', bg=blk, fg='white', font=font_style)
 btn_shuffle.place(x=440, y=50, width=240, height=100)
 
-# Generate Button
+# Sort Button
 btn_sort = Button(options, command=lambda: sort_array(
     selected_alg.get()), text='Sort', bg=blk, fg='white', font=font_style)
 btn_sort.place(x=680, y=50, width=240, height=100)
+
+# Sound button
+btn_sound = Button(options, command=toggle_sound, text='Toggle sound', bg=blk, fg='white', font=font_style)
+btn_sound.place(x=680, y=10, width=240, height=40)
 
 # Stop Button
 btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg='white', font=font_style)

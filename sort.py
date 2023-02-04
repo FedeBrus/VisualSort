@@ -9,6 +9,7 @@ velocity = [0]
 fc = 'red'
 sc = 'snow'
 tc = 'lime'
+othercolors = ["blue", "purple", "brown", "cyan", "yellow", 'green', 'orange', 'magenta', 'gray', 'beige']
 
 def reset_colors(array, colors, main):
     colors = ['red' for i in range(len(array))]
@@ -155,16 +156,20 @@ def bogo_sort(array, main, stop, colors):
     while array != sorted(array):
         x = random.randint(0, len(array) - 1)
         y = random.randint(0, len(array) - 1)
+        colors[x] = sc
+        colors[y] = sc
         array[x], array[y] = array[y], array[x]
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
+        colors[x] = fc
+        colors[y] = fc
         if (stop[0]):
             return
-
+    reset_colors(array, colors, main)
 
 def heapify(arr, N, i, stop, colors):
     if (stop[0]):
-            return
+        return
     largest = i
     l = 2 * i + 1
     r = 2 * i + 2
@@ -177,27 +182,37 @@ def heapify(arr, N, i, stop, colors):
         
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]  # swap
-        heapify(arr, N, largest, stop)
+        heapify(arr, N, largest, stop, colors)
 
 
 def heap_sort(array, main, stop, colors):
 
     N = len(array)
 
-    for i in range(N//2 - 1, -1, -1):
+    for i in range(N // 2 - 1, -1, -1):
         heapify(array, N, i, stop, colors)
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):
             return
+    bi = 0
+    for i in range(math.ceil(math.log2(N))):
+        for j in range(2**i):
+            if(bi + j < N):
+                colors[bi + j] = othercolors[i]
+        bi = (bi << 1) + 1
 
     for i in range(N-1, 0, -1):
         array[i], array[0] = array[0], array[i]  # swap
-        heapify(array, i, 0, stop)
+        heapify(array, i, 0, stop, colors)
+        colors[i] = fc
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):
             return
+    
+    colors[0] = fc
+    reset_colors(array, colors, main)
 
 def radix10LSD_sort(array, main, stop, colors):
     n = len(array)
@@ -225,8 +240,10 @@ def radix10LSD_sort(array, main, stop, colors):
 
         for i in range(0, n):
             array[i] = output[i]
+            colors[i] = sc
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
+            colors[i] = fc
             if (stop[0]):
                 return
             
@@ -237,6 +254,7 @@ def radix10LSD_sort(array, main, stop, colors):
 
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
+        reset_colors(array, colors, main)
 
 def radix2LSD_sort(array, main, stop, colors):
     n = len(array)
@@ -264,8 +282,10 @@ def radix2LSD_sort(array, main, stop, colors):
 
         for i in range(0, n):
             array[i] = output[i]
+            colors[i] = sc
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
+            colors[i] = fc
             if (stop[0]):
                 return
             
@@ -275,6 +295,7 @@ def radix2LSD_sort(array, main, stop, colors):
         posto *= 2
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
+        reset_colors(array, colors, main)
 
 def partition(array, main, stop, inf, sup, colors):
     # Questo campionamento serve a prende un pivot abbastanza bilanciato, per migliorare l'effetto visivo
@@ -285,6 +306,7 @@ def partition(array, main, stop, inf, sup, colors):
         array[sup], array[inf + sample_size // 2] = samples[sample_size // 2], array[sup] 
     
     x = array[sup]
+    colors[sup] = sc
     i = inf - 1
     for j in range(inf, sup):
         if(array[j] <= x):
@@ -295,6 +317,7 @@ def partition(array, main, stop, inf, sup, colors):
         if (stop[0]):
             return i + 1
 
+    colors[sup] = fc
     array[i + 1], array[sup] = array[sup], array[i + 1]
     main.event_generate("<<draw>>")
     time.sleep(velocity[0])
@@ -308,6 +331,8 @@ def quick_sort(array, main, stop, inf, sup, colors):
         quick_sort(array, main, stop, inf, q - 1, colors)
         quick_sort(array, main, stop, q + 1, sup, colors)
 
+    reset_colors(array, colors, main)
+
 def gnome_sort(array, main, stop, colors):
     # Per ora identico all'insertion sort, quando faremo anche i colori si noterà la differenza
     n = len(array)
@@ -315,16 +340,23 @@ def gnome_sort(array, main, stop, colors):
     while(pos < n):
         if(pos == 0 or array[pos] >= array[pos - 1]):
             pos += 1
+            if pos < n:
+                colors[pos] = sc 
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
         else:
             array[pos], array[pos - 1] = array[pos - 1], array[pos]
             pos -= 1
+            if pos >= 0:
+                colors[pos] = sc
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
-        
+        if pos >= 0 and pos < n:
+            colors[pos] = fc
         if(stop[0]):
             return
+    
+    reset_colors(array, colors, main)
 
 def introinsertion(array, main, stop, inf, sup, colors):
     n = sup - inf + 1

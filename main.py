@@ -10,6 +10,7 @@ stop = [False]
 
 def sort_array(alg):
     global stop
+    global colors
 
     btn_sort["state"] = "disabled"
     btn_shuffle["state"] = "disabled"
@@ -18,51 +19,51 @@ def sort_array(alg):
         stop[0] = False
         match (alg):
             case 'Bubble sort':
-                bubble_sort(array, main, stop)
+                bubble_sort(array, main, stop, colors)
             case 'Bogo sort':
-                bogo_sort(array, main, stop)
+                bogo_sort(array, main, stop, colors)
             case 'Bucket sort':
-                bucket_sort(array, main, stop)
+                bucket_sort(array, main, stop, colors)
             case 'Cocktail Shaker sort':
-                cocktailshaker_sort(array, main, stop)
+                cocktailshaker_sort(array, main, stop, colors)
             case 'Comb sort':
-                comb_sort(array, main, stop)
+                comb_sort(array, main, stop, colors)
             case 'Counting sort':
-                counting_sort(array, main, stop)
+                counting_sort(array, main, stop, colors)
             case 'Cycle sort':
-                cycle_sort(array, main, stop)
+                cycle_sort(array, main, stop, colors)
             case 'Gnome sort':
-                gnome_sort(array, main, stop)
+                gnome_sort(array, main, stop, colors)
             case 'Heap sort':
-                heap_sort(array, main, stop)
+                heap_sort(array, main, stop, colors)
             case 'Insertion sort':
-                insertion_sort(array, main, stop)
+                insertion_sort(array, main, stop, colors)
             case 'Intro sort':
-                intro_sort(array, main, stop)
+                intro_sort(array, main, stop, colors)
             case 'Merge sort':
-                merge_sort(array, main, stop, 0, len(array) - 1)
+                merge_sort(array, main, stop, 0, len(array) - 1, colors)
             case 'Odd-Even sort':
-                oddeven_sort(array, main, stop)
+                oddeven_sort(array, main, stop, colors)
             case 'Pancake sort':
-                pancake_sort(array, main, stop)
+                pancake_sort(array, main, stop, colors)
             case 'Radix 10 LSD sort':
-                radix10LSD_sort(array, main, stop)
+                radix10LSD_sort(array, main, stop, colors)
             case 'Radix 2 LSD sort':
-                radix2LSD_sort(array, main, stop)
+                radix2LSD_sort(array, main, stop, colors)
             case 'Selection sort':
-                selection_sort(array, main, stop)
+                selection_sort(array, main, stop, colors)
             case 'Shell sort':
-                shell_sort(array, main, stop)
+                shell_sort(array, main, stop, colors)
             case 'Sleep sort':
                 sleep_sort(array, main, stop)
             case 'Stooge sort':
-                stooge_sort(array, main, stop, 0, len(array) - 1)
+                stooge_sort(array, main, stop, 0, len(array) - 1, colors)
             case 'Strand sort':
-                strand_sort(array, array, [0], main, stop)
+                strand_sort(array, array, [0], main, stop, colors)
             case 'Tree sort':
                 tree_sort(array, main, stop)
             case 'Quick sort':
-                quick_sort(array, main, stop, 0, len(array) - 1)
+                quick_sort(array, main, stop, 0, len(array) - 1, colors)
 
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"
@@ -76,20 +77,23 @@ def draw_event(event):
 # Clears canvas and draws the new array
 def draw_array():
     global array
+    global colors
     canvas.delete('all')
     rectX = 1600 / len(array) if len(array) else 1
     rectY = 600 / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
     rY = 600
-    for i in array:
+    for i in range(len(array)):
+        color = colors[i]
         canvas.create_rectangle(
-            rX, rY, rX + rectX, rY - (rectY * i), fill='red')
+            rX, rY, rX + rectX, rY - (rectY * array[i]), fill=color)
         rX += rectX
 
     main.update_idletasks()
 
 # Fisher-Yates shuffle
 def shuffle_array(array):
+    colors = ['red' for i in range(len(array))]
     for i in range(0, len(array) - 1):
         j = rnd.randint(i, len(array) - 1)
         array[j], array[i] = array[i], array[j]
@@ -97,6 +101,8 @@ def shuffle_array(array):
 # Generates an array whose elements have distinct values from 1 to size
 def generate_array(size):
     global array
+    global colors
+    colors = ['red' for i in range(size)]
     array = [i for i in range(1, size + 1)]
     shuffle_array(array)
     draw_array()

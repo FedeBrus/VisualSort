@@ -6,7 +6,7 @@ import math
 global velocity
 velocity = [0]
 
-def bubble_sort(array, main, stop):
+def bubble_sort(array, main, stop, colors):
     n = len(array)
     sorted = False
     i = 0
@@ -23,7 +23,7 @@ def bubble_sort(array, main, stop):
         i += 1
 
 
-def insertion_sort(array, main, stop):
+def insertion_sort(array, main, stop, colors):
     n = len(array)
     for i in range(1, n):
         j = i
@@ -36,7 +36,7 @@ def insertion_sort(array, main, stop):
                 return
 
 
-def selection_sort(array, main, stop):
+def selection_sort(array, main, stop, colors):
     n = len(array)
     for i in range(0, n - 1):
         min_idx = i
@@ -51,7 +51,7 @@ def selection_sort(array, main, stop):
             return
 
 
-def merge(array, main, stop, inf, ctr, sup):
+def merge(array, main, stop, inf, ctr, sup, colors):
 
     i, j, k = inf, ctr + 1, 0
     supp = [None] * (sup - inf + 1)
@@ -81,15 +81,15 @@ def merge(array, main, stop, inf, ctr, sup):
         if stop[0]:
             return
 
-def merge_sort(array, main, stop, inf, sup):
+def merge_sort(array, main, stop, inf, sup, colors):
     if inf < sup:
         ctr = (sup + inf) // 2
-        merge_sort(array, main, stop, inf, ctr)
-        merge_sort(array, main, stop, ctr + 1, sup)
-        merge(array, main, stop, inf, ctr, sup)
+        merge_sort(array, main, stop, inf, ctr, colors)
+        merge_sort(array, main, stop, ctr + 1, sup, colors)
+        merge(array, main, stop, inf, ctr, sup, colors)
 
 
-def counting_sort(array, main, stop):
+def counting_sort(array, main, stop, colors):
     maxA = (max(array) + 1)
     copia = [0] * maxA
 
@@ -111,7 +111,7 @@ def counting_sort(array, main, stop):
             return
 
 
-def bogo_sort(array, main, stop):
+def bogo_sort(array, main, stop, colors):
     while array != sorted(array):
         x = random.randint(0, len(array) - 1)
         y = random.randint(0, len(array) - 1)
@@ -122,7 +122,7 @@ def bogo_sort(array, main, stop):
             return
 
 
-def heapify(arr, N, i, stop):
+def heapify(arr, N, i, stop, colors):
     if (stop[0]):
             return
     largest = i
@@ -140,12 +140,12 @@ def heapify(arr, N, i, stop):
         heapify(arr, N, largest, stop)
 
 
-def heap_sort(array, main, stop):
+def heap_sort(array, main, stop, colors):
 
     N = len(array)
 
     for i in range(N//2 - 1, -1, -1):
-        heapify(array, N, i, stop)
+        heapify(array, N, i, stop, colors)
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):
@@ -159,7 +159,7 @@ def heap_sort(array, main, stop):
         if (stop[0]):
             return
 
-def radix10LSD_sort(array, main, stop):
+def radix10LSD_sort(array, main, stop, colors):
     n = len(array)
     max_cifre = max(array)
     posto = 1
@@ -198,7 +198,7 @@ def radix10LSD_sort(array, main, stop):
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
 
-def radix2LSD_sort(array, main, stop):
+def radix2LSD_sort(array, main, stop, colors):
     n = len(array)
     max_cifre = max(array)
     posto = 1
@@ -236,7 +236,7 @@ def radix2LSD_sort(array, main, stop):
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
 
-def partition(array, main, stop, inf, sup):
+def partition(array, main, stop, inf, sup, colors):
     # Questo campionamento serve a prende un pivot abbastanza bilanciato, per migliorare l'effetto visivo
     sample_size = 5
     if sup - inf + 1 >= sample_size:
@@ -260,15 +260,15 @@ def partition(array, main, stop, inf, sup):
     time.sleep(velocity[0])
     return i + 1
     
-def quick_sort(array, main, stop, inf, sup):
+def quick_sort(array, main, stop, inf, sup, colors):
     if (stop[0]):
         return
     if inf < sup:
-        q = partition(array, main, stop, inf, sup)
-        quick_sort(array, main, stop, inf, q - 1)
-        quick_sort(array, main, stop, q + 1, sup)
+        q = partition(array, main, stop, inf, sup, colors)
+        quick_sort(array, main, stop, inf, q - 1, colors)
+        quick_sort(array, main, stop, q + 1, sup, colors)
 
-def gnome_sort(array, main, stop):
+def gnome_sort(array, main, stop, colors):
     # Per ora identico all'insertion sort, quando faremo anche i colori si noterà la differenza
     n = len(array)
     pos = 0
@@ -286,7 +286,7 @@ def gnome_sort(array, main, stop):
         if(stop[0]):
             return
 
-def introinsertion(array, main, stop, inf, sup):
+def introinsertion(array, main, stop, inf, sup, colors):
     n = sup - inf + 1
     for i in range(1, n):
         j = i
@@ -299,7 +299,7 @@ def introinsertion(array, main, stop, inf, sup):
                 return
     return
 
-def introheapify(arr, N, i, stop, inf):
+def introheapify(arr, N, i, stop, inf, colors):
     if (stop[0]):
             return
     largest = i
@@ -314,13 +314,13 @@ def introheapify(arr, N, i, stop, inf):
         
     if largest != i:
         arr[inf + i], arr[inf + largest] = arr[inf + largest], arr[inf + i]  # swap
-        introheapify(arr, N, largest, stop, inf)
+        introheapify(arr, N, largest, stop, inf, colors)
 
-def introheap(array, main, stop, inf, sup):
+def introheap(array, main, stop, inf, sup, colors):
     N = sup - inf + 1
 
     for i in range(N//2 - 1, -1, -1):
-        introheapify(array, N, i, stop, inf)
+        introheapify(array, N, i, stop, inf, colors)
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):
@@ -328,28 +328,28 @@ def introheap(array, main, stop, inf, sup):
 
     for i in range(N-1, 0, -1):
         array[inf + i], array[inf] = array[inf], array[inf + i]  # swap
-        introheapify(array, i, 0, stop, inf)
+        introheapify(array, i, 0, stop, inf, colors)
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):
             return
 
-def introutil(array, main, stop, maxdepth, inf, sup):
+def introutil(array, main, stop, maxdepth, inf, sup, colors):
     n = sup - inf + 1
     #if n < 16:
     if n < 32:
-        introinsertion(array, main, stop, inf, sup)
+        introinsertion(array, main, stop, inf, sup, colors)
     elif maxdepth == 0:
-        introheap(array, main, stop, inf, sup)
+        introheap(array, main, stop, inf, sup, colors)
     else:
-        q = partition(array, main, stop, inf, sup)
-        introutil(array, main, stop, maxdepth - 1, inf, q - 1)
-        introutil(array, main, stop, maxdepth - 1, q + 1, sup)
+        q = partition(array, main, stop, inf, sup, colors)
+        introutil(array, main, stop, maxdepth - 1, inf, q - 1, colors)
+        introutil(array, main, stop, maxdepth - 1, q + 1, sup, colors)
 
-def intro_sort(array, main, stop):
+def intro_sort(array, main, stop, colors):
     maxdepth = 4
     #maxdepth = math.floor(math.log2(len(array))) * 2
-    introutil(array, main, stop, maxdepth, 0, len(array) - 1)
+    introutil(array, main, stop, maxdepth, 0, len(array) - 1, colors)
 
 def sleep_sort(array: list, main, stop):
     copia = array.copy()
@@ -373,7 +373,7 @@ def sleep_sort(array: list, main, stop):
             uscita = True
         time.sleep(0.5)
 
-def shell_sort(array, main, stop):
+def shell_sort(array, main, stop, colors):
     n = len(array)
     gaps = [701, 301, 132, 57, 23, 10, 4, 1]
     for gap in gaps:
@@ -391,7 +391,7 @@ def shell_sort(array, main, stop):
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
 
-def oddeven_sort(array, main, stop):
+def oddeven_sort(array, main, stop, colors):
     n = len(array)
     sorted = False
     while not sorted:
@@ -413,7 +413,7 @@ def oddeven_sort(array, main, stop):
                 if stop[0]:
                     return
 
-def bucket_sort(array, main, stop):
+def bucket_sort(array, main, stop, colors):
     n = len(array)
     m = max(array) + 1
     k = n // 20 if n >= 20 else 1
@@ -434,10 +434,10 @@ def bucket_sort(array, main, stop):
 
     idx = 0
     for i in range(0, k):
-        introinsertion(array, main, stop, idx, idx + len(buckets[i]) - 1)
+        introinsertion(array, main, stop, idx, idx + len(buckets[i]) - 1, colors)
         idx += len(buckets[i])
 
-def cocktailshaker_sort(array, main, stop):
+def cocktailshaker_sort(array, main, stop, colors):
     n = len(array)
     i = 0
     j = n - 1
@@ -467,7 +467,7 @@ def cocktailshaker_sort(array, main, stop):
                     sorted = False
             i += 1
 
-def comb_sort(array, main, stop):
+def comb_sort(array, main, stop, colors):
     n = len(array)
     shrink = 1.33
     gap = n
@@ -535,7 +535,7 @@ def tree_sort(array, main, stop):
 
     tree.ascending(array, main, stop)
     
-def strand_sort(array: list, superlist, ric, main, stop):
+def strand_sort(array: list, superlist, ric, main, stop, colors):
     if(len(superlist) == 0):
         return
     else:
@@ -578,9 +578,9 @@ def strand_sort(array: list, superlist, ric, main, stop):
                     solstart = 0
         
         ric[0] += 1
-        strand_sort(array, superlist, ric, main, stop)
+        strand_sort(array, superlist, ric, main, stop, colors)
 
-def cycle_sort(array, main, stop):
+def cycle_sort(array, main, stop, colors):
     n = len(array)
     for i in range(0, n - 1):
         x = array[i]
@@ -620,7 +620,7 @@ def cycle_sort(array, main, stop):
             if(stop[0]):
                 return
 
-def stooge_sort(array, main, stop, start, end):
+def stooge_sort(array, main, stop, start, end, colors):
     if(stop[0]):
         return
     if array[start] > array[end]:
@@ -631,11 +631,11 @@ def stooge_sort(array, main, stop, start, end):
     length = end - start + 1
     if length >= 3:
         onethird = math.floor(length / 3)
-        stooge_sort(array, main, stop, start, end - onethird)
-        stooge_sort(array, main, stop, start + onethird, end)
-        stooge_sort(array, main, stop, start, end - onethird)
+        stooge_sort(array, main, stop, start, end - onethird, colors)
+        stooge_sort(array, main, stop, start + onethird, end, colors)
+        stooge_sort(array, main, stop, start, end - onethird, colors)
 
-def flip(array, main, stop, k):
+def flip(array, main, stop, k, colors):
     left = 0
     while left < k:
         if(stop[0]):
@@ -653,10 +653,10 @@ def max_index(array, k):
             index = i
     return index
 
-def pancake_sort(array, main, stop):
+def pancake_sort(array, main, stop, colors):
     n = len(array)
     while n > 1:
         maxdex = max_index(array, n)
-        flip(array, main, stop, maxdex)
-        flip(array, main, stop, n - 1)
+        flip(array, main, stop, maxdex, colors)
+        flip(array, main, stop, n - 1, colors)
         n -= 1

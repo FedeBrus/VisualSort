@@ -162,6 +162,7 @@ sizes = ttk.Combobox(options, textvariable=selected_size, font=font_style, state
 sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
 sizes.current(3)
 sizes.place(x=100, y=100, width=240, height=50)
+selected_size.trace("w", lambda x, y, z: generate_array(int(selected_size.get())))
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(

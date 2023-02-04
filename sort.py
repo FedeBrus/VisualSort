@@ -665,7 +665,11 @@ def stooge_sort(array, main, stop, start, end, colors):
         return
     if array[start] > array[end]:
         array[start], array[end] = array[end], array[start]
+        colors[start] = sc
+        colors[end] = sc
         main.event_generate("<<draw>>")
+        colors[start] = fc
+        colors[end] = fc
         time.sleep(velocity[0])
     
     length = end - start + 1
@@ -674,7 +678,9 @@ def stooge_sort(array, main, stop, start, end, colors):
         stooge_sort(array, main, stop, start, end - onethird, colors)
         stooge_sort(array, main, stop, start + onethird, end, colors)
         stooge_sort(array, main, stop, start, end - onethird, colors)
-
+        if start == 0 and end == len(array) - 1:
+            reset_colors(array, colors, main)
+            
 def flip(array, main, stop, k, colors):
     left = 0
     while left < k:

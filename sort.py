@@ -16,8 +16,10 @@ def bubble_sort(array, main, stop, colors):
             if array[j] > array[j + 1]:
                 array[j], array[j + 1] = array[j + 1], array[j]
                 sorted = False
+                colors[j + 1] = 'snow'
                 time.sleep(velocity[0])
                 main.event_generate("<<draw>>")
+                colors[j + 1] = 'red'
             if stop[0]:
                 return
         i += 1

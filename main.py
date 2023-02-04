@@ -65,11 +65,17 @@ def sort_array(alg):
             case 'Quick sort':
                 quick_sort(array, main, stop, 0, len(array) - 1, colors)
 
+        reset_colors()
+        draw_array()
+
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"
 
     Thread(target=sort, daemon=True).start()
 
+def reset_colors():
+    global colors
+    colors = ['red' for i in range(len(array))]
 
 def draw_event(event):
     draw_array()

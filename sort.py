@@ -163,8 +163,6 @@ def bogo_sort(array, main, stop, colors):
         colors[x] = fc
         colors[y] = fc
         time.sleep(velocity[0])
-        colors[x] = fc
-        colors[y] = fc
         if (stop[0]):
             return
     reset_colors(array, colors, main)
@@ -329,10 +327,8 @@ def quick_sort(array, main, stop, inf, sup, colors):
         return
     if inf < sup:
         q = partition(array, main, stop, inf, sup, colors)
-        colors[q] = sc
         quick_sort(array, main, stop, inf, q - 1, colors)
         quick_sort(array, main, stop, q + 1, sup, colors)
-        colors[q] = fc
     reset_colors(array, colors, main)
 
     reset_colors(array, colors, main)

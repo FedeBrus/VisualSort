@@ -1,1 +1,1 @@
-pip install playsound
+pip install pygame

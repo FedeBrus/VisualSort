@@ -116,6 +116,7 @@ def generate_array(size):
 
 def stop_thread():
     global stop
+    reset_colors()
     stop[0] = True
     generate_array(int(selected_size.get()))
     shuffle_array(array)

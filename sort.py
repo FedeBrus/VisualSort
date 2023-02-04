@@ -32,8 +32,10 @@ def insertion_sort(array, main, stop, colors):
         while j > 0 and array[j - 1] > array[j]:
             array[j - 1], array[j] = array[j], array[j - 1]
             j -= 1
-            main.event_generate("<<draw>>")
+            colors[j] = 'snow'
             time.sleep(velocity[0])
+            main.event_generate("<<draw>>")
+            colors[j] = 'red'
             if stop[0]:
                 return
 

@@ -4,7 +4,7 @@ import threading
 import math
 
 global velocity
-velocity = [0.001]
+velocity = [0]
 
 def bubble_sort(array, main, stop):
     n = len(array)
@@ -52,8 +52,6 @@ def selection_sort(array, main, stop):
 
 
 def merge(array, main, stop, inf, ctr, sup):
-    if stop[0]:
-        return
 
     i, j, k = inf, ctr + 1, 0
     supp = [None] * (sup - inf + 1)
@@ -65,28 +63,23 @@ def merge(array, main, stop, inf, ctr, sup):
             supp[k] = array[j]
             j += 1
         k += 1
-        if stop[0]:
-            return
 
     while i <= ctr:
         supp[k] = array[i]
         k += 1
         i += 1
-        if stop[0]:
-            return
 
     while j <= sup:
         supp[k] = array[j]
         k += 1
         j += 1
-        if stop[0]:
-            return
 
     for i in range(sup - inf + 1):
         array[inf + i] = supp[i]
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
-
+        if stop[0]:
+            return
 
 def merge_sort(array, main, stop, inf, sup):
     if inf < sup:

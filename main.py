@@ -105,7 +105,8 @@ def generate_array(size):
 def stop_thread():
     global stop
     stop[0] = True
-
+    generate_array(int(selected_size.get()))
+    shuffle_array(array)
 
 # Main window
 main = Tk()
@@ -170,15 +171,15 @@ btn_stop.place(x=920, y=50, width=240, height=100)
 # Slider for sorting speed
 def getSpeed(val):
     from sort import velocity
-    velocity[0] = float(val)
-    
-minSpeed = 0.001
-maxSpeed = 1
+    velocity[0] = float(2**int(val) / 1000)
 
-slider = Scale(options, from_=minSpeed, to=maxSpeed, orient=HORIZONTAL, length=200, command=getSpeed,
-                 resolution=0.001, foreground='white', bg=blk, activebackground='#801410')
-slider.set(0.001)
-slider.config(label='Velocità', font=font_style)
+minDelay = 0
+maxDelay = 10
+
+slider = Scale(options, from_=minDelay, to=maxDelay, orient=HORIZONTAL, length=200, command=getSpeed,
+                 resolution=1, foreground='white', bg=blk, activebackground='#801410')
+slider.set(0)
+slider.config(label='Delay', font=font_style)
 slider.place(x=1260, y=50, width=240, height=100)
 
 # Sort Canvas

@@ -4,7 +4,7 @@ import threading
 import math
 
 global velocity
-velocity = [0]
+velocity = [0.0]
 
 fc = 'red'
 sc = 'snow'
@@ -158,8 +158,10 @@ def bogo_sort(array, main, stop, colors):
         y = random.randint(0, len(array) - 1)
         colors[x] = sc
         colors[y] = sc
-        array[x], array[y] = array[y], array[x]
         main.event_generate("<<draw>>")
+        array[x], array[y] = array[y], array[x]
+        colors[x] = fc
+        colors[y] = fc
         time.sleep(velocity[0])
         colors[x] = fc
         colors[y] = fc
@@ -205,7 +207,6 @@ def heap_sort(array, main, stop, colors):
     for i in range(N-1, 0, -1):
         array[i], array[0] = array[0], array[i]  # swap
         heapify(array, i, 0, stop, colors)
-        colors[i] = fc
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):
@@ -328,8 +329,11 @@ def quick_sort(array, main, stop, inf, sup, colors):
         return
     if inf < sup:
         q = partition(array, main, stop, inf, sup, colors)
+        colors[q] = sc
         quick_sort(array, main, stop, inf, q - 1, colors)
         quick_sort(array, main, stop, q + 1, sup, colors)
+        colors[q] = fc
+    reset_colors(array, colors, main)
 
     reset_colors(array, colors, main)
 
@@ -697,7 +701,11 @@ def stooge_sort(array, main, stop, start, end, colors):
         return
     if array[start] > array[end]:
         array[start], array[end] = array[end], array[start]
+        colors[start] = sc
+        colors[end] = sc
         main.event_generate("<<draw>>")
+        colors[start] = fc
+        colors[end] = fc
         time.sleep(velocity[0])
     
     length = end - start + 1
@@ -706,7 +714,9 @@ def stooge_sort(array, main, stop, start, end, colors):
         stooge_sort(array, main, stop, start, end - onethird, colors)
         stooge_sort(array, main, stop, start + onethird, end, colors)
         stooge_sort(array, main, stop, start, end - onethird, colors)
-
+        if start == 0 and end == len(array) - 1:
+            reset_colors(array, colors, main)
+            
 def flip(array, main, stop, k, colors):
     left = 0
     while left < k:

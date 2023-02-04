@@ -162,6 +162,7 @@ sizes = ttk.Combobox(options, textvariable=selected_size, font=font_style, state
 sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
 sizes.current(3)
 sizes.place(x=100, y=100, width=240, height=50)
+selected_size.trace("w", lambda x, y, z: generate_array(int(selected_size.get())))
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
@@ -187,7 +188,7 @@ minDelay = 0
 maxDelay = 10
 
 slider = Scale(options, from_=minDelay, to=maxDelay, orient=HORIZONTAL, length=200, command=getSpeed,
-                 resolution=1, foreground='white', bg=blk, activebackground='#801410')
+                resolution=1, foreground='white', bg=blk, activebackground='#801410')
 slider.set(0)
 slider.config(label='Delay', font=font_style)
 slider.place(x=1260, y=50, width=240, height=100)

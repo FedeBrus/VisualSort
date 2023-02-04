@@ -155,8 +155,12 @@ def bogo_sort(array, main, stop, colors):
     while array != sorted(array):
         x = random.randint(0, len(array) - 1)
         y = random.randint(0, len(array) - 1)
-        array[x], array[y] = array[y], array[x]
+        colors[x] = sc
+        colors[y] = sc
         main.event_generate("<<draw>>")
+        array[x], array[y] = array[y], array[x]
+        colors[x] = fc
+        colors[y] = fc
         time.sleep(velocity[0])
         if (stop[0]):
             return
@@ -305,8 +309,11 @@ def quick_sort(array, main, stop, inf, sup, colors):
         return
     if inf < sup:
         q = partition(array, main, stop, inf, sup, colors)
+        colors[q] = sc
         quick_sort(array, main, stop, inf, q - 1, colors)
         quick_sort(array, main, stop, q + 1, sup, colors)
+        colors[q] = fc
+    reset_colors(array, colors, main)
 
 def gnome_sort(array, main, stop, colors):
     # Per ora identico all'insertion sort, quando faremo anche i colori si noterà la differenza

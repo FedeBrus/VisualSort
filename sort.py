@@ -4,7 +4,7 @@ import threading
 import math
 
 global velocity
-velocity = [0]
+velocity = [0.0]
 
 fc = 'red'
 sc = 'snow'
@@ -177,7 +177,7 @@ def heapify(arr, N, i, stop, colors):
         
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]  # swap
-        heapify(arr, N, largest, stop)
+        heapify(arr, N, largest, stop, colors)
 
 
 def heap_sort(array, main, stop, colors):
@@ -193,7 +193,7 @@ def heap_sort(array, main, stop, colors):
 
     for i in range(N-1, 0, -1):
         array[i], array[0] = array[0], array[i]  # swap
-        heapify(array, i, 0, stop)
+        heapify(array, i, 0, stop, colors)
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):

@@ -33,7 +33,7 @@ flash
 postman
 uni
 bead
-pancake
+pancake             x
 ICBICS
 spaghetti
 sortingnetwork

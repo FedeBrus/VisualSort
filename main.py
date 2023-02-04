@@ -187,7 +187,7 @@ minDelay = 0
 maxDelay = 10
 
 slider = Scale(options, from_=minDelay, to=maxDelay, orient=HORIZONTAL, length=200, command=getSpeed,
-                 resolution=1, foreground='white', bg=blk, activebackground='#801410')
+                resolution=1, foreground='white', bg=blk, activebackground='#801410')
 slider.set(0)
 slider.config(label='Delay', font=font_style)
 slider.place(x=1260, y=50, width=240, height=100)

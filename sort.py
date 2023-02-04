@@ -127,8 +127,12 @@ def counting_sort(array, main, stop, colors):
     maxA = (max(array) + 1)
     copia = [0] * maxA
 
-    for x in array:
-        copia[x] = copia[x] + 1
+    for i in range(len(array)):
+        colors[i] = sc
+        copia[array[i]] = copia[array[i]] + 1
+        main.event_generate("<<draw>>")
+        time.sleep(velocity[0])
+        colors[i] = fc
         if (stop[0]):
             return
 
@@ -143,6 +147,8 @@ def counting_sort(array, main, stop, colors):
         time.sleep(velocity[0])
         if (stop[0]):
             return
+
+    reset_colors(array, colors, main)
 
 
 def bogo_sort(array, main, stop, colors):

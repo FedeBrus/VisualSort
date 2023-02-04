@@ -12,6 +12,7 @@ def sort_array(alg):
     global stop
     global colors
 
+    btn_stop["state"] = "normal"
     btn_sort["state"] = "disabled"
     btn_shuffle["state"] = "disabled"
 
@@ -67,6 +68,7 @@ def sort_array(alg):
 
         btn_sort['state'] = "normal"
         btn_shuffle['state'] = "normal"
+        btn_stop['state'] = "disabled"
 
     Thread(target=sort, daemon=True).start()
 
@@ -174,6 +176,7 @@ btn_sort.place(x=680, y=50, width=240, height=100)
 # Stop Button
 btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg='white', font=font_style)
 btn_stop.place(x=920, y=50, width=240, height=100)
+btn_stop['state'] = "disabled"
 
 # Slider for sorting speed
 def getSpeed(val):

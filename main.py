@@ -7,7 +7,7 @@ from threading import Thread
 from pygame import mixer
 
 stop = [False]
-sound = True
+sound = False
 
 def sort_array(alg):
     global stop
@@ -94,10 +94,12 @@ def draw_array():
 
     if sound:
         mixer.music.play()
+    
     main.update_idletasks()
 
 # Fisher-Yates shuffle
 def shuffle_array(array):
+    global colors
     colors = ['red' for i in range(len(array))]
     for i in range(0, len(array) - 1):
         j = rnd.randint(i, len(array) - 1)
@@ -111,19 +113,18 @@ def generate_array(size):
     array = [i for i in range(1, size + 1)]
     shuffle_array(array)
     draw_array()
-
-
+    
 def stop_thread():
     global stop
     global colors
     colors = ['red' for i in range(len(array))]
-    stop[0] = True
     generate_array(int(selected_size.get()))
-    shuffle_array(array)
+    stop[0] = True
 
 def toggle_sound():
     global sound
     sound = not sound
+    btn_sound["text"] = "Toggle sound off" if sound else "Toggle sound on"
 
 # Main window
 main = Tk()
@@ -186,7 +187,7 @@ btn_sort = Button(options, command=lambda: sort_array(
 btn_sort.place(x=680, y=50, width=240, height=100)
 
 # Sound button
-btn_sound = Button(options, command=toggle_sound, text='Toggle sound', bg=blk, fg='white', font=font_style)
+btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=blk, fg='white', font=font_style)
 btn_sound.place(x=680, y=10, width=240, height=40)
 
 # Stop Button

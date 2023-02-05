@@ -205,6 +205,7 @@ def heap_sort(array, main, stop, colors):
     for i in range(N-1, 0, -1):
         array[i], array[0] = array[0], array[i]  # swap
         heapify(array, i, 0, stop, colors)
+        colors[i] = fc
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):

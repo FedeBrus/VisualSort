@@ -72,8 +72,8 @@ def sort_array(alg):
         btn_sort["state"] = "normal"
         btn_shuffle["state"] = "normal"
         btn_stop["state"] = "disabled"
-        sizes["state"] = "normal"
-        algorithms["state"] = "normal"
+        sizes["state"] = "readonly"
+        algorithms["state"] = "readonly"
 
     Thread(target=sort, daemon=True).start()
 

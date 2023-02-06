@@ -141,8 +141,9 @@ mixer.init()
 mixer.music.load("blipSelect.wav")
 
 # Colors
-blk = '#1c1c1c'
-rd = '#a32929'
+blk = '#282828'
+rd = '#fb4934'
+wht = '#ebdbb2'
 
 # Font
 font_style = font.Font(family='Consolas', size=12)
@@ -157,7 +158,7 @@ combostyle = ttk.Style()
 combostyle.theme_create('combostyle', parent='clam', settings = {'TCombobox': {'configure': {
                                                                                             'selectbackground': blk,
                                                                                             'fieldbackground': blk,
-                                                                                            'foreground': 'white'
+                                                                                            'foreground': wht
                                                                                             }}})
 combostyle.theme_use('combostyle')
 
@@ -182,20 +183,20 @@ selected_size.trace("w", lambda x, y, z: generate_array(int(selected_size.get())
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
-    int(selected_size.get())), text='Shuffle', bg=blk, fg='white', font=font_style)
+    int(selected_size.get())), text='Shuffle', bg=blk, fg=wht, font=font_style)
 btn_shuffle.place(x=440, y=50, width=240, height=100)
 
 # Sort Button
 btn_sort = Button(options, command=lambda: sort_array(
-    selected_alg.get()), text='Sort', bg=blk, fg='white', font=font_style)
+    selected_alg.get()), text='Sort', bg=blk, fg=wht, font=font_style)
 btn_sort.place(x=680, y=50, width=240, height=100)
 
 # Sound button
-btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=blk, fg='white', font=font_style)
+btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=blk, fg=wht, font=font_style)
 btn_sound.place(x=680, y=10, width=240, height=40)
 
 # Stop Button
-btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg='white', font=font_style)
+btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg=wht, font=font_style)
 btn_stop.place(x=920, y=50, width=240, height=100)
 btn_stop['state'] = "disabled"
 
@@ -208,7 +209,7 @@ minDelay = 0
 maxDelay = 10
 
 slider = Scale(options, from_=minDelay, to=maxDelay, orient=HORIZONTAL, length=200, command=getSpeed,
-                resolution=1, foreground='white', bg=blk, activebackground='#801410')
+                resolution=1, foreground=wht, bg=blk, activebackground=rd)
 slider.set(0)
 slider.config(label='Delay', font=font_style)
 slider.place(x=1260, y=50, width=240, height=100)

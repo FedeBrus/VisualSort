@@ -13,6 +13,8 @@ def sort_array(alg):
     global stop
     global colors
 
+    sizes["state"] = "disabled"
+    algorithms["state"] = "disabled"
     btn_stop["state"] = "normal"
     btn_sort["state"] = "disabled"
     btn_shuffle["state"] = "disabled"
@@ -67,9 +69,11 @@ def sort_array(alg):
             case 'Quick sort':
                 quick_sort(array, main, stop, 0, len(array) - 1, colors)
 
-        btn_sort['state'] = "normal"
-        btn_shuffle['state'] = "normal"
-        btn_stop['state'] = "disabled"
+        btn_sort["state"] = "normal"
+        btn_shuffle["state"] = "normal"
+        btn_stop["state"] = "disabled"
+        sizes["state"] = "normal"
+        algorithms["state"] = "normal"
 
     Thread(target=sort, daemon=True).start()
 

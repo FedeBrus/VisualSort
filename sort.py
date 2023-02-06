@@ -35,7 +35,6 @@ def bubble_sort(array, main, stop, colors):
                 return
         i += 1
 
-    reset_colors(array, colors, main)
 
 def insertion_sort(array, main, stop, colors):
     n = len(array)
@@ -51,7 +50,6 @@ def insertion_sort(array, main, stop, colors):
             if stop[0]:
                 return
     
-    reset_colors(array, colors, main)
 
 def selection_sort(array, main, stop, colors):
     n = len(array)
@@ -77,7 +75,6 @@ def selection_sort(array, main, stop, colors):
         if stop[0]:
             return
     
-    reset_colors(array, colors, main)
 
 def merge(array, main, stop, inf, ctr, sup, colors):
     i, j, k = inf, ctr + 1, 0
@@ -120,7 +117,6 @@ def merge_sort(array, main, stop, inf, sup, colors):
         merge_sort(array, main, stop, ctr + 1, sup, colors)
         merge(array, main, stop, inf, ctr, sup, colors)
 
-    reset_colors(array, colors, main)
 
 def counting_sort(array, main, stop, colors):
     maxA = (max(array) + 1)
@@ -147,7 +143,6 @@ def counting_sort(array, main, stop, colors):
         if (stop[0]):
             return
 
-    reset_colors(array, colors, main)
 
 def bogo_sort(array, main, stop, colors):
     while array != sorted(array):
@@ -162,7 +157,6 @@ def bogo_sort(array, main, stop, colors):
         time.sleep(velocity[0])
         if (stop[0]):
             return
-    reset_colors(array, colors, main)
 
 def heapify(arr, N, i, stop, colors):
     if (stop[0]):
@@ -208,7 +202,6 @@ def heap_sort(array, main, stop, colors):
             return
     
     colors[0] = fc
-    reset_colors(array, colors, main)
 
 def radix10LSD_sort(array, main, stop, colors):
     n = len(array)
@@ -250,7 +243,6 @@ def radix10LSD_sort(array, main, stop, colors):
 
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
-        reset_colors(array, colors, main)
 
 def radix2LSD_sort(array, main, stop, colors):
     n = len(array)
@@ -291,7 +283,6 @@ def radix2LSD_sort(array, main, stop, colors):
         posto *= 2
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
-        reset_colors(array, colors, main)
 
 def partition(array, main, stop, inf, sup, colors):
     # Questo campionamento serve a prende un pivot abbastanza bilanciato, per migliorare l'effetto visivo
@@ -328,8 +319,6 @@ def quick_sort(array, main, stop, inf, sup, colors):
         quick_sort(array, main, stop, q + 1, sup, colors)
     reset_colors(array, colors, main)
 
-    reset_colors(array, colors, main)
-
 def gnome_sort(array, main, stop, colors):
     n = len(array)
     pos = 0
@@ -352,7 +341,6 @@ def gnome_sort(array, main, stop, colors):
         if(stop[0]):
             return
     
-    reset_colors(array, colors, main)
 
 def introinsertion(array, main, stop, inf, sup, colors):
     n = sup - inf + 1
@@ -437,7 +425,6 @@ def intro_sort(array, main, stop, colors):
     maxdepth = 4
     #maxdepth = math.floor(math.log2(len(array))) * 2
     introutil(array, main, stop, maxdepth, 0, len(array) - 1, colors)
-    reset_colors(array, colors, main)
 
 def sleep_sort(array: list, main, stop):
     copia = array.copy()
@@ -446,7 +433,7 @@ def sleep_sort(array: list, main, stop):
     e = threading.Event()
 
     def s_sort(val):
-        e.wait(0.1 * val * (velocity[0] * 1000))
+        e.wait((0.1 * val) + (velocity[0] * 1000))
         array.append(val)
         main.event_generate("<<draw>>")
 
@@ -762,7 +749,6 @@ def cycle_sort(array, main, stop, colors):
             colors[pos] = fc
             if(stop[0]):
                 return
-    reset_colors(array, colors, main)
 
 def stooge_sort(array, main, stop, start, end, colors):
     if(stop[0]):
@@ -782,8 +768,6 @@ def stooge_sort(array, main, stop, start, end, colors):
         stooge_sort(array, main, stop, start, end - onethird, colors)
         stooge_sort(array, main, stop, start + onethird, end, colors)
         stooge_sort(array, main, stop, start, end - onethird, colors)
-        if start == 0 and end == len(array) - 1:
-            reset_colors(array, colors, main)
             
 def flip(array, main, stop, k, colors):
     left = 0
@@ -814,7 +798,6 @@ def pancake_sort(array, main, stop, colors):
         flip(array, main, stop, maxdex, colors)
         flip(array, main, stop, n - 1, colors)
         n -= 1
-    reset_colors(array, colors, main)
     
 def slow_sort(array, main, stop, colors, start, end):
     if start >= end or stop[0]:
@@ -827,11 +810,10 @@ def slow_sort(array, main, stop, colors, start, end):
     if array[end] < array[middle]:
         array[end], array[middle] = array[middle], array[end]
         
+    time.sleep(velocity[0])
     slow_sort(array, main, stop, colors, start, end - 1)
     colors[end] = sc
     colors[start] = sc
     main.event_generate("<<draw>>")
     colors[end] = fc
     colors[start] = fc
-    reset_colors(array, colors, main)
-    time.sleep(velocity[0])

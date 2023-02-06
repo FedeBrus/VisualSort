@@ -516,8 +516,10 @@ def bucketinsertion(array, main, stop, inf, sup, colors):
         while j > 0 and array[inf + j - 1] > array[inf + j]:
             array[inf + j - 1], array[inf + j] = array[inf + j], array[inf + j - 1]
             j -= 1
+            colors[inf + j] = sc
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
+            colors[inf + j] = tc
             if stop[0]:
                 return
     return
@@ -676,6 +678,8 @@ def strand_sort(array: list, superlist, ric, main, stop, colors):
         i = 0
         idx = 0
         while i < len(superlist):
+            if(stop[0]):
+                return
             if(superlist[i] > sublist[idx]):
                 sublist.append(superlist.pop(i))
                 i -= 1
@@ -824,6 +828,8 @@ def slow_sort(array, main, stop, colors, start, end):
     slow_sort(array, main, stop, colors, start, end - 1)
     colors[end] = sc
     colors[start] = sc
+    if stop[0]:
+        return
     main.event_generate("<<draw>>")
     time.sleep(velocity[0])
     colors[end] = fc

@@ -99,6 +99,10 @@ def draw_array():
     rectY = 600 / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
     rY = 600
+    
+    if(len(array) > len(colors)):
+        array = array[0:-1:].copy()
+
     for i in range(len(array)):
         color = colors[i]
         canvas.create_rectangle(

@@ -484,20 +484,42 @@ def oddeven_sort(array, main, stop, colors):
         sorted = True
         for i in range(1, n - 1, 2):
             if array[i] > array[i + 1]:
+                colors[i] = sc
+                colors[i + 1] = sc
                 array[i], array[i + 1] = array[i + 1], array[i]
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])
+                colors[i] = fc
+                colors[i + 1] = fc
                 sorted = False
                 if stop[0]:
                     return
         for i in range(0, n - 1, 2):
             if array[i] > array[i + 1]:
+                colors[i] = sc
+                colors[i + 1] = sc
                 array[i], array[i + 1] = array[i + 1], array[i]
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])
+                colors[i] = fc
+                colors[i + 1] = fc
                 sorted = False
                 if stop[0]:
                     return
+    reset_colors(array, colors, main)
+
+def bucketinsertion(array, main, stop, inf, sup, colors):
+    n = sup - inf + 1
+    for i in range(1, n):
+        j = i
+        while j > 0 and array[inf + j - 1] > array[inf + j]:
+            array[inf + j - 1], array[inf + j] = array[inf + j], array[inf + j - 1]
+            j -= 1
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
+            if stop[0]:
+                return
+    return
 
 def bucket_sort(array, main, stop, colors):
     n = len(array)
@@ -520,8 +542,13 @@ def bucket_sort(array, main, stop, colors):
 
     idx = 0
     for i in range(0, k):
-        introinsertion(array, main, stop, idx, idx + len(buckets[i]) - 1, colors)
+        for j in range(len(buckets[i])):
+            colors[idx + j] = tc
+        bucketinsertion(array, main, stop, idx, idx + len(buckets[i]) - 1, colors)
+        reset_colors(array, colors, main)
         idx += len(buckets[i])
+
+    reset_colors(array, colors, main)
 
 def cocktailshaker_sort(array, main, stop, colors):
     n = len(array)

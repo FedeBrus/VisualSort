@@ -37,7 +37,6 @@ def bubble_sort(array, main, stop, colors):
 
     reset_colors(array, colors, main)
 
-
 def insertion_sort(array, main, stop, colors):
     n = len(array)
     for i in range(1, n):
@@ -53,7 +52,6 @@ def insertion_sort(array, main, stop, colors):
                 return
     
     reset_colors(array, colors, main)
-
 
 def selection_sort(array, main, stop, colors):
     n = len(array)
@@ -80,7 +78,6 @@ def selection_sort(array, main, stop, colors):
             return
     
     reset_colors(array, colors, main)
-
 
 def merge(array, main, stop, inf, ctr, sup, colors):
     i, j, k = inf, ctr + 1, 0
@@ -125,7 +122,6 @@ def merge_sort(array, main, stop, inf, sup, colors):
 
     reset_colors(array, colors, main)
 
-
 def counting_sort(array, main, stop, colors):
     maxA = (max(array) + 1)
     copia = [0] * maxA
@@ -152,7 +148,6 @@ def counting_sort(array, main, stop, colors):
             return
 
     reset_colors(array, colors, main)
-
 
 def bogo_sort(array, main, stop, colors):
     while array != sorted(array):
@@ -185,7 +180,6 @@ def heapify(arr, N, i, stop, colors):
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]  # swap
         heapify(arr, N, largest, stop, colors)
-
 
 def heap_sort(array, main, stop, colors):
 
@@ -367,8 +361,10 @@ def introinsertion(array, main, stop, inf, sup, colors):
         while j > 0 and array[inf + j - 1] > array[inf + j]:
             array[inf + j - 1], array[inf + j] = array[inf + j], array[inf + j - 1]
             j -= 1
+            colors[inf + j] = sc
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
+            colors[inf + j] = tc
             if stop[0]:
                 return
     return
@@ -400,30 +396,48 @@ def introheap(array, main, stop, inf, sup, colors):
         if (stop[0]):
             return
 
+    bi = 0
+    for i in range(math.ceil(math.log2(N))):
+        for j in range(2**i):
+            if(bi + j < N):
+                colors[inf + bi + j] = othercolors[i]
+        bi = (bi << 1) + 1
+
     for i in range(N-1, 0, -1):
         array[inf + i], array[inf] = array[inf], array[inf + i]  # swap
         introheapify(array, i, 0, stop, inf, colors)
+        colors[inf + i] = tc
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
         if (stop[0]):
             return
+        
+    colors[inf] = tc
 
 def introutil(array, main, stop, maxdepth, inf, sup, colors):
     n = sup - inf + 1
     #if n < 16:
     if n < 32:
+        for i in range(inf, sup + 1):
+            colors[i] = tc
         introinsertion(array, main, stop, inf, sup, colors)
+        reset_colors(array, colors, main)
     elif maxdepth == 0:
+        for i in range(inf, sup + 1):
+            colors[i] = tc
         introheap(array, main, stop, inf, sup, colors)
+        reset_colors(array, colors, main)
     else:
         q = partition(array, main, stop, inf, sup, colors)
         introutil(array, main, stop, maxdepth - 1, inf, q - 1, colors)
         introutil(array, main, stop, maxdepth - 1, q + 1, sup, colors)
+    reset_colors(array, colors, main)
 
 def intro_sort(array, main, stop, colors):
     maxdepth = 4
     #maxdepth = math.floor(math.log2(len(array))) * 2
     introutil(array, main, stop, maxdepth, 0, len(array) - 1, colors)
+    reset_colors(array, colors, main)
 
 def sleep_sort(array: list, main, stop):
     copia = array.copy()
@@ -702,6 +716,7 @@ def strand_sort(array: list, superlist, ric, main, stop, colors):
                     solstart = 0
         
         ric[0] += 1
+        time.sleep(velocity[0] * 2)
         strand_sort(array, superlist, ric, main, stop, colors)
 
 def cycle_sort(array, main, stop, colors):
@@ -721,9 +736,11 @@ def cycle_sort(array, main, stop, colors):
         while x == array[pos]:
             pos += 1
 
+        colors[pos] = sc
         array[pos], x = x, array[pos]
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
+        colors[pos] = fc
         if(stop[0]):
             return
 
@@ -738,11 +755,14 @@ def cycle_sort(array, main, stop, colors):
             while x == array[pos]:
                 pos += 1
 
+            colors[pos] = sc
             array[pos], x = x, array[pos]
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
+            colors[pos] = fc
             if(stop[0]):
                 return
+    reset_colors(array, colors, main)
 
 def stooge_sort(array, main, stop, start, end, colors):
     if(stop[0]):

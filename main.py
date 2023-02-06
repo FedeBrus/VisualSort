@@ -81,6 +81,7 @@ def sort_array(alg):
         btn_stop["state"] = "disabled"
         sizes["state"] = "readonly"
         algorithms["state"] = "readonly"
+        slider["state"] = "normal"
         reset_colors(array, colors, main)
         
     Thread(target=sort, daemon=True).start()

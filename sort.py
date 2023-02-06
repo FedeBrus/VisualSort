@@ -433,7 +433,7 @@ def sleep_sort(array: list, main, stop):
     e = threading.Event()
 
     def s_sort(val):
-        e.wait((0.1 * val) + (velocity[0] * 1000))
+        e.wait((0.1 * val) * (0.001 * 1000))
         array.append(val)
         main.event_generate("<<draw>>")
 

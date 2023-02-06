@@ -12,13 +12,18 @@ sound = False
 def sort_array(alg):
     global stop
     global colors
-
+    
     sizes["state"] = "disabled"
     algorithms["state"] = "disabled"
     btn_stop["state"] = "normal"
     btn_sort["state"] = "disabled"
     btn_shuffle["state"] = "disabled"
 
+    if(alg == 'Sleep sort'):
+        btn_stop["state"] = "disabled"
+        slider.set(0)
+        slider["state"] = "disabled"
+    
     def sort():
         stop[0] = False
         match (alg):

@@ -519,26 +519,32 @@ def cocktailshaker_sort(array, main, stop, colors):
         sorted = True
         for idx in range(i, j):
             if(array[idx] > array[idx + 1]):
+                colors[idx + 1] = sc
                 array[idx], array[idx + 1] = array[idx + 1], array[idx]
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])
+                colors[idx + 1] = fc
                 if(stop[0]):
                     return
                 sorted = False
 
         j -= 1
         if sorted:
+            reset_colors(array, colors, main)
             return
         else:
             for idx in range(j, i - 1, -1):
                 if(array[idx] > array[idx + 1]):
+                    colors[idx] = sc
                     array[idx], array[idx + 1] = array[idx + 1], array[idx]
                     main.event_generate("<<draw>>")
                     time.sleep(velocity[0])
+                    colors[idx] = fc
                     if(stop[0]):
                         return
                     sorted = False
             i += 1
+    reset_colors(array, colors, main)
 
 def comb_sort(array, main, stop, colors):
     n = len(array)
@@ -552,12 +558,17 @@ def comb_sort(array, main, stop, colors):
             gap = 1
         for i in range(0, n - gap):
             if array[i] > array[i + gap]:
+                colors[i] = sc
+                colors[i + gap] = sc
                 array[i], array[i + gap] = array[i + gap], array[i]
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])
+                colors[i] = fc
+                colors[i + gap] = fc
                 if(stop[0]):
                     return
                 sorted = False
+    reset_colors(array, colors, main)
 
 class BST:
     def __init__(self):
@@ -719,9 +730,13 @@ def flip(array, main, stop, k, colors):
     while left < k:
         if(stop[0]):
             return
+        colors[left] = sc
+        colors[k] = sc
         array[left], array[k] = array[k], array[left]
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
+        colors[left] = fc
+        colors[k] = fc
         k -= 1
         left += 1
 
@@ -739,3 +754,4 @@ def pancake_sort(array, main, stop, colors):
         flip(array, main, stop, maxdex, colors)
         flip(array, main, stop, n - 1, colors)
         n -= 1
+    reset_colors(array, colors, main)

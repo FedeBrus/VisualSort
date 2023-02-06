@@ -12,7 +12,9 @@ tc = 'lime'
 othercolors = ["blue", "purple", "brown", "cyan", "yellow", 'green', 'orange', 'magenta', 'gray', 'beige']
 
 def reset_colors(array, colors, main):
-    colors = ['red' for i in range(len(array))]
+    n = len(array)
+    for i in range(n):
+        colors[i] = fc
     main.event_generate("<<draw>>")
 
 def bubble_sort(array, main, stop, colors):
@@ -335,7 +337,6 @@ def quick_sort(array, main, stop, inf, sup, colors):
     reset_colors(array, colors, main)
 
 def gnome_sort(array, main, stop, colors):
-    # Per ora identico all'insertion sort, quando faremo anche i colori si noterà la differenza
     n = len(array)
     pos = 0
     while(pos < n):
@@ -451,18 +452,30 @@ def shell_sort(array, main, stop, colors):
     gaps = [701, 301, 132, 57, 23, 10, 4, 1]
     for gap in gaps:
         for i in range(gap, n):
+            colors[i] = tc
+            main.event_generate("<<draw>>")
+            time.sleep(velocity[0])
             tmp = array[i]
             j = i
             while j >= gap and array[j - gap] > tmp:
                 array[j] = array[j - gap]
+                if j != i:
+                    colors[j + gap] = sc
+                colors[j] = tc
+                colors[j - gap] = sc
                 j -= gap
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])
                 if stop[0]:
                     return
             array[j] = tmp
-            main.event_generate("<<draw>>")
-            time.sleep(velocity[0])
+            reset_colors(array, colors, main)
+            if j != i:
+                colors[j] = tc
+                main.event_generate("<<draw>>")
+                time.sleep(velocity[0])
+                reset_colors(array, colors, main)
+    reset_colors(array, colors, main)
 
 def oddeven_sort(array, main, stop, colors):
     n = len(array)

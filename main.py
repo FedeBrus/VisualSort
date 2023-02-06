@@ -123,10 +123,22 @@ def generate_array(size):
     
 def stop_thread():
     global stop
+    global array
     global colors
-    colors = ['#cc241d' for i in range(len(array))]
-    generate_array(int(selected_size.get()))
+
+    n = int(selected_size.get())
+    if(len(array) != n):
+        for i in range(n):
+            if i + 1 not in array:
+                array.append(i + 1)
+
+    for i in range(n):
+        colors[i] = '#cc241d'
+
+    draw_array()
+    #generate_array(int(selected_size.get()))
     stop[0] = True
+
 
 def toggle_sound():
     global sound

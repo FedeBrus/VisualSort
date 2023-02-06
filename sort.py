@@ -631,17 +631,21 @@ class BST:
                 self.right.insert(val)
 
     def ascending(self, array, main, stop):
+        if(stop[0]):
+            return
         if self.value != None:
             if self.left == None:
                 self.left = BST()
             self.left.ascending(array, main, stop)
             
+            if(stop[0]):
+                return
             array.append(self.value)
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
             if(stop[0]):
                 return
-            
+
             if self.right == None:
                 self.right = BST()
             self.right.ascending(array, main, stop)
@@ -661,7 +665,7 @@ def tree_sort(array, main, stop):
     tree.ascending(array, main, stop)
     
 def strand_sort(array: list, superlist, ric, main, stop, colors):
-    if(len(superlist) == 0):
+    if(stop[0] or len(superlist) == 0):
         return
     else:
         if(ric[0] == 0):
@@ -681,6 +685,8 @@ def strand_sort(array: list, superlist, ric, main, stop, colors):
         if ric[0] == 0:
             i = 0
             while i < len(sublist):
+                if(stop[0]):
+                    return
                 array.append(sublist[i])
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])
@@ -691,9 +697,13 @@ def strand_sort(array: list, superlist, ric, main, stop, colors):
             subend = len(sublist) - 1
             solstart = 0;
             while len(sublist) > 0:
+                if(stop[0]):
+                    return
                 if sublist[subend] > array[solstart]:
                     solstart += 1
                 else:
+                    if(stop[0]):
+                        return
                     array.insert(solstart, sublist.pop(subend))
                     main.event_generate("<<draw>>")
                     time.sleep(velocity[0])
@@ -705,6 +715,7 @@ def strand_sort(array: list, superlist, ric, main, stop, colors):
         ric[0] += 1
         time.sleep(velocity[0] * 2)
         strand_sort(array, superlist, ric, main, stop, colors)
+
 
 def cycle_sort(array, main, stop, colors):
     n = len(array)
@@ -810,10 +821,10 @@ def slow_sort(array, main, stop, colors, start, end):
     if array[end] < array[middle]:
         array[end], array[middle] = array[middle], array[end]
         
-    time.sleep(velocity[0])
     slow_sort(array, main, stop, colors, start, end - 1)
     colors[end] = sc
     colors[start] = sc
     main.event_generate("<<draw>>")
+    time.sleep(velocity[0])
     colors[end] = fc
     colors[start] = fc

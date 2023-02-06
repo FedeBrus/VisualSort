@@ -815,3 +815,23 @@ def pancake_sort(array, main, stop, colors):
         flip(array, main, stop, n - 1, colors)
         n -= 1
     reset_colors(array, colors, main)
+    
+def slow_sort(array, main, stop, colors, start, end):
+    if start >= end or stop[0]:
+        return
+    
+    middle = math.floor((start + end) / 2);
+    slow_sort(array, main, stop, colors, start, middle);
+    slow_sort(array, main, stop, colors, middle + 1, end);
+    
+    if array[end] < array[middle]:
+        array[end], array[middle] = array[middle], array[end]
+        
+    slow_sort(array, main, stop, colors, start, end - 1)
+    colors[end] = sc
+    colors[start] = sc
+    main.event_generate("<<draw>>")
+    colors[end] = fc
+    colors[start] = fc
+    reset_colors(array, colors, main)
+    time.sleep(velocity[0])

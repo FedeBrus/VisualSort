@@ -60,6 +60,8 @@ def sort_array(alg):
                 shell_sort(array, main, stop, colors)
             case 'Sleep sort':
                 sleep_sort(array, main, stop)
+            case 'Slow sort':
+                slow_sort(array, main, stop, colors, 0, len(array) - 1)
             case 'Stooge sort':
                 stooge_sort(array, main, stop, 0, len(array) - 1, colors)
             case 'Strand sort':
@@ -168,8 +170,8 @@ algorithms = ttk.Combobox(options, textvariable=selected_alg, font=font_style, s
 algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Cocktail Shaker sort',
                         'Comb sort', 'Counting sort', 'Cycle sort', 'Gnome sort', 'Heap sort', 'Insertion sort',
                         'Intro sort', 'Merge sort', 'Odd-Even sort', 'Pancake sort', 'Radix 10 LSD sort',
-                        'Radix 2 LSD sort', 'Selection sort', 'Shell sort', 'Sleep sort', 'Strand sort',
-                        'Stooge sort', 'Tree sort', 'Quick sort')
+                        'Radix 2 LSD sort', 'Selection sort', 'Shell sort', 'Sleep sort', 'Slow sort',
+                        'Strand sort', 'Stooge sort', 'Tree sort', 'Quick sort')
 algorithms.current(0)
 algorithms.place(x=100, y=50, width=240, height=50)
 

@@ -40,5 +40,5 @@ sortingnetwork
 bitonic
 bogo                x
 stooge              x
-slow
+slow                x
 

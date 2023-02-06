@@ -6,7 +6,7 @@ import math
 global velocity
 velocity = [0.0]
 
-fc = '#fb4934'
+fc = '#cc241d'
 sc = '#ebdbb2'
 tc = '#b8bb26'
 othercolors = ["#928374", "#fabd2f", "#83a598", "#d3869b", "#fe8019", '#8ec07c', '#f92672', '#7fffd4', '#e1c699', '#c8a2c8']

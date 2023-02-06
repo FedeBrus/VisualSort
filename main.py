@@ -104,7 +104,7 @@ def draw_array():
 # Fisher-Yates shuffle
 def shuffle_array(array):
     global colors
-    colors = ['red' for i in range(len(array))]
+    colors = ['#cc241d' for i in range(len(array))]
     for i in range(0, len(array) - 1):
         j = rnd.randint(i, len(array) - 1)
         array[j], array[i] = array[i], array[j]
@@ -113,7 +113,7 @@ def shuffle_array(array):
 def generate_array(size):
     global array
     global colors
-    colors = ['red' for i in range(size)]
+    colors = ['#cc241d' for i in range(size)]
     array = [i for i in range(1, size + 1)]
     shuffle_array(array)
     draw_array()
@@ -121,7 +121,7 @@ def generate_array(size):
 def stop_thread():
     global stop
     global colors
-    colors = ['red' for i in range(len(array))]
+    colors = ['#cc241d' for i in range(len(array))]
     generate_array(int(selected_size.get()))
     stop[0] = True
 
@@ -142,7 +142,7 @@ mixer.music.load("blipSelect.wav")
 
 # Colors
 blk = '#282828'
-rd = '#fb4934'
+rd = '#cc241d'
 wht = '#ebdbb2'
 
 # Font

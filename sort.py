@@ -16,6 +16,7 @@ def reset_colors(array, colors, main):
     for i in range(n):
         colors[i] = fc
     main.event_generate("<<draw>>")
+    time.sleep(velocity[0])
 
 def bubble_sort(array, main, stop, colors):
     n = len(array)
@@ -305,9 +306,11 @@ def partition(array, main, stop, inf, sup, colors):
             return i + 1
 
     colors[sup] = fc
+    colors[i + 1] = tc
     array[i + 1], array[sup] = array[sup], array[i + 1]
     main.event_generate("<<draw>>")
     time.sleep(velocity[0])
+    colors[i + 1] = fc
     return i + 1
     
 def quick_sort(array, main, stop, inf, sup, colors):
@@ -454,11 +457,15 @@ def shell_sort(array, main, stop, colors):
     for gap in gaps:
         for i in range(gap, n):
             colors[i] = tc
+            if stop[0]:
+                return
             main.event_generate("<<draw>>")
             time.sleep(velocity[0])
             tmp = array[i]
             j = i
             while j >= gap and array[j - gap] > tmp:
+                if stop[0]:
+                    return
                 array[j] = array[j - gap]
                 if j != i:
                     colors[j + gap] = sc
@@ -467,11 +474,11 @@ def shell_sort(array, main, stop, colors):
                 j -= gap
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])
-                if stop[0]:
-                    return
             array[j] = tmp
             reset_colors(array, colors, main)
             if j != i:
+                if stop[0]:
+                    return
                 colors[j] = tc
                 main.event_generate("<<draw>>")
                 time.sleep(velocity[0])

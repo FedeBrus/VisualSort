@@ -14,4 +14,5 @@ In the next releases we plan to add more sorting algorithms, color themes and an
 
 ## Authors 
 VisualSort was created FedeBrus, Nikicoraz and FratelloDog.
+
 ITT G. Chilesotti, 4 IC 22/23

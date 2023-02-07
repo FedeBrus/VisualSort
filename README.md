@@ -10,7 +10,7 @@ Otherwise you can always clone this repository using git:
 git clone https://github.com/fedebrus/visualsort
 ```
 ## Future updates
-In the next releases we plan to add more sorting algorithms, color themes and an information page for every algorithm.
+In the next releases we plan to add more sorting algorithms, several color themes and an information page for every algorithm.
 
 ## Authors 
 VisualSort was created FedeBrus, Nikicoraz and FratelloDog.

@@ -122,7 +122,7 @@ def shuffle_array(array):
         j = rnd.randint(i, len(array) - 1)
         array[j], array[i] = array[i], array[j]
 
-# Generates an array whose elements have distinct values from 1 to size
+# Generates an array of distinct values from 1 to size
 def generate_array(size):
     global array
     global colors
@@ -136,7 +136,7 @@ def stop_thread():
     global array
     global colors
 
-    n = int(selected_size.get())
+    n = int(selected_size.get()) 
     if(len(array) != n):
         for i in range(n):
             if i + 1 not in array:
@@ -146,7 +146,6 @@ def stop_thread():
         colors[i] = '#cc241d'
 
     draw_array()
-    #generate_array(int(selected_size.get()))
     stop[0] = True
 
 

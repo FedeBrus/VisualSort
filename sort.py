@@ -105,17 +105,25 @@ def merge(array, main, stop, inf, ctr, sup, colors):
         array[inf + i] = supp[i]
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
-        if stop[0]:
-            return
-
+    
     colors[inf] = fc
     colors[sup] = fc
+    
+    if stop[0]:
+        return
 
 def merge_sort(array, main, stop, inf, sup, colors):
+    if stop[0]:
+        return
+    
     if inf < sup:
         ctr = (sup + inf) // 2
         merge_sort(array, main, stop, inf, ctr, colors)
+        if stop[0]:
+            return
         merge_sort(array, main, stop, ctr + 1, sup, colors)
+        if stop[0]:
+            return
         merge(array, main, stop, inf, ctr, sup, colors)
 
 
@@ -141,8 +149,6 @@ def counting_sort(array, main, stop, colors):
 
         main.event_generate("<<draw>>")
         time.sleep(velocity[0])
-        if (stop[0]):
-            return
 
 
 def bogo_sort(array, main, stop, colors):
@@ -286,7 +292,6 @@ def radix2LSD_sort(array, main, stop, colors):
         time.sleep(velocity[0])
 
 def partition(array, main, stop, inf, sup, colors):
-    # Questo campionamento serve a prende un pivot abbastanza bilanciato, per migliorare l'effetto visivo
     sample_size = 5
     if sup - inf + 1 >= sample_size:
         samples = [array[inf + i] for i in range(0, sample_size)]

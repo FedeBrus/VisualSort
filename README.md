@@ -13,6 +13,6 @@ git clone https://github.com/fedebrus/visualsort
 In the next releases we plan to add more sorting algorithms, several color themes and an information page for every algorithm.
 
 ## Authors 
-VisualSort was created FedeBrus, Nikicoraz and FratelloDog.
+VisualSort was created by FedeBrus, Nikicoraz and FratelloDog.
 
 ITT G. Chilesotti, 4 IC 22/23

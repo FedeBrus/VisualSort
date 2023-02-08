@@ -5,6 +5,10 @@ import random as rnd
 from sort import *
 from threading import Thread
 from pygame import mixer
+from pysound import oscillators
+from pysound import soundfile
+from pysound import buffer
+from os import remove
 
 stop = [False]
 sound = False
@@ -83,6 +87,10 @@ def sort_array(alg):
         algorithms["state"] = "readonly"
         slider["state"] = "normal"
         reset_colors(array, colors, main)
+        try:
+            remove("sound.wav")
+        except IOError:
+            pass
         
     Thread(target=sort, daemon=True).start()
 
@@ -110,8 +118,15 @@ def draw_array():
         rX += rectX
 
     if sound:
+        mixer.music.unload()
+        params = buffer.BufferParams(420)
+        pitch = 0
+        pitch += sum([array[i] for i, x in enumerate(colors) if colors[i] == sc])
+        data = oscillators.sine_wave(params, pitch * 20, 1)
+        soundfile.save(params, "sound.wav", data)
+        mixer.music.load("sound.wav")
         mixer.music.play()
-    
+        
     main.update_idletasks()
 
 # Fisher-Yates shuffle
@@ -162,7 +177,6 @@ main.resizable(False, False)
 main.protocol("WM_DELETE_WINDOW", )
 
 mixer.init()
-mixer.music.load("blipSelect.wav")
 
 # Colors
 blk = '#282828'

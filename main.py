@@ -83,6 +83,7 @@ def sort_array(alg):
             case 'Quick sort':
                 quick_sort(array, main, stop, 0, len(array) - 1, colors)
 
+        draw_final()
         btn_sort["state"] = "normal"
         btn_shuffle["state"] = "normal"
         btn_stop["state"] = "disabled"
@@ -90,6 +91,7 @@ def sort_array(alg):
         algorithms["state"] = "readonly"
         slider["state"] = "normal"
         reset_colors(array, colors, main)
+        
         try:
             remove("sound.wav")
         except IOError:
@@ -131,6 +133,16 @@ def draw_array():
         mixer.music.play()
         
     main.update_idletasks()
+
+# Draw the array when the sort has finished
+def draw_final():
+    global colors, array
+    colors = [tc for x in array]
+    for i, x in enumerate(array):
+        colors[i] = sc
+        main.event_generate("<<draw>>")
+        colors[i] = tc
+        time.sleep(0.01)
 
 # Fisher-Yates shuffle
 def shuffle_array(array):

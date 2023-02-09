@@ -198,18 +198,16 @@ main.protocol("WM_DELETE_WINDOW", )
 mixer.init()
 
 # Colors
-dark1 = '#533747'
-dark2 = '#5F506B'
-medium1 = '#6A6B83'
-medium2 = '#76949F'
-light = '#86BBBD'
+dark = '#282828'
+medium = '#ebdbb2'
+light = '#ebdbb2'
 
 # Font
 font_style = font.Font(family='Consolas', size=12)
-font_info = font.Font(family='Consolas', size = 20)
+font_icon = font.Font(family='Arial', size = 20)
 
 # Options Frame
-options = Frame(main, width=1600, height=200, bg=dark2)
+options = Frame(main, width=1600, height=200, bg=dark)
 options.grid_propagate(False)
 options.pack()
 
@@ -238,51 +236,42 @@ style.theme_create("combobox", parent='alt')
 style.theme_use(themename="combobox")
 
 # Info Button
-btn_info = Button(options, text="ⓘ", bg=dark2, fg=light, font=font_info)
+btn_info = Button(options, text="ℹ️", bg=dark, fg=light, font=font_icon)
 btn_info.place(x=30, y=50, width=50, height=50)
-
-def color_combobox(dark2, light):
-    style = ttk.Style()
-    style.configure("TCombobox", fieldbackground=dark2)
-    algorithms.config(foreground=light)
-    sizes.config(foreground=light)
 
 # Themes Button
 def set_colors(colors):
-    print(colors)
-    dark1, dark2, medium1, medium2, light, unitcolor = colors
+    dark, medium, light, unitcolor = colors
 
-    color_combobox(dark2, light)
+    options.config(bg=dark)
+    btn_info.config(bg=dark, fg=light)
+    btn_themes.config(bg=dark, fg=light)
+    btn_sound.config(bg=dark, fg=light)
+    btn_shuffle.config(bg=dark, fg=light)
+    btn_sort.config(bg=dark, fg=light)
+    btn_stop.config(bg=dark, fg=light)
+    slider.config(bg=dark, fg=light, activebackground=medium, highlightbackground=medium)
+    canvas.config(bg=dark, highlightbackground=medium)
 
-    options.config(bg=dark2)
-    btn_info.config(bg=dark2, fg=light)
-    btn_themes.config(bg=dark2, fg=light)
-    btn_sound.config(bg=dark2, fg=light)
-    btn_shuffle.config(bg=dark2, fg=light)
-    btn_sort.config(bg=dark2, fg=light)
-    btn_stop.config(bg=dark2, fg=light)
-    slider.config(bg=dark2, fg=light, activebackground=medium2, highlightbackground=medium1)
-    canvas.config(bg=dark1, highlightbackground=medium1)
-
-btn_themes = Button(options, command=lambda: show_themes(main, set_colors), text="Theme", bg=dark2, fg=light, font=font_style)
+btn_themes = Button(options, command=lambda: show_themes(main, set_colors), text="✨", bg=dark, fg=light, font=font_icon)
 btn_themes.place(x=30, y=100, width=50, height=50)
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
-    int(selected_size.get())), text='Shuffle', bg=dark2, fg=light, font=font_style)
+    int(selected_size.get())), text='Shuffle', bg=dark, fg=light, font=font_style)
 btn_shuffle.place(x=440, y=50, width=240, height=100)
 
 # Sort Button
 btn_sort = Button(options, command=lambda: sort_array(
-    selected_alg.get()), text='Sort', bg=dark2, fg=light, font=font_style)
+    selected_alg.get()), text='Sort', bg=dark, fg=light, font=font_style)
 btn_sort.place(x=680, y=50, width=240, height=100)
 
 # Sound button
-btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=dark2, fg=light, font=font_style)
+btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=dark, fg=light, font=font_style)
 btn_sound.place(x=680, y=10, width=240, height=40)
 
 # Stop Button
-btn_stop = Button(options, command=stop_thread, text="Stop", bg=dark2, fg=light, font=font_style)
+btn_stop = Button(options, command=stop_thread, text="Stop", bg=dark, fg=light, font=font_style)
 btn_stop.place(x=920, y=50, width=240, height=100)
 btn_stop['state'] = "disabled"
 
@@ -295,16 +284,22 @@ minDelay = 0
 maxDelay = 10
 
 slider = Scale(options, from_=minDelay, to=maxDelay, orient=HORIZONTAL, length=200, command=getSpeed,
-                resolution=1, foreground=light, bg=dark2, activebackground=medium2, highlightbackground=medium1)
+                resolution=1, foreground=light, bg=dark, activebackground=medium, highlightbackground=medium)
 slider.set(0)
 slider.config(label='Delay', font=font_style)
 slider.place(x=1260, y=50, width=240, height=100)
 
 # Sort Canvas
-canvas = Canvas(main, width=1600, height=600, bg=dark1, highlightthickness=3, highlightbackground=medium1)
+canvas = Canvas(main, width=1600, height=600, bg=dark, highlightthickness=3, highlightbackground=medium)
 canvas.pack()
 
-color_combobox(dark2, light)
+startingcombostyle = ttk.Style()
+startingcombostyle.theme_create('starting', parent='clam', settings = {'TCombobox': {'configure': {
+                                                                                            'selectbackground': dark,
+                                                                                            'fieldbackground': dark,
+                                                                                            'foreground': light
+                                                                                            }}})
+startingcombostyle.theme_use('starting')
 
 generate_array(100)
 main.bind("<<draw>>", draw_event)

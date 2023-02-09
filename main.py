@@ -137,12 +137,16 @@ def draw_array():
 # Draw the array when the sort has finished
 def draw_final():
     global colors, array
+    if stop[0]:
+        return
     colors = [tc for x in array]
     for i, x in enumerate(array):
         colors[i] = sc
         main.event_generate("<<draw>>")
         colors[i] = tc
         time.sleep(0.01)
+        if stop[0]:
+            return
 
 # Fisher-Yates shuffle
 def shuffle_array(array):

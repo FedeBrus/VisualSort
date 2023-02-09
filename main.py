@@ -122,10 +122,10 @@ def draw_array():
 
     if sound:
         mixer.music.unload()
-        params = buffer.BufferParams(420)
-        pitch = 0
+        params = buffer.BufferParams(400)
+        pitch = 1
         pitch += sum([array[i] for i, x in enumerate(colors) if colors[i] == sc])
-        data = oscillators.sine_wave(params, pitch * 20, 1)
+        data = oscillators.sine_wave(params, int(pitch / max(array) * 100) * 10, 0.7)
         soundfile.save(params, "sound.wav", data)
         mixer.music.load("sound.wav")
         mixer.music.play()

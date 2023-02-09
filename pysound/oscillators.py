@@ -65,7 +65,7 @@ def noise(params, amplitude=1, offset=0):
     output = offset + amplitude * (np.random.random(params.length)*2 - 1)
     return output
 
-def table_wave(params, frequency=400, amplitude=1,
+def table_wave(params, frequency=400, amplitude=1.0,
                 offset=0, table=None):
     '''
     Generate a wave from a wavetable
@@ -117,7 +117,7 @@ def sync_table_wave(params, sync, frequency=400, amplitude=1,
         index = int(index % size)
     return output*amplitude
 
-def sine_wave(params, frequency=400, amplitude=1, offset=0):
+def sine_wave(params, frequency=400, amplitude=1.0, offset=0):
     '''
     Generate a sine wave
     Convenience function, table_wave generates a sine wave by default

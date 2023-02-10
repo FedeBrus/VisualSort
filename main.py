@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import font
 import random as rnd
 from sort import *
+from themes import *
 from threading import Thread
 from pygame import mixer
 from pysound import oscillators
@@ -230,14 +231,14 @@ sizes.current(3)
 sizes.place(x=100, y=100, width=240, height=50)
 selected_size.trace("w", lambda x, y, z: generate_array(int(selected_size.get())))
 
-# Style ComboBox
-style=ttk.Style()
-style.theme_create("combobox", parent='alt')
-style.theme_use(themename="combobox")
-
 # Info Button
 btn_info = Button(options, text="ℹ️", bg=dark, fg=light, font=font_icon)
 btn_info.place(x=30, y=50, width=50, height=50)
+
+# Combobox Styles
+combostyle = ttk.Style()
+create_combobox_styles(combostyle)
+combostyle.theme_use('Theme 1')
 
 # Themes Button
 def set_colors(colors):
@@ -253,7 +254,7 @@ def set_colors(colors):
     slider.config(bg=dark, fg=light, activebackground=medium, highlightbackground=medium)
     canvas.config(bg=dark, highlightbackground=medium)
 
-btn_themes = Button(options, command=lambda: show_themes(main, set_colors), text="✨", bg=dark, fg=light, font=font_icon)
+btn_themes = Button(options, command=lambda: show_themes(main, set_colors, combostyle), text="✨", bg=dark, fg=light, font=font_icon)
 btn_themes.place(x=30, y=100, width=50, height=50)
 
 # Generate Button
@@ -292,14 +293,6 @@ slider.place(x=1260, y=50, width=240, height=100)
 # Sort Canvas
 canvas = Canvas(main, width=1600, height=600, bg=dark, highlightthickness=3, highlightbackground=medium)
 canvas.pack()
-
-startingcombostyle = ttk.Style()
-startingcombostyle.theme_create('starting', parent='clam', settings = {'TCombobox': {'configure': {
-                                                                                            'selectbackground': dark,
-                                                                                            'fieldbackground': dark,
-                                                                                            'foreground': light
-                                                                                            }}})
-startingcombostyle.theme_use('starting')
 
 generate_array(100)
 main.bind("<<draw>>", draw_event)

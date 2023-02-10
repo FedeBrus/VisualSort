@@ -3,10 +3,27 @@ from tkinter import ttk
 
 theme_window = None
 
-def show_themes(root, set_colors_f):
+global themes
+themes = [("Theme 1", "#282828, #ebdbb2, #ebdbb2, #ebdbb2"),
+              ("Theme 2", "#533747, #6A6B83, #91C1C3, #FF5733"), 
+              ("Theme 3", "#aaaaaa, #cccccc, #eeeeee, #ffffff"), 
+              ("Theme 4", "#112233, #778899, #ddeeff, #001122")]
+
+
+def create_combobox_styles(combostyle):
+    global themes
+    for i in range(len(themes)):
+        colors = themes[i][1].split(", ")
+        combostyle.theme_create('Theme ' + str(i + 1), parent='clam', settings = {'TCombobox': {'configure': {
+                                                                                            'selectbackground': colors[0],
+                                                                                            'fieldbackground': colors[0],
+                                                                                            'foreground': colors[2]
+                                                                                            }}})
+
+
+def show_themes(root, set_colors_f, combostyle):
     global theme_window
-    global combostyle
-    combostyle = ttk.Style()
+    global themes
 
     if theme_window is not None and theme_window.winfo_exists():
         return
@@ -16,20 +33,7 @@ def show_themes(root, set_colors_f):
     theme_window.geometry("240x70")
     theme_window.resizable(False, False)
     theme_window.grid_propagate(False)
-
-    themes = [("Theme 1", "#282828, #ebdbb2, #ebdbb2, #ebdbb2"),
-              ("Theme 2", "#533747, #6A6B83, #91C1C3, #FF5733"), 
-              ("Theme 3", "#aaaaaa, #cccccc, #eeeeee, #ffffff"), 
-              ("Theme 4", "#112233, #778899, #ddeeff, #001122")]
-
-    for i in range(len(themes)):
-        colors = themes[i][1].split(", ")
-        combostyle.theme_create('Theme ' + str(i + 1), parent='clam', settings = {'TCombobox': {'configure': {
-                                                                                            'selectbackground': colors[0],
-                                                                                            'fieldbackground': colors[0],
-                                                                                            'foreground': colors[2]
-                                                                                            }}})
-
+    
     theme_combo = ttk.Combobox(theme_window, values=[theme[0] for theme in themes], state='readonly')
     theme_combo.place(x=0, y=0, width=240, height=30) 
     theme_combo.current(0)
@@ -55,7 +59,6 @@ def show_themes(root, set_colors_f):
                     squares[i].configure(bg=color)
                 theme_window.config(bg=colors[0])
                 set_colors_f(colors)
-                global combostyle
                 combostyle.theme_use(str(theme[0]))
     
     theme_combo.bind("<<ComboboxSelected>>", lambda event: set_colors(themes[theme_combo.current()][1].split(", ")))

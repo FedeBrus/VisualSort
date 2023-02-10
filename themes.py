@@ -82,5 +82,6 @@ def show_themes(root, set_colors_f, combostyle):
 
 def close_theme_window():
     global theme_window
-    theme_window.destroy()
+    if theme_window != None:
+        theme_window.destroy()
     theme_window = None

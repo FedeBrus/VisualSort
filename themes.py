@@ -9,6 +9,8 @@ themes = [("Theme 1", "#282828, #ebdbb2, #ebdbb2, #ebdbb2"),
               ("Theme 3", "#aaaaaa, #cccccc, #eeeeee, #ffffff"), 
               ("Theme 4", "#112233, #778899, #ddeeff, #001122")]
 
+global last
+last = 0
 
 def create_combobox_styles(combostyle):
     global themes
@@ -24,6 +26,7 @@ def create_combobox_styles(combostyle):
 def show_themes(root, set_colors_f, combostyle):
     global theme_window
     global themes
+    global last
 
     if theme_window is not None and theme_window.winfo_exists():
         return
@@ -36,7 +39,7 @@ def show_themes(root, set_colors_f, combostyle):
     
     theme_combo = ttk.Combobox(theme_window, values=[theme[0] for theme in themes], state='readonly')
     theme_combo.place(x=0, y=0, width=240, height=30) 
-    theme_combo.current(0)
+    theme_combo.current(last)
 
     squares = []
     for i in range(4):
@@ -52,15 +55,21 @@ def show_themes(root, set_colors_f, combostyle):
 
     def set_colors(hex_values):
         selected_theme = theme_combo.get()
-        for theme in themes:
+        
+        for i, theme in enumerate(themes):
             if theme[0] == selected_theme:
                 colors = theme[1].split(", ")
-                for i, color in enumerate(colors):
-                    squares[i].configure(bg=color)
+                
+                for j, color in enumerate(colors):
+                    squares[j].configure(bg=color)
+                
                 theme_window.config(bg=colors[0])
                 set_colors_f(colors)
                 combostyle.theme_use(str(theme[0]))
-    
+
+                global last
+                last = i
+
     theme_combo.bind("<<ComboboxSelected>>", lambda event: set_colors(themes[theme_combo.current()][1].split(", ")))
 
     def on_closing():

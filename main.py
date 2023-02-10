@@ -25,6 +25,7 @@ def sort_array(alg):
     btn_stop["state"] = "normal"
     btn_sort["state"] = "disabled"
     btn_shuffle["state"] = "disabled"
+    btn_themes["state"] = "disabled"
 
     if(alg == 'Sleep sort'):
         btn_stop["state"] = "disabled"
@@ -34,7 +35,9 @@ def sort_array(alg):
     set_unit_colors(unitcolors)
 
     def sort():
+        from themes import close_theme_window
         stop[0] = False
+        close_theme_window()
         match (alg):
             case 'Bubble sort':
                 bubble_sort(array, main, stop, colors)
@@ -92,6 +95,7 @@ def sort_array(alg):
         sizes["state"] = "readonly"
         algorithms["state"] = "readonly"
         slider["state"] = "normal"
+        btn_themes["state"] = "normal"
         reset_colors(array, colors, main)
         
         try:

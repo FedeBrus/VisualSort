@@ -79,3 +79,8 @@ def show_themes(root, set_colors_f, combostyle):
         
     theme_window.after(100, set_default_colors)
     theme_window.protocol("WM_DELETE_WINDOW", on_closing)
+
+def close_theme_window():
+    global theme_window
+    theme_window.destroy()
+    theme_window = None

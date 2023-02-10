@@ -4,9 +4,9 @@ from tkinter import ttk
 theme_window = None
 
 global themes
-themes = [("Theme 1", "#282828, #ebdbb2, #ebdbb2, #ebdbb2"),
+themes = [("Theme 1", "#282828, #282828, #ebdbb2, #cc241d"),
           ("Theme 2", "#533747, #6A6B83, #91C1C3, #FF5733"), 
-          ("Theme 3", "#aaaaaa, #cccccc, #eeeeee, #ffffff"), 
+          ("Theme 3", "#003C82, #12A0D7, #FFFFFF, #ffffff"), 
           ("Theme 4", "#112233, #778899, #ddeeff, #001122")]
 
 global last
@@ -17,8 +17,8 @@ def create_combobox_styles(combostyle):
     for i in range(len(themes)):
         colors = themes[i][1].split(", ")
         combostyle.theme_create('Theme ' + str(i + 1), parent='clam', settings = {'TCombobox': {'configure': {
-                                                                                            'selectbackground': colors[0],
-                                                                                            'fieldbackground': colors[0],
+                                                                                            'selectbackground': colors[1],
+                                                                                            'fieldbackground': colors[1],
                                                                                             'foreground': colors[2]
                                                                                             }}})
 

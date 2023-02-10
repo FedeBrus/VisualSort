@@ -14,8 +14,7 @@ from themes import *
 
 stop = [False]
 sound = False
-global unitcolor 
-unitcolor = '#FF5733'
+unitcolors = ['#cc241d', '#ebdbb2', '#b8bb26'] 
 
 def sort_array(alg):
     global stop
@@ -32,6 +31,8 @@ def sort_array(alg):
         slider.set(0)
         slider["state"] = "disabled"
     
+    set_unit_colors(unitcolors)
+
     def sort():
         stop[0] = False
         match (alg):
@@ -140,11 +141,11 @@ def draw_final():
     global colors, array
     if stop[0]:
         return
-    colors = [tc for x in array]
+    colors = [unitcolors[2] for x in array]
     for i, x in enumerate(array):
         colors[i] = sc
         main.event_generate("<<draw>>")
-        colors[i] = tc
+        colors[i] = unitcolors[2]
         time.sleep(0.01)
         if stop[0]:
             return
@@ -152,7 +153,8 @@ def draw_final():
 # Fisher-Yates shuffle
 def shuffle_array(array):
     global colors
-    colors = ['#cc241d' for i in range(len(array))]
+    global unitcolors
+    colors = [unitcolors[0] for i in range(len(array))]
     for i in range(0, len(array) - 1):
         j = rnd.randint(i, len(array) - 1)
         array[j], array[i] = array[i], array[j]
@@ -161,7 +163,8 @@ def shuffle_array(array):
 def generate_array(size):
     global array
     global colors
-    colors = ['#cc241d' for i in range(size)]
+    global unitcolors
+    colors = [unitcolors[0] for i in range(size)]
     array = [i for i in range(1, size + 1)]
     shuffle_array(array)
     draw_array()
@@ -170,6 +173,7 @@ def stop_thread():
     global stop
     global array
     global colors
+    global unitcolors
 
     n = int(selected_size.get()) 
     if(len(array) != n):
@@ -178,7 +182,7 @@ def stop_thread():
                 array.append(i + 1)
 
     for i in range(n):
-        colors[i] = '#cc241d'
+        colors[i] = unitcolors[0]
 
     draw_array()
     stop[0] = True
@@ -242,17 +246,23 @@ combostyle.theme_use('Theme 1')
 
 # Themes Button
 def set_colors(colors):
-    dark, medium, light, unitcolor = colors
+    global unitcolors
+    dark, medium, light, unitcolors[0] = colors
+    unitcolors[1] = light
+    unitcolors[2] = dark
 
     options.config(bg=dark)
-    btn_info.config(bg=dark, fg=light)
-    btn_themes.config(bg=dark, fg=light)
-    btn_sound.config(bg=dark, fg=light)
-    btn_shuffle.config(bg=dark, fg=light)
-    btn_sort.config(bg=dark, fg=light)
-    btn_stop.config(bg=dark, fg=light)
-    slider.config(bg=dark, fg=light, activebackground=medium, highlightbackground=medium)
-    canvas.config(bg=dark, highlightbackground=medium)
+    btn_info.config(bg=medium, fg=light)
+    btn_themes.config(bg=medium, fg=light)
+    btn_sound.config(bg=medium, fg=light)
+    btn_shuffle.config(bg=medium, fg=light)
+    btn_sort.config(bg=medium, fg=light)
+    btn_stop.config(bg=medium, fg=light)
+    slider.config(bg=medium, fg=light, activebackground=light, highlightbackground=light)
+    canvas.config(bg=medium, highlightbackground=light)
+
+    global array
+    generate_array(len(array))
 
 btn_themes = Button(options, command=lambda: show_themes(main, set_colors, combostyle), text="★", bg=dark, fg=light, font=font_icon)
 btn_themes.place(x=30, y=100, width=50, height=50)

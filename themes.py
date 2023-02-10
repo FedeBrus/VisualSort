@@ -5,9 +5,9 @@ theme_window = None
 
 global themes
 themes = [("Theme 1", "#282828, #ebdbb2, #ebdbb2, #ebdbb2"),
-              ("Theme 2", "#533747, #6A6B83, #91C1C3, #FF5733"), 
-              ("Theme 3", "#aaaaaa, #cccccc, #eeeeee, #ffffff"), 
-              ("Theme 4", "#112233, #778899, #ddeeff, #001122")]
+          ("Theme 2", "#533747, #6A6B83, #91C1C3, #FF5733"), 
+          ("Theme 3", "#aaaaaa, #cccccc, #eeeeee, #ffffff"), 
+          ("Theme 4", "#112233, #778899, #ddeeff, #001122")]
 
 global last
 last = 0

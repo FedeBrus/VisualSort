@@ -232,7 +232,7 @@ sizes.place(x=100, y=100, width=240, height=50)
 selected_size.trace("w", lambda x, y, z: generate_array(int(selected_size.get())))
 
 # Info Button
-btn_info = Button(options, text="ℹ️", bg=dark, fg=light, font=font_icon)
+btn_info = Button(options, text="ⓘ", bg=dark, fg=light, font=font_icon)
 btn_info.place(x=30, y=50, width=50, height=50)
 
 # Combobox Styles
@@ -254,7 +254,7 @@ def set_colors(colors):
     slider.config(bg=dark, fg=light, activebackground=medium, highlightbackground=medium)
     canvas.config(bg=dark, highlightbackground=medium)
 
-btn_themes = Button(options, command=lambda: show_themes(main, set_colors, combostyle), text="✨", bg=dark, fg=light, font=font_icon)
+btn_themes = Button(options, command=lambda: show_themes(main, set_colors, combostyle), text="★", bg=dark, fg=light, font=font_icon)
 btn_themes.place(x=30, y=100, width=50, height=50)
 
 # Generate Button

@@ -146,7 +146,7 @@ def draw_final():
         colors[i] = sc
         main.event_generate("<<draw>>")
         colors[i] = unitcolors[2]
-        time.sleep(0.01)
+        time.sleep(0.5/len(array))
         if stop[0]:
             return
 

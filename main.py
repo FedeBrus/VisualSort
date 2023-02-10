@@ -249,9 +249,10 @@ create_combobox_styles(combostyle)
 combostyle.theme_use('Theme 1')
 
 # Themes Button
-def set_colors(colors):
+def set_colors(colors1):
     global unitcolors
-    dark, medium, light, unitcolors[0] = colors
+    global colors
+    dark, medium, light, unitcolors[0] = colors1
     unitcolors[1] = light
     unitcolors[2] = dark
 
@@ -266,7 +267,8 @@ def set_colors(colors):
     canvas.config(bg=medium, highlightbackground=light)
 
     global array
-    generate_array(len(array))
+    colors = [unitcolors[0] for i in range(len(array))]
+    draw_array()
 
 btn_themes = Button(options, command=lambda: show_themes(main, set_colors, combostyle), text="★", bg=dark, fg=light, font=font_icon)
 btn_themes.place(x=30, y=100, width=50, height=50)

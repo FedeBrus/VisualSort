@@ -132,7 +132,7 @@ def draw_array():
     if sound:
         
         pitch = last
-        pitch = sum([array[i] for i, x in enumerate(colors) if colors[i] == sc])
+        pitch = sum([array[i] for i, x in enumerate(colors) if colors[i] == unitcolors[1]])
 
         params = buffer.BufferParams(440)
         data = oscillators.sine_wave(params, int(pitch / max(array) * 100) * 10, amplitude=0.05)
@@ -155,7 +155,7 @@ def draw_final():
         return
     colors = [unitcolors[2] for x in array]
     for i, x in enumerate(array):
-        colors[i] = sc
+        colors[i] = unitcolors[1]
         main.event_generate("<<draw>>")
         colors[i] = unitcolors[2]
         time.sleep(0.5 / len(array))
@@ -260,9 +260,7 @@ combostyle.theme_use('Theme 1')
 def set_colors(colors1):
     global unitcolors
     global colors
-    dark, medium, light, unitcolors[0] = colors1
-    unitcolors[1] = light
-    unitcolors[2] = dark
+    dark, medium, light, unitcolors[0], unitcolors[1], unitcolors[2] = colors1
 
     options.config(bg=dark)
     btn_info.config(bg=medium, fg=light)

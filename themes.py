@@ -4,10 +4,10 @@ from tkinter import ttk
 theme_window = None
 
 global themes
-themes = [("Theme 1", "#282828, #282828, #ebdbb2, #cc241d"),
-          ("Theme 2", "#533747, #6A6B83, #91C1C3, #FF5733"), 
-          ("Theme 3", "#003C82, #12A0D7, #FFFFFF, #ffffff"), 
-          ("Theme 4", "#112233, #778899, #ddeeff, #001122")]
+themes = [("Theme 1", "#282828, #282828, #ebdbb2, #cc241d, #ebdbb2, #b8bb26"),
+          ("Theme 2", "#533747, #6A6B83, #91C1C3, #FF5733, #91C1C3, #6A6B83"), 
+          ("Theme 3", "#003C82, #12A0D7, #FFFFFF, #ffffff, #003C82, #ffffff"), 
+          ("Theme 4", "#112233, #778899, #ddeeff, #001122, #001122, #ddeeff")]
 
 global last
 last = 0
@@ -42,9 +42,9 @@ def show_themes(root, set_colors_f, combostyle):
     theme_combo.current(last)
 
     squares = []
-    for i in range(4):
+    for i in range(6):
         square = tk.Canvas(theme_window, width=20, height=20, highlightbackground='#000000')
-        square.place(x=i*60, y=30, width=60, height=40)
+        square.place(x=i*40, y=30, width=40, height=40)
         squares.append(square)
 
     def set_default_colors():

@@ -80,9 +80,18 @@ def table_wave(params, frequency=400, amplitude=1.0,
     if not table:
         table = create_sine_table(65536)
     size = table.size
+    #print("frequency1", frequency)
     frequency = create_buffer(params, frequency)
+    #print("frequency2", frequency)
+
+    #print("amplitude1", frequency)
     amplitude = create_buffer(params, amplitude)
+    #print("apmlitude2", frequency)
+    
+    #print("offset1", frequency)
     offset = create_buffer(params, offset)
+    #print("offset2", frequency)
+    
     index = np.floor((np.add.accumulate(frequency / params.get_sample_rate()) % 1) * size).astype(int)
     output = offset + amplitude * table[index]
     return output

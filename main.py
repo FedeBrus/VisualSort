@@ -111,6 +111,7 @@ def draw_event(event):
 # Clears canvas and draws the new array
 def draw_array():
     global array
+    global last
     global colors
     global sound
     canvas.delete('all')
@@ -129,13 +130,20 @@ def draw_array():
         rX += rectX
 
     if sound:
-        mixer.music.unload()
-        params = buffer.BufferParams(400)
-        pitch = 1
-        pitch += sum([array[i] for i, x in enumerate(colors) if colors[i] == sc])
-        data = oscillators.sine_wave(params, int(pitch / max(array) * 100) * 10, 0.7)
+        
+        pitch = last
+        pitch = sum([array[i] for i, x in enumerate(colors) if colors[i] == sc])
+
+        params = buffer.BufferParams(440)
+        data = oscillators.sine_wave(params, int(pitch / max(array) * 100) * 10, amplitude=0.05)
         soundfile.save(params, "sound.wav", data)
-        mixer.music.load("sound.wav")
+        
+        if last != pitch:
+            mixer.music.unload()
+            mixer.music.load("sound.wav")
+
+        last = pitch
+
         mixer.music.play()
         
     main.update_idletasks()
@@ -150,7 +158,7 @@ def draw_final():
         colors[i] = sc
         main.event_generate("<<draw>>")
         colors[i] = unitcolors[2]
-        time.sleep(0.5/len(array))
+        time.sleep(0.5 / len(array))
         if stop[0]:
             return
 

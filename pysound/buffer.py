@@ -73,6 +73,7 @@ def create_buffer(params, value=0.0):
         return buffer
     try:
         fv = float(value)
+        #print(fv)
         return np.full(params.get_length(), fv, np.float64)
     except TypeError:
         raise TypeError('Value must be a float or a numpy array')

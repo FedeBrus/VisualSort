@@ -114,11 +114,13 @@ def draw_array():
     global last
     global colors
     global sound
+    global width
+    global height
     canvas.delete('all')
-    rectX = 1600 / len(array) if len(array) else 1
-    rectY = 600 / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
+    rectX = width / len(array) if len(array) else 1
+    rectY = (height - 200) / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
-    rY = 600
+    rY = height - 200
     
     if(len(array) > len(colors)):
         array = array[0:-1:].copy()
@@ -208,7 +210,14 @@ def toggle_sound():
 # Main window
 main = Tk()
 main.title("Visual Sort")
-main.geometry("1600x800")
+if main.winfo_screenheight() <= 900:
+    width = 1300
+    height = 625
+else:
+    width = 1600
+    height = 800
+
+main.geometry(f"{width}x{height}")
 main.resizable(False, False)
 main.protocol("WM_DELETE_WINDOW", )
 
@@ -224,7 +233,7 @@ font_style = font.Font(family='Consolas', size=12)
 font_icon = font.Font(family='Arial', size = 20)
 
 # Options Frame
-options = Frame(main, width=1600, height=200, bg=dark)
+options = Frame(main, width=width, height=height - (height - 200), bg=dark)
 options.grid_propagate(False)
 options.pack()
 
@@ -237,14 +246,14 @@ algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Cocktail Sha
                         'Radix 2 LSD sort', 'Selection sort', 'Shell sort', 'Sleep sort', 'Slow sort',
                         'Strand sort', 'Stooge sort', 'Tree sort', 'Quick sort')
 algorithms.current(0)
-algorithms.place(x=100, y=50, width=240, height=50)
+algorithms.place(x=width / 16, y=50, width=240, height=50)
 
 # Size ComboBox
 selected_size = StringVar()
 sizes = ttk.Combobox(options, textvariable=selected_size, font=font_style, state='readonly')
 sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
 sizes.current(3)
-sizes.place(x=100, y=100, width=240, height=50)
+sizes.place(x=width / 16, y=100, width=240, height=50)
 selected_size.trace("w", lambda x, y, z: generate_array(int(selected_size.get())))
 
 # Info Button
@@ -282,20 +291,20 @@ btn_themes.place(x=30, y=100, width=50, height=50)
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
     int(selected_size.get())), text='Shuffle', bg=dark, fg=light, font=font_style)
-btn_shuffle.place(x=440, y=50, width=240, height=100)
+btn_shuffle.place(x=440/1600 * width, y=50, width=240 / 1600 * width, height=100)
 
 # Sort Button
 btn_sort = Button(options, command=lambda: sort_array(
     selected_alg.get()), text='Sort', bg=dark, fg=light, font=font_style)
-btn_sort.place(x=680, y=50, width=240, height=100)
+btn_sort.place(x=680/1600 * width, y=50, width=240 / 1600 * width, height=100)
 
 # Sound button
 btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=dark, fg=light, font=font_style)
-btn_sound.place(x=680, y=10, width=240, height=40)
+btn_sound.place(x=680/1600 * width, y=10, width=240 / 1600 * width, height=40)
 
 # Stop Button
 btn_stop = Button(options, command=stop_thread, text="Stop", bg=dark, fg=light, font=font_style)
-btn_stop.place(x=920, y=50, width=240, height=100)
+btn_stop.place(x=920/1600 * width, y=50, width=240 / 1600 * width, height=100)
 btn_stop['state'] = "disabled"
 
 # Slider for sorting speed
@@ -310,10 +319,10 @@ slider = Scale(options, from_=minDelay, to=maxDelay, orient=HORIZONTAL, length=2
                 resolution=1, foreground=light, bg=dark, activebackground=medium, highlightbackground=medium)
 slider.set(0)
 slider.config(label='Delay', font=font_style)
-slider.place(x=1260, y=50, width=240, height=100)
+slider.place(x=1260 / 1600 * width, y=50, width=240 / 1600 * width, height=100)
 
 # Sort Canvas
-canvas = Canvas(main, width=1600, height=600, bg=dark, highlightthickness=3, highlightbackground=medium)
+canvas = Canvas(main, width=width, height=height - 200, bg=dark, highlightthickness=3, highlightbackground=medium)
 canvas.pack()
 
 generate_array(100)

@@ -11,6 +11,9 @@ from pysound import soundfile
 from pysound import buffer
 from os import remove
 from themes import *
+from sorts import BubbleSort, InsertionSort, SelectionSort, MergeSort, CountingSort, BogoSort, HeapSort, Radix10LSDSort, Radix2LSDSort, QuickSort
+from sorts import GnomeSort, IntroSort, SleepSort, ShellSort, OddEvenSort, BucketSort, CocktailShakerSort, CombSort, TreeSort, StrandSort, CycleSort
+from sorts import StoogeSort, PancakeSort, SlowSort
 
 stop = [False]
 sound = False
@@ -38,56 +41,59 @@ def sort_array(alg):
         from themes import close_theme_window
         stop[0] = False
         close_theme_window()
+        algo = BubbleSort.BubbleSort(array, main, stop, colors)
+        
         match (alg):
             case 'Bubble sort':
-                bubble_sort(array, main, stop, colors)
+                algo = BubbleSort.BubbleSort.fromAlgorithm(algo)
             case 'Bogo sort':
-                bogo_sort(array, main, stop, colors)
+                algo = BogoSort.BogoSort.fromAlgorithm(algo)
             case 'Bucket sort':
-                bucket_sort(array, main, stop, colors)
+                algo = BucketSort.BucketSort.fromAlgorithm(algo)
             case 'Cocktail Shaker sort':
-                cocktailshaker_sort(array, main, stop, colors)
+                algo = CocktailShakerSort.CocktailSorterSort.fromAlgorithm(algo)
             case 'Comb sort':
-                comb_sort(array, main, stop, colors)
+                algo = CombSort.CombSort.fromAlgorithm(algo)
             case 'Counting sort':
-                counting_sort(array, main, stop, colors)
+                algo = CountingSort.CountingSort.fromAlgorithm(algo)
             case 'Cycle sort':
-                cycle_sort(array, main, stop, colors)
+                algo = CycleSort.CycleSort.fromAlgorithm(algo)
             case 'Gnome sort':
-                gnome_sort(array, main, stop, colors)
+                algo = GnomeSort.GnomeSort.fromAlgorithm(algo)
             case 'Heap sort':
-                heap_sort(array, main, stop, colors)
+                algo = HeapSort.HeapSort.fromAlgorithm(algo)
             case 'Insertion sort':
-                insertion_sort(array, main, stop, colors)
+                algo = InsertionSort.InsertionSort.fromAlgorithm(algo)
             case 'Intro sort':
-                intro_sort(array, main, stop, colors)
+                algo = IntroSort.IntroSort.fromAlgorithm(algo)
             case 'Merge sort':
-                merge_sort(array, main, stop, 0, len(array) - 1, colors)
+                algo = MergeSort.MergeSort.fromAlgorithm(algo)
             case 'Odd-Even sort':
-                oddeven_sort(array, main, stop, colors)
+                algo = OddEvenSort.OddEvenSort.fromAlgorithm(algo)
             case 'Pancake sort':
-                pancake_sort(array, main, stop, colors)
+                algo = PancakeSort.PancakeSort.fromAlgorithm(algo)
             case 'Radix 10 LSD sort':
-                radix10LSD_sort(array, main, stop, colors)
+                algo = Radix10LSDSort.Radix10LSDSort.fromAlgorithm(algo)
             case 'Radix 2 LSD sort':
-                radix2LSD_sort(array, main, stop, colors)
+                algo = Radix2LSDSort.Radix2LSDSort.fromAlgorithm(algo)
             case 'Selection sort':
-                selection_sort(array, main, stop, colors)
+                algo = SelectionSort.SelectionSort.fromAlgorithm(algo)
             case 'Shell sort':
-                shell_sort(array, main, stop, colors)
+                algo = ShellSort.ShellSort.fromAlgorithm(algo)
             case 'Sleep sort':
-                sleep_sort(array, main, stop)
+                algo = SleepSort.SleepSort.fromAlgorithm(algo)
             case 'Slow sort':
-                slow_sort(array, main, stop, colors, 0, len(array) - 1)
+                algo = SlowSort.SlowSort.fromAlgorithm(algo)
             case 'Stooge sort':
-                stooge_sort(array, main, stop, 0, len(array) - 1, colors)
+                algo = StoogeSort.StoogeSort.fromAlgorithm(algo)
             case 'Strand sort':
-                strand_sort(array, array, [0], main, stop, colors)
+                algo = StrandSort.StrandSort.fromAlgorithm(algo)
             case 'Tree sort':
-                tree_sort(array, main, stop)
+                algo = TreeSort.TreeSort.fromAlgorithm(algo)
             case 'Quick sort':
-                quick_sort(array, main, stop, 0, len(array) - 1, colors)
+                algo = QuickSort.QuickSort.fromAlgorithm(algo)
 
+        algo.run()
         draw_final()
         btn_sort["state"] = "normal"
         btn_shuffle["state"] = "normal"
@@ -96,7 +102,6 @@ def sort_array(alg):
         algorithms["state"] = "readonly"
         slider["state"] = "normal"
         btn_themes["state"] = "normal"
-        reset_colors(array, colors, main)
         
         try:
             remove("sound.wav")
@@ -163,6 +168,11 @@ def draw_final():
         time.sleep(0.5 / len(array))
         if stop[0]:
             return
+    
+    n = len(array)
+    for i in range(n):
+        colors[i] = fc
+    draw_array()
 
 # Fisher-Yates shuffle
 def shuffle_array(array):

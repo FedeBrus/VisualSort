@@ -16,8 +16,8 @@ class BogoSort(Algorithm):
             self._colors[x] = self._fc
             self._colors[y] = self._fc
 
-        if (self._stop[0]):
-            return
-        
+            if (self._stop[0]):
+                return
+            
     def info(self):
         pass

@@ -3,11 +3,21 @@ from tkinter import ttk
 from tkinter import font
 import random as rnd
 from sort import *
+from themes import *
 from threading import Thread
 from pygame import mixer
+from pysound import oscillators
+from pysound import soundfile
+from pysound import buffer
+from os import remove
+from themes import *
+from sorts import BubbleSort, InsertionSort, SelectionSort, MergeSort, CountingSort, BogoSort, HeapSort, Radix10LSDSort, Radix2LSDSort, QuickSort
+from sorts import GnomeSort, IntroSort, SleepSort, ShellSort, OddEvenSort, BucketSort, CocktailShakerSort, CombSort, TreeSort, StrandSort, CycleSort
+from sorts import StoogeSort, PancakeSort, SlowSort
 
 stop = [False]
 sound = False
+unitcolors = ['#cc241d', '#ebdbb2', '#b8bb26'] 
 
 def sort_array(alg):
     global stop
@@ -18,71 +28,85 @@ def sort_array(alg):
     btn_stop["state"] = "normal"
     btn_sort["state"] = "disabled"
     btn_shuffle["state"] = "disabled"
+    btn_themes["state"] = "disabled"
 
     if(alg == 'Sleep sort'):
         btn_stop["state"] = "disabled"
         slider.set(0)
         slider["state"] = "disabled"
     
+    set_unit_colors(unitcolors)
+
     def sort():
+        from themes import close_theme_window
         stop[0] = False
+        close_theme_window()
+        algo = BubbleSort.BubbleSort(array, main, stop, colors)
+        
         match (alg):
             case 'Bubble sort':
-                bubble_sort(array, main, stop, colors)
+                algo = BubbleSort.BubbleSort.fromAlgorithm(algo)
             case 'Bogo sort':
-                bogo_sort(array, main, stop, colors)
+                algo = BogoSort.BogoSort.fromAlgorithm(algo)
             case 'Bucket sort':
-                bucket_sort(array, main, stop, colors)
+                algo = BucketSort.BucketSort.fromAlgorithm(algo)
             case 'Cocktail Shaker sort':
-                cocktailshaker_sort(array, main, stop, colors)
+                algo = CocktailShakerSort.CocktailSorterSort.fromAlgorithm(algo)
             case 'Comb sort':
-                comb_sort(array, main, stop, colors)
+                algo = CombSort.CombSort.fromAlgorithm(algo)
             case 'Counting sort':
-                counting_sort(array, main, stop, colors)
+                algo = CountingSort.CountingSort.fromAlgorithm(algo)
             case 'Cycle sort':
-                cycle_sort(array, main, stop, colors)
+                algo = CycleSort.CycleSort.fromAlgorithm(algo)
             case 'Gnome sort':
-                gnome_sort(array, main, stop, colors)
+                algo = GnomeSort.GnomeSort.fromAlgorithm(algo)
             case 'Heap sort':
-                heap_sort(array, main, stop, colors)
+                algo = HeapSort.HeapSort.fromAlgorithm(algo)
             case 'Insertion sort':
-                insertion_sort(array, main, stop, colors)
+                algo = InsertionSort.InsertionSort.fromAlgorithm(algo)
             case 'Intro sort':
-                intro_sort(array, main, stop, colors)
+                algo = IntroSort.IntroSort.fromAlgorithm(algo)
             case 'Merge sort':
-                merge_sort(array, main, stop, 0, len(array) - 1, colors)
+                algo = MergeSort.MergeSort.fromAlgorithm(algo)
             case 'Odd-Even sort':
-                oddeven_sort(array, main, stop, colors)
+                algo = OddEvenSort.OddEvenSort.fromAlgorithm(algo)
             case 'Pancake sort':
-                pancake_sort(array, main, stop, colors)
+                algo = PancakeSort.PancakeSort.fromAlgorithm(algo)
             case 'Radix 10 LSD sort':
-                radix10LSD_sort(array, main, stop, colors)
+                algo = Radix10LSDSort.Radix10LSDSort.fromAlgorithm(algo)
             case 'Radix 2 LSD sort':
-                radix2LSD_sort(array, main, stop, colors)
+                algo = Radix2LSDSort.Radix2LSDSort.fromAlgorithm(algo)
             case 'Selection sort':
-                selection_sort(array, main, stop, colors)
+                algo = SelectionSort.SelectionSort.fromAlgorithm(algo)
             case 'Shell sort':
-                shell_sort(array, main, stop, colors)
+                algo = ShellSort.ShellSort.fromAlgorithm(algo)
             case 'Sleep sort':
-                sleep_sort(array, main, stop)
+                algo = SleepSort.SleepSort.fromAlgorithm(algo)
             case 'Slow sort':
-                slow_sort(array, main, stop, colors, 0, len(array) - 1)
+                algo = SlowSort.SlowSort.fromAlgorithm(algo)
             case 'Stooge sort':
-                stooge_sort(array, main, stop, 0, len(array) - 1, colors)
+                algo = StoogeSort.StoogeSort.fromAlgorithm(algo)
             case 'Strand sort':
-                strand_sort(array, array, [0], main, stop, colors)
+                algo = StrandSort.StrandSort.fromAlgorithm(algo)
             case 'Tree sort':
-                tree_sort(array, main, stop)
+                algo = TreeSort.TreeSort.fromAlgorithm(algo)
             case 'Quick sort':
-                quick_sort(array, main, stop, 0, len(array) - 1, colors)
+                algo = QuickSort.QuickSort.fromAlgorithm(algo)
 
+        algo.run()
+        draw_final()
         btn_sort["state"] = "normal"
         btn_shuffle["state"] = "normal"
         btn_stop["state"] = "disabled"
         sizes["state"] = "readonly"
         algorithms["state"] = "readonly"
         slider["state"] = "normal"
-        reset_colors(array, colors, main)
+        btn_themes["state"] = "normal"
+        
+        try:
+            remove("sound.wav")
+        except IOError:
+            pass
         
     Thread(target=sort, daemon=True).start()
 
@@ -92,13 +116,16 @@ def draw_event(event):
 # Clears canvas and draws the new array
 def draw_array():
     global array
+    global last
     global colors
     global sound
+    global width
+    global height
     canvas.delete('all')
-    rectX = 1600 / len(array) if len(array) else 1
-    rectY = 600 / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
+    rectX = width / len(array) if len(array) else 1
+    rectY = (height - 200) / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
-    rY = 600
+    rY = height - 200
     
     if(len(array) > len(colors)):
         array = array[0:-1:].copy()
@@ -110,14 +137,48 @@ def draw_array():
         rX += rectX
 
     if sound:
+        
+        pitch = last
+        pitch = sum([array[i] for i, x in enumerate(colors) if colors[i] == unitcolors[1]])
+
+        params = buffer.BufferParams(440)
+        data = oscillators.sine_wave(params, int(pitch / max(array) * 100) * 10, amplitude=0.05)
+        soundfile.save(params, "sound.wav", data)
+        
+        if last != pitch:
+            mixer.music.unload()
+            mixer.music.load("sound.wav")
+
+        last = pitch
+
         mixer.music.play()
-    
+        
     main.update_idletasks()
+
+# Draw the array when the sort has finished
+def draw_final():
+    global colors, array
+    if stop[0]:
+        return
+    colors = [unitcolors[2] for x in array]
+    for i, x in enumerate(array):
+        colors[i] = unitcolors[1]
+        main.event_generate("<<draw>>")
+        colors[i] = unitcolors[2]
+        time.sleep(0.5 / len(array))
+        if stop[0]:
+            return
+    
+    n = len(array)
+    for i in range(n):
+        colors[i] = fc
+    draw_array()
 
 # Fisher-Yates shuffle
 def shuffle_array(array):
     global colors
-    colors = ['#cc241d' for i in range(len(array))]
+    global unitcolors
+    colors = [unitcolors[0] for i in range(len(array))]
     for i in range(0, len(array) - 1):
         j = rnd.randint(i, len(array) - 1)
         array[j], array[i] = array[i], array[j]
@@ -126,7 +187,8 @@ def shuffle_array(array):
 def generate_array(size):
     global array
     global colors
-    colors = ['#cc241d' for i in range(size)]
+    global unitcolors
+    colors = [unitcolors[0] for i in range(size)]
     array = [i for i in range(1, size + 1)]
     shuffle_array(array)
     draw_array()
@@ -135,6 +197,7 @@ def stop_thread():
     global stop
     global array
     global colors
+    global unitcolors
 
     n = int(selected_size.get()) 
     if(len(array) != n):
@@ -143,7 +206,7 @@ def stop_thread():
                 array.append(i + 1)
 
     for i in range(n):
-        colors[i] = '#cc241d'
+        colors[i] = unitcolors[0]
 
     draw_array()
     stop[0] = True
@@ -157,34 +220,32 @@ def toggle_sound():
 # Main window
 main = Tk()
 main.title("Visual Sort")
-main.geometry("1600x800")
+if main.winfo_screenheight() <= 900:
+    width = 1300
+    height = 625
+else:
+    width = 1600
+    height = 800
+
+main.geometry(f"{width}x{height}")
 main.resizable(False, False)
 main.protocol("WM_DELETE_WINDOW", )
 
 mixer.init()
-mixer.music.load("blipSelect.wav")
 
 # Colors
-blk = '#282828'
-rd = '#cc241d'
-wht = '#ebdbb2'
+dark = '#282828'
+medium = '#ebdbb2'
+light = '#ebdbb2'
 
 # Font
 font_style = font.Font(family='Consolas', size=12)
+font_icon = font.Font(family='Arial', size = 20)
 
 # Options Frame
-options = Frame(main, width=1600, height=200, bg=blk)
+options = Frame(main, width=width, height=height - (height - 200), bg=dark)
 options.grid_propagate(False)
 options.pack()
-
-# Combobox style
-combostyle = ttk.Style()
-combostyle.theme_create('combostyle', parent='clam', settings = {'TCombobox': {'configure': {
-                                                                                            'selectbackground': blk,
-                                                                                            'fieldbackground': blk,
-                                                                                            'foreground': wht
-                                                                                            }}})
-combostyle.theme_use('combostyle')
 
 # Algs ComboBox
 selected_alg = StringVar()
@@ -195,33 +256,65 @@ algorithms['values'] = ('Bubble sort', 'Bogo sort', 'Bucket sort', 'Cocktail Sha
                         'Radix 2 LSD sort', 'Selection sort', 'Shell sort', 'Sleep sort', 'Slow sort',
                         'Strand sort', 'Stooge sort', 'Tree sort', 'Quick sort')
 algorithms.current(0)
-algorithms.place(x=100, y=50, width=240, height=50)
+algorithms.place(x=width / 16, y=50, width=240, height=50)
 
 # Size ComboBox
 selected_size = StringVar()
 sizes = ttk.Combobox(options, textvariable=selected_size, font=font_style, state='readonly')
 sizes['values'] = ('10', '40', '80', '100', '200', '400', '800')
 sizes.current(3)
-sizes.place(x=100, y=100, width=240, height=50)
+sizes.place(x=width / 16, y=100, width=240, height=50)
 selected_size.trace("w", lambda x, y, z: generate_array(int(selected_size.get())))
+
+# Info Button
+btn_info = Button(options, text="ⓘ", bg=dark, fg=light, font=font_icon)
+btn_info.place(x=30, y=50, width=50, height=50)
+
+# Combobox Styles
+combostyle = ttk.Style()
+create_combobox_styles(combostyle)
+combostyle.theme_use('Theme 1')
+
+# Themes Button
+def set_colors(colors1):
+    global unitcolors
+    global colors
+    dark, medium, light, unitcolors[0], unitcolors[1], unitcolors[2] = colors1
+
+    options.config(bg=dark)
+    btn_info.config(bg=medium, fg=light)
+    btn_themes.config(bg=medium, fg=light)
+    btn_sound.config(bg=medium, fg=light)
+    btn_shuffle.config(bg=medium, fg=light)
+    btn_sort.config(bg=medium, fg=light)
+    btn_stop.config(bg=medium, fg=light)
+    slider.config(bg=medium, fg=light, activebackground=light, highlightbackground=light)
+    canvas.config(bg=medium, highlightbackground=light)
+
+    global array
+    colors = [unitcolors[0] for i in range(len(array))]
+    draw_array()
+
+btn_themes = Button(options, command=lambda: show_themes(main, set_colors, combostyle), text="★", bg=dark, fg=light, font=font_icon)
+btn_themes.place(x=30, y=100, width=50, height=50)
 
 # Generate Button
 btn_shuffle = Button(options, command=lambda: generate_array(
-    int(selected_size.get())), text='Shuffle', bg=blk, fg=wht, font=font_style)
-btn_shuffle.place(x=440, y=50, width=240, height=100)
+    int(selected_size.get())), text='Shuffle', bg=dark, fg=light, font=font_style)
+btn_shuffle.place(x=440/1600 * width, y=50, width=240 / 1600 * width, height=100)
 
 # Sort Button
 btn_sort = Button(options, command=lambda: sort_array(
-    selected_alg.get()), text='Sort', bg=blk, fg=wht, font=font_style)
-btn_sort.place(x=680, y=50, width=240, height=100)
+    selected_alg.get()), text='Sort', bg=dark, fg=light, font=font_style)
+btn_sort.place(x=680/1600 * width, y=50, width=240 / 1600 * width, height=100)
 
 # Sound button
-btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=blk, fg=wht, font=font_style)
-btn_sound.place(x=680, y=10, width=240, height=40)
+btn_sound = Button(options, command=toggle_sound, text='Toggle sound on', bg=dark, fg=light, font=font_style)
+btn_sound.place(x=680/1600 * width, y=10, width=240 / 1600 * width, height=40)
 
 # Stop Button
-btn_stop = Button(options, command=stop_thread, text="Stop", bg=blk, fg=wht, font=font_style)
-btn_stop.place(x=920, y=50, width=240, height=100)
+btn_stop = Button(options, command=stop_thread, text="Stop", bg=dark, fg=light, font=font_style)
+btn_stop.place(x=920/1600 * width, y=50, width=240 / 1600 * width, height=100)
 btn_stop['state'] = "disabled"
 
 # Slider for sorting speed
@@ -233,13 +326,13 @@ minDelay = 0
 maxDelay = 10
 
 slider = Scale(options, from_=minDelay, to=maxDelay, orient=HORIZONTAL, length=200, command=getSpeed,
-                resolution=1, foreground=wht, bg=blk, activebackground=rd)
+                resolution=1, foreground=light, bg=dark, activebackground=medium, highlightbackground=medium)
 slider.set(0)
 slider.config(label='Delay', font=font_style)
-slider.place(x=1260, y=50, width=240, height=100)
+slider.place(x=1260 / 1600 * width, y=50, width=240 / 1600 * width, height=100)
 
 # Sort Canvas
-canvas = Canvas(main, width=1600, height=600, bg=blk)
+canvas = Canvas(main, width=width, height=height - 200, bg=dark, highlightthickness=3, highlightbackground=medium)
 canvas.pack()
 
 generate_array(100)

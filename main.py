@@ -19,6 +19,7 @@ stop = [False]
 sound = False
 unitcolors = ['#cc241d', '#ebdbb2', '#b8bb26'] 
 prev = -1
+drawing_final = False
 
 def draw_arrow(current, previous, rectX, rectY, canvas, array):
     rY = height - 200
@@ -33,8 +34,10 @@ def sort_array(alg):
     global stop
     global colors
     global prev
+    global drawing_final
     
     prev = -1
+    drawing_final = False
     sizes["state"] = "disabled"
     algorithms["state"] = "disabled"
     btn_stop["state"] = "normal"
@@ -51,6 +54,7 @@ def sort_array(alg):
 
     def sort():
         from themes import close_theme_window
+        global drawing_final
         stop[0] = False
         close_theme_window()
         algo = BubbleSort.BubbleSort(array, main, stop, colors)
@@ -106,7 +110,9 @@ def sort_array(alg):
                 algo = QuickSort.QuickSort.fromAlgorithm(algo)
 
         algo.run()
+        drawing_final = True
         draw_final()
+        drawing_final = False
         btn_sort["state"] = "normal"
         btn_shuffle["state"] = "normal"
         btn_stop["state"] = "disabled"
@@ -135,6 +141,7 @@ def draw_array():
     global width
     global height
     global prev
+    global drawing_final
     canvas.delete('all')
     rectX = width / len(array) if len(array) else 1
     rectY = (height - 200) / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
@@ -174,7 +181,7 @@ def draw_array():
 
         mixer.music.play()
         
-    if should_draw_arrow:
+    if should_draw_arrow and not drawing_final:
         if prev != -1:
             draw_arrow(current, prev, rectX, rectY, canvas, array)
         prev = current

@@ -18,11 +18,23 @@ from sorts import StoogeSort, PancakeSort, SlowSort
 stop = [False]
 sound = False
 unitcolors = ['#cc241d', '#ebdbb2', '#b8bb26'] 
+prev = -1
+
+def draw_arrow(current, previous, rectX, rectY, canvas, array):
+    rY = height - 200
+    crX = current * rectX;
+    prX = previous * rectX;
+    canvas.create_line(
+        prX + rectX / 2, rY - (rectY * array[previous]), prX + rectX, 0, crX + rectX / 2, rY - (rectY * array[current]),
+        smooth=1, arrow=LAST, width=3, fill=unitcolors[1])
+    
 
 def sort_array(alg):
     global stop
     global colors
+    global prev
     
+    prev = -1
     sizes["state"] = "disabled"
     algorithms["state"] = "disabled"
     btn_stop["state"] = "normal"
@@ -115,29 +127,38 @@ def draw_event(event):
 
 # Clears canvas and draws the new array
 def draw_array():
+    from sort import fc, sc, tc
     global array
     global last
     global colors
     global sound
     global width
     global height
+    global prev
     canvas.delete('all')
     rectX = width / len(array) if len(array) else 1
     rectY = (height - 200) / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
     rY = height - 200
+    should_draw_arrow=False
+    current = -1
     
     if(len(array) > len(colors)):
         array = array[0:-1:].copy()
 
     for i in range(len(array)):
         color = colors[i]
+        if color == sc:
+            if current == -1:
+                should_draw_arrow = True
+                current = i
+            else:
+                should_draw_arrow = False
         canvas.create_rectangle(
             rX, rY, rX + rectX, rY - (rectY * array[i]), fill=color)
         rX += rectX
 
     if sound:
-        
         pitch = last
         pitch = sum([array[i] for i, x in enumerate(colors) if colors[i] == unitcolors[1]])
 
@@ -153,6 +174,11 @@ def draw_array():
 
         mixer.music.play()
         
+    if should_draw_arrow:
+        if prev != -1:
+            draw_arrow(current, prev, rectX, rectY, canvas, array)
+        prev = current
+
     main.update_idletasks()
 
 # Draw the array when the sort has finished

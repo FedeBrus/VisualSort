@@ -11,6 +11,8 @@ class BogoSort(Algorithm):
             y = random.randint(0, len(self._array) - 1)
             self._colors[x] = self._sc
             self._colors[y] = self._sc
+            self._setCurrent(x)
+            self._setPrevious(y)
             self.drawSleep()
             self._array[x], self._array[y] = self._array[y], self._array[x]
             self._colors[x] = self._fc

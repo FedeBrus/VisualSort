@@ -3,7 +3,7 @@ import abc
 
 class Algorithm(abc.ABC):
     def __init__(self, array, main, stop, colors) -> None:
-        from sort import fc, sc, tc, velocity
+        from sort import fc, sc, tc, velocity, setCurrent, setPrevious
         self._array = array
         self._main = main
         self._stop = stop
@@ -12,6 +12,9 @@ class Algorithm(abc.ABC):
         self._sc = sc
         self._tc = tc
         self._velocity = velocity
+        self._setCurrent = setCurrent
+        self._setPrevious = setPrevious
+        
     
     @classmethod
     def fromAlgorithm(cls, algo):

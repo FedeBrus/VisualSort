@@ -14,6 +14,8 @@ class BubbleSort(Algorithm):
                 if self._array[j] > self._array[j + 1]:
                     self._array[j], self._array[j + 1] = self._array[j + 1], self._array[j]
                     sorted = False
+                    self._setPrevious(j + 1)
+                    self._setCurrent(j + 2)
                     self._colors[j + 1] = self._sc
                     self.drawSleep()
                     self._colors[j + 1] = self._fc

@@ -1,10 +1,26 @@
-import time
-import random
-import threading
-import math
+import time, random, threading, math
 
 global velocity
 velocity = [0.0]
+
+current = -1
+previous = -1
+
+def getCurrent():
+    global current
+    return current;
+
+def getPrevious():
+    global previous
+    return previous
+
+def setCurrent(val):
+    global current
+    current = val
+    
+def setPrevious(val):
+    global previous
+    previous = val
 
 global fc
 global sc

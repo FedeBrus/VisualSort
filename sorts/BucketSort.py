@@ -12,6 +12,8 @@ class BucketSort(Algorithm):
             while j > 0 and self._array[inf + j - 1] > self._array[inf + j]:
                 self._array[inf + j - 1], self._array[inf + j] = self._array[inf + j], self._array[inf + j - 1]
                 j -= 1
+                self._setPrevious(inf + j)
+                self._setCurrent(inf + j - 1)
                 self._colors[inf + j] = self._sc
                 self.drawSleep()
                 self._colors[inf + j] = self._tc

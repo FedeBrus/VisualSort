@@ -18,10 +18,13 @@ from sorts import StoogeSort, PancakeSort, SlowSort
 stop = [False]
 sound = False
 unitcolors = ['#cc241d', '#ebdbb2', '#b8bb26'] 
-prev = -1
 drawing_final = False
+should_draw_arrow = True
 
 def draw_arrow(current, previous, rectX, rectY, canvas, array):
+    if current >= len(array) or previous >= len(array) or current < 0 or previous < 0:
+        return
+    
     rY = height - 200
     crX = current * rectX;
     prX = previous * rectX;
@@ -35,8 +38,11 @@ def sort_array(alg):
     global colors
     global prev
     global drawing_final
+    from sort import setCurrent, setPrevious
     
-    prev = -1
+    setCurrent(-1)    
+    setPrevious(-1)    
+
     drawing_final = False
     sizes["state"] = "disabled"
     algorithms["state"] = "disabled"
@@ -147,20 +153,12 @@ def draw_array():
     rectY = (height - 200) / (max(max(array) if len(array) > 0 else 1, len(array)) + 1)
     rX = 0
     rY = height - 200
-    should_draw_arrow=False
-    current = -1
     
     if(len(array) > len(colors)):
         array = array[0:-1:].copy()
 
     for i in range(len(array)):
         color = colors[i]
-        if color == sc:
-            if current == -1:
-                should_draw_arrow = True
-                current = i
-            else:
-                should_draw_arrow = False
         canvas.create_rectangle(
             rX, rY, rX + rectX, rY - (rectY * array[i]), fill=color)
         rX += rectX
@@ -182,8 +180,9 @@ def draw_array():
         mixer.music.play()
         
     if should_draw_arrow and not drawing_final:
-        if prev != -1:
-            draw_arrow(current, prev, rectX, rectY, canvas, array)
+        from sort import getCurrent, getPrevious
+        if getPrevious() != -1:
+            draw_arrow(getCurrent(), getPrevious(), rectX, rectY, canvas, array)
         prev = current
 
     main.update_idletasks()
